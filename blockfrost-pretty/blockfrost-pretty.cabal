@@ -1,0 +1,57 @@
+cabal-version:       2.2
+name:                blockfrost-pretty
+version:             0.1.0.0
+synopsis:            blockfrost.io pretty-printing utilities
+description:         prettyprinter Docs and standalone prettyPrinters
+homepage:            https://github.com/blockfrost/blockfrost-hs
+license:             Apache-2.0
+license-file:        LICENSE
+author:              blockfrost.io
+maintainer:          srk@48.io
+copyright:           2021 blockfrost.io
+category:            Web
+build-type:          Simple
+
+extra-source-files:
+    CHANGELOG.md
+    LICENSE
+    README.md
+
+flag BuildFast
+     Default: True
+     Description: Turn off optimizations
+
+flag Production
+     Default: False
+     Description: Production build
+
+common libstuff
+  default-language:    Haskell2010
+  ghc-options:         -Wall -Wunused-packages -fno-warn-orphans
+  if flag(BuildFast)
+    ghc-options: -O0
+  if flag(Production)
+    ghc-options: -Werror
+
+library
+   import:              libstuff
+   hs-source-dirs:      src
+   exposed-modules:     Blockfrost.Pretty
+                      , Blockfrost.Pretty.Ada
+                      , Blockfrost.Pretty.Block
+                      , Blockfrost.Pretty.Config
+                      , Blockfrost.Pretty.POSIXTime
+                      , Blockfrost.Pretty.Shared
+   build-depends:       base >= 4.7 && < 5
+                      , blockfrost-api
+                      , data-default
+                      , lens
+                      , prettyprinter
+                      , prettyprinter-ansi-terminal
+                      , safe-money
+                      , text
+                      , time
+
+source-repository head
+  type:     git
+  location: https://github.com/blockfrost/blockfrost-hs
