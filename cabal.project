@@ -1,0 +1,5 @@
+packages:
+  ./blockfrost-api
+  ./blockfrost-client-core
+  ./blockfrost-client
+  ./blockfrost-pretty
