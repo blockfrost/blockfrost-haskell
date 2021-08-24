@@ -56,6 +56,7 @@ If you already have `GHC` and `cabal` installed:
 ```sh
 git clone https://github.com/blockfrost/blockfrost-haskell
 cd blockfrost-haskell
+cabal update
 cabal build all
 cabal repl blockfrost-client
 ```
