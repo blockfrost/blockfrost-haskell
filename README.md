@@ -60,6 +60,10 @@ cabal build all
 cabal repl blockfrost-client
 ```
 
+Note: Due to TLS support, you might need to
+provide `zlib` headers if compilation
+of `http-client-tls` fails. (On NixOS this is `nix-shell -p zlib.dev`).
+
 ### `nix`
 
 Using `nix-shell`, you can obtain a preconfigured environment
