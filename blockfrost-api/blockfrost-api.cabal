@@ -1,0 +1,166 @@
+cabal-version:       2.2
+name:                blockfrost-api
+version:             0.1.0.0
+synopsis:            API definitions for blockfrost.io
+description:         Core types and Servant API description
+homepage:            https://github.com/blockfrost/blockfrost-hs
+license:             Apache-2.0
+license-file:        LICENSE
+author:              blockfrost.io
+maintainer:          srk@48.io
+copyright:           2021 blockfrost.io
+category:            Web
+build-type:          Simple
+
+extra-source-files:
+    CHANGELOG.md
+    LICENSE
+    README.md
+
+flag BuildFast
+     Default: True
+     Description: Turn off optimizations
+
+flag Production
+     Default: False
+     Description: Production build
+
+common libstuff
+  default-language:    Haskell2010
+  default-extensions:
+    DataKinds
+    DeriveAnyClass
+    DeriveGeneric
+    DerivingVia
+    GADTs
+    GeneralizedNewtypeDeriving
+    FlexibleContexts
+    FlexibleInstances
+    InstanceSigs
+    LambdaCase
+    MultiParamTypeClasses
+    QuasiQuotes
+    RankNTypes
+    ScopedTypeVariables
+    TemplateHaskell
+    TypeApplications
+    TypeFamilies
+    TypeOperators
+    ViewPatterns
+    OverloadedStrings
+  ghc-options:         -Wall -Wunused-packages -fno-warn-orphans
+  if flag(BuildFast)
+    ghc-options: -O0
+  if flag(Production)
+    ghc-options: -Werror
+
+library
+   import:              libstuff
+   hs-source-dirs:      src
+   exposed-modules:     Blockfrost.API
+                      , Blockfrost.API.Common
+                      , Blockfrost.API.Cardano
+                      , Blockfrost.API.Cardano.Accounts
+                      , Blockfrost.API.Cardano.Addresses
+                      , Blockfrost.API.Cardano.Assets
+                      , Blockfrost.API.Cardano.Blocks
+                      , Blockfrost.API.Cardano.Epochs
+                      , Blockfrost.API.Cardano.Ledger
+                      , Blockfrost.API.Cardano.Metadata
+                      , Blockfrost.API.Cardano.Network
+                      , Blockfrost.API.Cardano.Pools
+                      , Blockfrost.API.Cardano.Transactions
+                      , Blockfrost.API.IPFS
+                      , Blockfrost.API.NutLink
+                      , Blockfrost.Auth
+                      , Blockfrost.Env
+                      , Blockfrost.Lens
+                      , Blockfrost.Types
+                      , Blockfrost.Types.ApiError
+                      , Blockfrost.Types.Common
+                      , Blockfrost.Types.Cardano
+                      , Blockfrost.Types.Cardano.Accounts
+                      , Blockfrost.Types.Cardano.Addresses
+                      , Blockfrost.Types.Cardano.Assets
+                      , Blockfrost.Types.Cardano.Blocks
+                      , Blockfrost.Types.Cardano.Epochs
+                      , Blockfrost.Types.Cardano.Genesis
+                      , Blockfrost.Types.Cardano.Metadata
+                      , Blockfrost.Types.Cardano.Network
+                      , Blockfrost.Types.Cardano.Pools
+                      , Blockfrost.Types.Cardano.Transactions
+                      , Blockfrost.Types.IPFS
+                      , Blockfrost.Types.NutLink
+                      , Blockfrost.Types.Shared
+                      , Blockfrost.Types.Shared.Ada
+                      , Blockfrost.Types.Shared.Address
+                      , Blockfrost.Types.Shared.BlockHash
+                      , Blockfrost.Types.Shared.BlockIndex
+                      , Blockfrost.Types.Shared.Epoch
+                      , Blockfrost.Types.Shared.CBOR
+                      , Blockfrost.Types.Shared.Opts
+                      , Blockfrost.Types.Shared.POSIXMillis
+                      , Blockfrost.Types.Shared.Slot
+                      , Blockfrost.Types.Shared.TxHash
+                      , Blockfrost.Types.Shared.Amount
+                      , Blockfrost.Types.Shared.AssetId
+                      , Blockfrost.Types.Shared.PolicyId
+                      , Blockfrost.Types.Shared.PoolId
+                      , Blockfrost.Types.Shared.Quantity
+                      , Blockfrost.Util.LensRules
+                      , Blockfrost.Util.Pagination
+                      , Blockfrost.Util.Sorting
+                      , Blockfrost.Util.Tag
+   build-depends:       base >= 4.7 && < 5
+                      , bytestring
+                      , data-default-class
+                      , text
+                      , time
+                      , aeson
+                      , deriving-aeson
+                      , lens
+                      , template-haskell
+                      , servant                  ^>= 0.18
+                      , servant-docs
+                      , servant-multipart-api
+                      , safe-money
+                      , quickcheck-instances
+                      , QuickCheck
+
+test-suite blockfrost-api-tests
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  other-modules:       AmountSpec
+                     , APISpec
+                     , Cardano.Accounts
+                     , Cardano.Addresses
+                     , Cardano.Assets
+                     , Cardano.Epochs
+                     , Cardano.Ledger
+                     , Cardano.Metadata
+                     , Cardano.Network
+                     , Cardano.Pools
+                     , Cardano.Transactions
+                     , IPFS
+                     , NutLink
+  build-depends:       base >= 4.7 && < 5
+                     , blockfrost-api
+                     , aeson
+                     , bytestring
+                     , text
+                     , data-default
+                     , safe-money
+                     , raw-strings-qq
+                     , vector
+                     , hspec
+                     , tasty
+                     , tasty-hspec
+                     , tasty-hunit
+  build-tool-depends:
+    tasty-discover:tasty-discover
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/blockfrost/blockfrost-hs
