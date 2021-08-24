@@ -45,6 +45,6 @@ instance {-# OVERLAPS #-} ToHttpApiData (Either Integer BlockHash) where
 instance {-# OVERLAPS #-} FromHttpApiData (Either Integer BlockHash) where
   parseUrlPiece x | Data.Text.all isDigit x =
     case Text.Read.readMaybe (Data.Text.unpack x) of
-        Nothing    -> Left "Unable to read block id"
+        Nothing      -> Left "Unable to read block id"
         Just blockId -> pure (Left blockId)
   parseUrlPiece x | otherwise = pure (Right (BlockHash x))
