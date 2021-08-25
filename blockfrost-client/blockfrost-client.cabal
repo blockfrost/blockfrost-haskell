@@ -3,7 +3,7 @@ name:                blockfrost-client
 version:             0.1.0.0
 synopsis:            blockfrost.io basic client
 description:         Simple Blockfrost clients for use with transformers or mtl
-homepage:            https://github.com/blockfrost/blockfrost-hs
+homepage:            https://github.com/blockfrost/blockfrost-haskell
 license:             Apache-2.0
 license-file:        LICENSE
 author:              blockfrost.io
@@ -101,4 +101,4 @@ test-suite blockfrost-client-tests
 
 source-repository head
   type:     git
-  location: https://github.com/blockfrost/blockfrost-hs
+  location: https://github.com/blockfrost/blockfrost-haskell
