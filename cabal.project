@@ -1,0 +1,15 @@
+packages:
+  ./blockfrost-api
+  ./blockfrost-client-core
+  ./blockfrost-client
+  ./blockfrost-pretty
+
+-- until next release (>0.9)
+-- https://github.com/k0001/safe-money/pull/59 (GHC9)
+source-repository-package
+  type: git
+  location: https://github.com/k0001/safe-money/
+  tag: d9a5ace78950c221ed7b03c0de3626f1b577813a
+  --sha256: 0n8l0mzx42mk851k69wz5grcc0rh6wq5bjbw95yd5wmrjganwsr7
+  subdir:
+    safe-money
