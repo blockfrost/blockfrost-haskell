@@ -17,7 +17,7 @@
 ## About
 
 The repository provides an API definition, data types, client and utilities
-for working with Blockfrost. We are striving to provide begginer-friendly
+for working with Blockfrost. We are striving to provide beginner-friendly
 interface while adding a bit of type safety, especially when working with monetary
 values.
 
@@ -27,7 +27,7 @@ values.
   Types, sample data, API definition and tests. See the [`README.md`](./blockfrost-api/#readme)
   for quick tutorial
 * [`blockfrost-client-core`](./blockfrost-client-core/#readme)
-  Instances and helpers share by all clients.
+  Instances and helpers shared by all clients.
 * [`blockfrost-client`](./blockfrost-client/#readme)
   Blockfrost client for use with `mtl`. Its [`README.md`](./blockfrost-api/#readme)
   contains an introduction and usage examples.
