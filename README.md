@@ -1,3 +1,5 @@
+[![Haskell CI](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml/badge.svg)](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml) <a href="https://fivebinaries.com/"><img src="https://img.shields.io/badge/made%20by-Five%20Binaries-darkviolet.svg?style=flat-square" /></a>
+
 <img src="https://blockfrost.io/images/logo.svg" width="250" align="right" height="90">
 
 # blockfrost-haskell
@@ -53,7 +55,7 @@ with `nix`.
 
 If you already have `GHC` and `cabal` installed:
 
-```sh
+```bash
 git clone https://github.com/blockfrost/blockfrost-haskell
 cd blockfrost-haskell
 cabal update
@@ -70,7 +72,7 @@ of `http-client-tls` fails. (On NixOS this is `nix-shell -p zlib.dev`).
 Using `nix-shell`, you can obtain a preconfigured environment
 with `GHC` and `cabal`:
 
-```sh
+```bash
 git clone https://github.com/blockfrost/blockfrost-haskell
 cd blockfrost-haskell
 nix-shell
