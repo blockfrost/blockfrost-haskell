@@ -8,6 +8,8 @@ module Blockfrost.Util.Pagination
   , PaginationExpanded
   , page
   , paged
+  , nextPage
+  , maxPageSize
   ) where
 
 import Data.Default.Class
@@ -19,8 +21,12 @@ data Paged = Paged
   , pageNumber   :: Int -- ^ Page number
   } deriving (Eq, Ord, Show)
 
+-- | Maximum number of items per page
+maxPageSize :: Int
+maxPageSize = 100
+
 instance Default Paged where
-  def = Paged 100 1
+  def = Paged maxPageSize 1
 
 -- | Default `Paged` at specific page number
 page :: Int -> Paged
@@ -31,9 +37,13 @@ page _ = error "Page number not in range [1..]"
 --
 -- Throws error on invalid values.
 paged :: Int -> Int -> Paged
-paged size _ | size > 100 = error "Page size exceeds 100"
+paged size _ | size > maxPageSize = error "Page size exceeds 100"
 paged _ n | n < 1 = error "Page number not in range [1..]"
 paged size n = Paged size n
+
+-- | Increment page number
+nextPage :: Paged -> Paged
+nextPage p = p { pageNumber = 1 + pageNumber p }
 
 -- | Adds Pagination to an API
 data Pagination
