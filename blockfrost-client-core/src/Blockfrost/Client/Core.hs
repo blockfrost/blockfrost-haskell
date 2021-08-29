@@ -15,6 +15,8 @@ module Blockfrost.Client.Core
   , fromServantClientError
   , newEnvByProject
   , page
+  , paged
+  , allPages
   , projectFromEnv
   , projectFromEnv'
   , projectFromFile
