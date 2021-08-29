@@ -48,7 +48,7 @@ instance ToSample AccountInfo where
 
 -- | Reward received by an account
 data AccountReward = AccountReward
-  { _accountRewardEpoch  :: Integer -- ^ Epoch of the associated reward
+  { _accountRewardEpoch  :: Epoch -- ^ Epoch of the associated reward
   , _accountRewardAmount :: Lovelaces -- ^ Rewards for given epoch in Lovelaces
   , _accountRewardPoolId :: PoolId -- ^ Bech32 pool ID being delegated to
   }
@@ -106,7 +106,7 @@ instance ToSample AccountHistory where
 
 -- | Account delegations and associated transaction IDs
 data AccountDelegation = AccountDelegation
-  { _accountDelegationActiveEpoch :: Integer -- ^ Epoch in which the delegation becomes active
+  { _accountDelegationActiveEpoch :: Epoch -- ^ Epoch in which the delegation becomes active
   , _accountDelegationTxHash      :: TxHash -- ^ Hash of the transaction containing the delegation
   , _accountDelegationAmount      :: Lovelaces -- ^ Rewards for given epoch in Lovelaces
   , _accountDelegationPoolId      :: PoolId -- ^ Bech32 ID of pool being delegated to
