@@ -1,4 +1,9 @@
-[![Haskell CI](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml/badge.svg)](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml) <a href="https://fivebinaries.com/"><img src="https://img.shields.io/badge/made%20by-Five%20Binaries-darkviolet.svg?style=flat-square" /></a>
+
+[![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fblockfrost%2Fblockfrost-haskell%2Fbadge&style=flat-square)](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml)
+[![Hackage blockfrost-api](https://img.shields.io/hackage/v/blockfrost-api.svg?logo=haskell&style=flat-square&label=blockfrost-api)](https://hackage.haskell.org/package/blockfrost-api)
+[![Hackage blockfrost-client](https://img.shields.io/hackage/v/blockfrost-client.svg?logo=haskell&style=flat-square&label=blockfrost-client)](https://hackage.haskell.org/package/blockfrost-client)
+[![Hackage blockfrost-pretty](https://img.shields.io/hackage/v/blockfrost-pretty.svg?logo=haskell&style=flat-square&label=blockfrost-pretty)](https://hackage.haskell.org/package/blockfrost-pretty)
+[![Made by Five Binaries](https://img.shields.io/badge/made%20by-Five%20Binaries-darkviolet.svg?style=flat-square)](https://fivebinaries.com/)
 
 <img src="https://blockfrost.io/images/logo.svg" width="250" align="right" height="90">
 
@@ -47,8 +52,17 @@ To use this SDK, you first need to log in to [blockfrost.io](https://blockfrost.
 
 ## Installation
 
-The packages are not yet published on Hackage. For now, you can
-either work within this repository using plain `cabal` or in combination
+Packages are available on Hackage, you only need to add `blockfrost-client`
+to your package dependencies.
+
+Haddocks available on Hackage:
+* [![Hackage blockfrost-api](https://img.shields.io/hackage/v/blockfrost-api.svg?logo=haskell&style=flat-square&label=blockfrost-api)](https://hackage.haskell.org/package/blockfrost-api)
+* [![Hackage blockfrost-client](https://img.shields.io/hackage/v/blockfrost-client.svg?logo=haskell&style=flat-square&label=blockfrost-client)](https://hackage.haskell.org/package/blockfrost-client)
+* [![Hackage blockfrost-pretty](https://img.shields.io/hackage/v/blockfrost-pretty.svg?logo=haskell&style=flat-square&label=blockfrost-pretty)](https://hackage.haskell.org/package/blockfrost-pretty)
+
+## Development setup
+
+You can either work within this repository using plain `cabal` or in combination
 with `nix`.
 
 ### `cabal`
