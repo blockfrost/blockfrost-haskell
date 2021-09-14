@@ -53,8 +53,17 @@ To use this SDK, you first need to log in to [blockfrost.io](https://blockfrost.
 
 ## Installation
 
-The packages are not yet published on Hackage. For now, you can
-either work within this repository using plain `cabal` or in combination
+Packages are available on Hackage, you only need to add `blockfrost-client`
+to your package dependencies.
+
+Haddocks available on Hackage:
+* [![Hackage blockfrost-api](https://img.shields.io/hackage/v/blockfrost-api.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-api)
+* [![Hackage blockfrost-client](https://img.shields.io/hackage/v/blockfrost-client.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-client)
+* [![Hackage blockfrost-pretty](https://img.shields.io/hackage/v/blockfrost-pretty.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-pretty)
+
+## Development setup
+
+You can either work within this repository using plain `cabal` or in combination
 with `nix`.
 
 ### `cabal`
