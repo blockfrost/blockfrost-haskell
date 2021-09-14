@@ -24,10 +24,12 @@ flag BuildFast
 
 flag Examples
      Default: False
+     Manual: True
      Description: Build examples
 
 flag Production
      Default: False
+     Manual: True
      Description: Production build
 
 common libstuff
