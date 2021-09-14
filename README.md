@@ -1,4 +1,10 @@
-[![Haskell CI](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml/badge.svg)](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml) <a href="https://fivebinaries.com/"><img src="https://img.shields.io/badge/made%20by-Five%20Binaries-darkviolet.svg?style=flat-square" /></a>
+
+[![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fblockfrost%2Fblockfrost-haskell%2Fbadge&style=flat-square)](https://github.com/blockfrost/blockfrost-haskell/actions/workflows/ci.yaml)
+[![Hackage blockfrost-api](https://img.shields.io/hackage/v/blockfrost-api.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-api)
+[![Hackage blockfrost-client-core](https://img.shields.io/hackage/v/blockfrost-client-core.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-client-core)
+[![Hackage blockfrost-client](https://img.shields.io/hackage/v/blockfrost-client.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-client)
+[![Hackage blockfrost-pretty](https://img.shields.io/hackage/v/blockfrost-pretty.svg?logo=haskell&style=flat-square)](https://hackage.haskell.org/package/blockfrost-pretty)
+[![Made by Five Binaries](https://img.shields.io/badge/made%20by-Five%20Binaries-darkviolet.svg?style=flat-square)](https://fivebinaries.com/)
 
 <img src="https://blockfrost.io/images/logo.svg" width="250" align="right" height="90">
 
