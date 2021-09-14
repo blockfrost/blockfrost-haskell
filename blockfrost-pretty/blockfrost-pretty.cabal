@@ -23,6 +23,7 @@ flag BuildFast
 
 flag Production
      Default: False
+     Manual: True
      Description: Production build
 
 common libstuff
