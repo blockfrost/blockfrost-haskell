@@ -36,6 +36,8 @@ module Blockfrost.Client
   , getAddressDetails
   , getAddressUtxos
   , getAddressUtxos'
+  , getAddressUtxosAsset
+  , getAddressUtxosAsset'
   , getAddressTransactions
   , getAddressTransactions'
     -- Cardano - Assets
