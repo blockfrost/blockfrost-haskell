@@ -87,7 +87,17 @@ protocolParamsSample = [r|
     "protocol_minor_ver": 0,
     "min_utxo": "1000000",
     "min_pool_cost": "340000000",
-    "nonce": "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+    "nonce": "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81",
+    "price_mem": 0.0577,
+    "price_step": 0.0000721,
+    "max_tx_ex_mem": "10000000",
+    "max_tx_ex_steps": "10000000000",
+    "max_block_ex_mem": "50000000",
+    "max_block_ex_steps": "40000000000",
+    "max_val_size": "5000",
+    "collateral_percent": 150,
+    "max_collateral_inputs": 3,
+    "coins_per_utxo_word": "34482"
 }
 |]
 
@@ -113,6 +123,16 @@ protocolParamsExpected =
     , _protocolParamsMinUtxo = 1000000
     , _protocolParamsMinPoolCost = 340000000
     , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+    , _protocolParamsPriceMem = 0.0577
+    , _protocolParamsPriceStep = 0.0000721
+    , _protocolParamsMaxTxExMem = 10000000
+    , _protocolParamsMaxTxExSteps = 10000000000
+    , _protocolParamsMaxBlockExMem = 50000000
+    , _protocolParamsMaxBlockExSteps = 40000000000
+    , _protocolParamsMaxValSize = 5000
+    , _protocolParamsCollateralPercent = 150
+    , _protocolParamsMaxCollateralInputs = 3
+    , _protocolParamsCoinsPerUtxoWord = 34482
     }
 
 stakeDistributionSample = [r|

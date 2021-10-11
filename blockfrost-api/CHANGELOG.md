@@ -15,6 +15,7 @@
     * `treasury` field (current treasury supply)
     * `reserves` field (current reserves supply)
   * `/txs/${hash}/redeemers` endpoint with `TransactionRedeemer` and `ValidationPurpose` types
+  * Epoch cost model parameters to `ProtocolParams`
 
 # Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
 
