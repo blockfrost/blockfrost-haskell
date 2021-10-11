@@ -37,7 +37,6 @@ data Transaction = Transaction
   , _transactionFees                 :: Lovelaces -- ^ Fees of the transaction in Lovelaces
   , _transactionDeposit              :: Lovelaces -- ^ Deposit within the transaction in Lovelaces
   , _transactionSize                 :: Integer -- ^ Size of the transaction in Bytes
-  --_ TODO: Text Slots?
   , _transactionInvalidBefore        :: Maybe Text -- ^ Left (included) endpoint of the timelock validity intervals
   , _transactionInvalidHereafter     :: Maybe Text -- ^ Right (excluded) endpoint of the timelock validity intervals
   , _transactionUtxoCount            :: Integer -- ^ Count of UTXOs within the transaction
