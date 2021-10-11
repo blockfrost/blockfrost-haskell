@@ -83,6 +83,7 @@ data UtxoInput = UtxoInput
   , _utxoInputAmount      :: [Amount]
   , _utxoInputTxHash      :: Text -- ^ Hash of the UTXO transaction
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
+  , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -98,6 +99,7 @@ utxoInSample =
     , _utxoInputAmount = sampleAmounts
     , _utxoInputTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
     , _utxoInputOutputIndex = 0
+    , _utxoInputCollateral = False
     }
 
 -- | Transaction output UTxO
