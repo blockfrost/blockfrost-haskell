@@ -123,7 +123,8 @@ txMetaCBORSample = [r|
   },
   {
     "tx_hash": "4237501da3cfdd53ade91e8911e764bd0699d88fd43b12f44a1f459b89bc91be",
-    "cbor_metadata": "\\xa100a16b436f6d62696e6174696f6e8601010101010c"
+    "cbor_metadata": "\\xa100a16b436f6d62696e6174696f6e8601010101010c",
+    "metadata": "a100a16b436f6d62696e6174696f6e8601010101010c"
   }
 ]
 |]
@@ -137,7 +138,5 @@ txMetaCBORExpected =
       Nothing
   , TxMetaCBOR
       "4237501da3cfdd53ade91e8911e764bd0699d88fd43b12f44a1f459b89bc91be"
-      (Just "\\xa100a16b436f6d62696e6174696f6e8601010101010c")
+      (Just "a100a16b436f6d62696e6174696f6e8601010101010c")
   ]
-
-
