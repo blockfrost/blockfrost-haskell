@@ -52,11 +52,12 @@ data NetworkStake = NetworkStake
 netStakeSample :: NetworkStake
 netStakeSample =
   NetworkStake
-    23_204_950_463_991_654
-    22_210_233_523_456_321
+    { _stakeLive = 23_204_950_463_991_654
+    , _stakeActive = 22_210_233_523_456_321
+    }
 
 instance ToSample NetworkStake where
-  toSamples = pure $ singleSample $ netStakeSample
+  toSamples = pure $ singleSample netStakeSample
 
 -- | Detailed network information
 data Network = Network

@@ -49,6 +49,7 @@ networkExpected =
        , _supplyTreasury = 98_635_632_000_000
        , _supplyReserves = 46_635_632_000_000
        }
-    (NetworkStake
-      23_204_950_463_991_654
-      22_210_233_523_456_321)
+    NetworkStake
+      { _stakeLive = 23_204_950_463_991_654
+      , _stakeActive = 22_210_233_523_456_321
+      }
