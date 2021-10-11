@@ -27,7 +27,10 @@ networkSample = [r|
   "supply": {
     "max": "45000000000000000",
     "total": "32890715183299160",
-    "circulating": "32412601976210393"
+    "circulating": "32412601976210393",
+    "locked": "125006953355",
+    "treasury": "98635632000000",
+    "reserves": "46635632000000"
   },
   "stake": {
     "live": "23204950463991654",
@@ -38,10 +41,14 @@ networkSample = [r|
 
 networkExpected =
   Network
-    (NetworkSupply
-      45_000_000_000_000_000
-      32_890_715_183_299_160
-      32_412_601_976_210_393)
+    NetworkSupply
+       { _supplyMax = 45_000_000_000_000_000
+       , _supplyTotal = 32_890_715_183_299_160
+       , _supplyCirculating = 32_412_601_976_210_393
+       , _supplyLocked = 125_006_953_355
+       , _supplyTreasury = 98_635_632_000_000
+       , _supplyReserves = 46_635_632_000_000
+       }
     (NetworkStake
       23_204_950_463_991_654
       22_210_233_523_456_321)

@@ -18,6 +18,9 @@ data NetworkSupply = NetworkSupply
   { _supplyMax         :: Lovelaces -- ^ Maximum supply in Lovelaces
   , _supplyTotal       :: Lovelaces -- ^ Current total (max supply - reserves) supply in Lovelaces
   , _supplyCirculating :: Lovelaces -- ^ Current circulating (UTXOs + withdrawables) supply in Lovelaces
+  , _supplyLocked      :: Lovelaces -- ^ Current supply locked by scripts in Lovelaces
+  , _supplyTreasury    :: Lovelaces -- ^ Current supply locked in treasury
+  , _supplyReserves    :: Lovelaces -- ^ Current supply locked in reserves
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -26,9 +29,13 @@ data NetworkSupply = NetworkSupply
 netSupplySample :: NetworkSupply
 netSupplySample =
   NetworkSupply
-    45_000_000_000_000_000
-    32_890_715_183_299_160
-    32_412_601_976_210_393
+    { _supplyMax = 45_000_000_000_000_000
+    , _supplyTotal = 32_890_715_183_299_160
+    , _supplyCirculating = 32_412_601_976_210_393
+    , _supplyLocked = 125_006_953_355
+    , _supplyTreasury = 98_635_632_000_000
+    , _supplyReserves = 46_635_632_000_000
+    }
 
 instance ToSample NetworkSupply where
   toSamples = pure $ singleSample netSupplySample
