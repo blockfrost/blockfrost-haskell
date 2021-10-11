@@ -56,7 +56,8 @@ addressInfoSample = [r|
     }
   ],
   "stake_address": "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7",
-  "type": "shelley"
+  "type": "shelley",
+  "script": false
 }
 |]
 
@@ -73,6 +74,7 @@ addressInfoExpected =
       ]
     , _addressInfoStakeAddress = pure "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
     , _addressInfoType = Shelley
+    , _addressInfoScript = False
     }
 
 addressDetailsSample = [r|

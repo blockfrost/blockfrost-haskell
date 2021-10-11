@@ -19,6 +19,7 @@ data AddressInfo = AddressInfo
   , _addressInfoAmount       :: [Amount] -- ^ Lovelaces or tokens stored on this address
   , _addressInfoStakeAddress :: Maybe Address -- ^ Stake address that controls the key
   , _addressInfoType         :: AddressType -- ^ Address era
+  , _addressInfoScript       :: Bool -- ^ True if this is a script address
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressInfo", CamelToSnake]] AddressInfo
@@ -37,6 +38,7 @@ instance ToSample AddressInfo where
         ]
       , _addressInfoStakeAddress = pure "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
       , _addressInfoType = Shelley
+      , _addressInfoScript = False
       }
 
 -- | Type (era) of an address
