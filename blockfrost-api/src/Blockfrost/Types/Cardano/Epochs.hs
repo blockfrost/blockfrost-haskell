@@ -8,6 +8,7 @@ module Blockfrost.Types.Cardano.Epochs
   ) where
 
 import Blockfrost.Types.Shared
+import Data.Aeson (Value)
 import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), singleSample)
@@ -61,8 +62,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsRho                   :: Double -- ^ Monetary expansion
   , _protocolParamsTau                   :: Double -- ^ Treasury expansion
   , _protocolParamsDecentralisationParam :: Double -- ^ Percentage of blocks produced by federated nodes
--- ?? TODO: object Nullable
---  , protocolParamsExtraEntropy :: Maybe Value
+  , _protocolParamsExtraEntropy          :: Maybe Value -- ^ Seed for extra entropy
   , _protocolParamsProtocolMajorVer      :: Integer -- ^ Accepted protocol major version
   , _protocolParamsProtocolMinorVer      :: Integer -- ^ Accepted protocol minor version
   , _protocolParamsMinUtxo               :: Lovelaces -- ^ Minimum UTXO value
@@ -103,7 +103,7 @@ instance ToSample ProtocolParams where
       , _protocolParamsRho = 0.003
       , _protocolParamsTau = 0.2
       , _protocolParamsDecentralisationParam = 0.5
---      , _protocolParamsExtraEntropy = Nothing
+      , _protocolParamsExtraEntropy = Nothing
       , _protocolParamsProtocolMajorVer = 2
       , _protocolParamsProtocolMinorVer = 0
       , _protocolParamsMinUtxo = 1000000
