@@ -2,6 +2,7 @@
 
 * Alonzo additions
   * `collateral` field to `UtxoInput`
+  * `redeemerCount` field to `Transaction`
 
 # Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
 

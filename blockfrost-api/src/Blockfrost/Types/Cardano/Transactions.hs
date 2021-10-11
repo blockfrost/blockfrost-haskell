@@ -47,6 +47,7 @@ data Transaction = Transaction
   , _transactionPoolUpdateCount      :: Integer -- ^ Count of the stake pool registration and update certificates within the transaction
   , _transactionPoolRetireCount      :: Integer -- ^ Count of the stake pool retirement certificates within the transaction
   , _transactionAssetMintOrBurnCount :: Integer -- ^ Count of asset mints and burns within the transaction
+  , _transactionRedeemerCount        :: Integer -- ^ Count of redeemers within the transaction
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -74,6 +75,7 @@ instance ToSample Transaction where
       , _transactionPoolUpdateCount = 0
       , _transactionPoolRetireCount = 0
       , _transactionAssetMintOrBurnCount = 0
+      , _transactionRedeemerCount = 0
       }
 
 -- | Transaction input UTxO
