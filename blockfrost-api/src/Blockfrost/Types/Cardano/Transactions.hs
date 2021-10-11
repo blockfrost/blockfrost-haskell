@@ -130,8 +130,8 @@ utxoOutSample =
 -- | Transaction UTxOs
 data TransactionUtxos = TransactionUtxos
   { _transactionUtxosHash    :: TxHash -- ^ Transaction hash
-  , _transactionUtxosInputs  :: [UtxoInput]
-  , _transactionUtxosOutputs :: [UtxoOutput]
+  , _transactionUtxosInputs  :: [UtxoInput] -- ^ Transaction inputs
+  , _transactionUtxosOutputs :: [UtxoOutput] -- ^ Transaction outputs
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
