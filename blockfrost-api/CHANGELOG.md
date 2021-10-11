@@ -4,6 +4,7 @@
   * `collateral` field to `UtxoInput`
   * `redeemerCount` field to `Transaction`
   * `dataHash` field to `UtxoInput` and `UtxoOutput`
+  * `dataHash` field to `AdressUTXO`
   * `outputIndex` field to `UtxoOutput`
   * `script` field to `AddressInfo`
   * `NetworkSupply`
