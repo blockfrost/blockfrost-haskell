@@ -2,6 +2,9 @@
 
 * Alonzo additions
   * `getTxRedeemers` for `/txs/${hash}/redeemers` endpoint
+  * `listScripts` for `/scripts` endpoint, principled `listScripts'`
+  * `getScript` for `/scripts/${script_hash}` endpoint
+  * `getScriptRedeemers` for `/scripts/${script_hash}/redeemers` endpoint, principled `getScriptRedeemers'`
 
 # Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
 
