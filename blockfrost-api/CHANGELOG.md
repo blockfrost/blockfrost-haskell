@@ -16,6 +16,9 @@
     * `reserves` field (current reserves supply)
   * `/txs/${hash}/redeemers` endpoint with `TransactionRedeemer` and `ValidationPurpose` types
   * Epoch cost model parameters to `ProtocolParams`
+  * `/scripts` endpoint and `ScriptHash` newtype
+  * `/scripts/${script_hash}` endpoint with `Script` data type
+  * `/scripts/${script_hash}/redeemers` endpoint with `ScriptRedeemer` data type
 
 # Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
 

@@ -111,6 +111,11 @@ data CardanoAPI route =
       :- "pools"
       :> Tag "Cardano » Pools"
       :> ToServantApi PoolsAPI
+    , _scripts
+      :: route
+      :- "scripts"
+      :> Tag "Cardano » Scripts"
+      :> ToServantApi ScriptsAPI
     , _transactions
       :: route
       :- "txs"

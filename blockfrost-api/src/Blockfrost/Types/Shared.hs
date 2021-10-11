@@ -15,6 +15,7 @@ module Blockfrost.Types.Shared
   , module Blockfrost.Types.Shared.PoolId
   , module Blockfrost.Types.Shared.Quantity
   , module Blockfrost.Types.Shared.Slot
+  , module Blockfrost.Types.Shared.ScriptHash
   , module Blockfrost.Types.Shared.TxHash
   ) where
 
@@ -32,4 +33,5 @@ import Blockfrost.Types.Shared.PolicyId
 import Blockfrost.Types.Shared.PoolId
 import Blockfrost.Types.Shared.Quantity
 import Blockfrost.Types.Shared.Slot
+import Blockfrost.Types.Shared.ScriptHash
 import Blockfrost.Types.Shared.TxHash

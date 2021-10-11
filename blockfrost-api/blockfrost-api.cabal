@@ -70,6 +70,7 @@ library
                       , Blockfrost.API.Cardano.Metadata
                       , Blockfrost.API.Cardano.Network
                       , Blockfrost.API.Cardano.Pools
+                      , Blockfrost.API.Cardano.Scripts
                       , Blockfrost.API.Cardano.Transactions
                       , Blockfrost.API.IPFS
                       , Blockfrost.API.NutLink
@@ -89,6 +90,7 @@ library
                       , Blockfrost.Types.Cardano.Metadata
                       , Blockfrost.Types.Cardano.Network
                       , Blockfrost.Types.Cardano.Pools
+                      , Blockfrost.Types.Cardano.Scripts
                       , Blockfrost.Types.Cardano.Transactions
                       , Blockfrost.Types.IPFS
                       , Blockfrost.Types.NutLink
@@ -101,6 +103,7 @@ library
                       , Blockfrost.Types.Shared.CBOR
                       , Blockfrost.Types.Shared.Opts
                       , Blockfrost.Types.Shared.POSIXMillis
+                      , Blockfrost.Types.Shared.ScriptHash
                       , Blockfrost.Types.Shared.Slot
                       , Blockfrost.Types.Shared.TxHash
                       , Blockfrost.Types.Shared.Amount
@@ -127,6 +130,7 @@ library
                       , safe-money
                       , quickcheck-instances
                       , QuickCheck
+                      , vector
 
 test-suite blockfrost-api-tests
   type:                exitcode-stdio-1.0
@@ -142,6 +146,7 @@ test-suite blockfrost-api-tests
                      , Cardano.Metadata
                      , Cardano.Network
                      , Cardano.Pools
+                     , Cardano.Scripts
                      , Cardano.Transactions
                      , IPFS
                      , NutLink
