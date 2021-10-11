@@ -153,7 +153,8 @@ transactionUtxosSample = [r|
       ],
       "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0",
       "output_index": 0,
-      "collateral": false
+      "collateral": false,
+      "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     }
   ],
   "outputs": [
@@ -168,7 +169,8 @@ transactionUtxosSample = [r|
           "unit": "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e",
           "quantity": "12"
         }
-      ]
+      ],
+      "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     }
   ]
 }
@@ -182,6 +184,7 @@ utxoInSample =
       , _utxoInputTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
       , _utxoInputOutputIndex = 0
       , _utxoInputCollateral = False
+      , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
       }
 
 utxoOutSample :: UtxoOutput
@@ -189,6 +192,7 @@ utxoOutSample =
   UtxoOutput
     { _utxoOutputAddress = "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv"
     , _utxoOutputAmount = sampleAmounts
+    , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     }
 
 transactionUtxosExpected =
