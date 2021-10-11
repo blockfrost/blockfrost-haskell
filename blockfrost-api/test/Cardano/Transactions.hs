@@ -27,6 +27,11 @@ spec_txs = do
     `shouldBe`
     Right transactionUtxosExpected
 
+  it "parses transaction redeemers sample" $ do
+    eitherDecode transactionRedeemerSample
+    `shouldBe`
+    Right transactionRedeemerExpected
+
   it "parses transaction stake sample" $ do
     eitherDecode transactionStakeSample
     `shouldBe`
@@ -202,6 +207,25 @@ transactionUtxosExpected =
     { _transactionUtxosHash = "1e043f100dce12d107f679685acd2fc0610e10f72a92d412794c9773d11d8477"
     , _transactionUtxosInputs = pure utxoInSample
     , _transactionUtxosOutputs = pure utxoOutSample
+    }
+
+transactionRedeemerSample = [r|
+{
+  "tx_index": 0,
+  "purpose": "spend",
+  "unit_mem": "1700",
+  "unit_steps": "476468",
+  "fee": "172033"
+}
+|]
+
+transactionRedeemerExpected =
+  TransactionRedeemer
+    { _transactionRedeemerTxIndex = 0
+    , _transactionRedeemerPurpose = Spend
+    , _transactionRedeemerUnitMem = 1700
+    , _transactionRedeemerUnitSteps = 476468
+    , _transactionRedeemerFee = 172033
     }
 
 transactionStakeSample = [r|

@@ -5,6 +5,8 @@ module Blockfrost.Types.Cardano.Transactions
   , TransactionUtxos (..)
   , UtxoInput (..)
   , UtxoOutput (..)
+  , ValidationPurpose (..)
+  , TransactionRedeemer (..)
   , TransactionStake (..)
   , TransactionDelegation (..)
   , TransactionWithdrawal (..)
@@ -154,6 +156,37 @@ sampleAmounts =
           unitScale
           12
   ]
+
+-- | Validation purpose
+data ValidationPurpose = Spend | Mint | Cert | Reward
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[ConstructorTagModifier '[ToLower]] ValidationPurpose
+
+instance ToSample ValidationPurpose where
+  toSamples = pure $ samples [ Spend, Mint, Cert, Reward ]
+
+-- | Transaction redeemer
+data TransactionRedeemer = TransactionRedeemer
+  { _transactionRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
+  , _transactionRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
+  , _transactionRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
+  , _transactionRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
+  , _transactionRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_transactionRedeemer", CamelToSnake]] TransactionRedeemer
+
+instance ToSample TransactionRedeemer where
+  toSamples = pure $ singleSample
+    TransactionRedeemer
+      { _transactionRedeemerTxIndex = 0
+      , _transactionRedeemerPurpose = Spend
+      , _transactionRedeemerUnitMem = 1700
+      , _transactionRedeemerUnitSteps = 476468
+      , _transactionRedeemerFee = 172033
+      }
 
 -- | Information about (de-)registration of a stake address
 -- within a transaction
