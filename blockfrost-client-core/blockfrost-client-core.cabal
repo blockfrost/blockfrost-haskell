@@ -9,7 +9,7 @@ license-file:        LICENSE
 author:              blockfrost.io
 maintainer:          srk@48.io
 copyright:           2021 blockfrost.io
-category:            Web
+category:            Cardano
 build-type:          Simple
 
 extra-source-files:
