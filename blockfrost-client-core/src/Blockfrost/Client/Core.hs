@@ -62,7 +62,6 @@ baseUrlByEnv Localhost = BaseUrl Http "localhost" 8000 ""
 baseUrlByEnv e         = maybe (error "absurd") buildUrl (subdomainByEnv e)
 
 subdomainByEnv :: Env -> Maybe String
-subdomainByEnv Alonzo    = pure "cardano-alonzo"
 subdomainByEnv Ipfs      = pure "ipfs"
 subdomainByEnv Mainnet   = pure "cardano-mainnet"
 subdomainByEnv Testnet   = pure "cardano-testnet"
