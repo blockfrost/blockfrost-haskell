@@ -44,6 +44,7 @@ data ScriptRedeemer = ScriptRedeemer
   { _scriptRedeemerTxHash    :: TxHash -- ^ Hash of the transaction
   , _scriptRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
   , _scriptRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
+  , _scriptRedeemerDatumHash :: Text -- ^ Datum hash
   , _scriptRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
   , _scriptRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
   , _scriptRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script
@@ -58,6 +59,7 @@ instance ToSample ScriptRedeemer where
       { _scriptRedeemerTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
       , _scriptRedeemerTxIndex = 0
       , _scriptRedeemerPurpose = Spend
+      , _scriptRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
       , _scriptRedeemerUnitMem = 1700
       , _scriptRedeemerUnitSteps = 476468
       , _scriptRedeemerFee = 172033

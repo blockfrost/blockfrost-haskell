@@ -11,6 +11,7 @@
   * `dataHash` field to `AdressUTXO`
   * `outputIndex` field to `UtxoOutput`
   * `script` field to `AddressInfo`
+  * `datumHash` field to `ScriptRedeemer`
   * `NetworkSupply`
     * `locked` field representing supply locked by all scripts
     * `treasury` field (current treasury supply)

@@ -73,6 +73,7 @@ scriptRedeemerSample = [r|
   "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0",
   "tx_index": 0,
   "purpose": "spend",
+  "datum_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
   "unit_mem": "1700",
   "unit_steps": "476468",
   "fee": "172033"
@@ -84,6 +85,7 @@ scriptRedeemerExpected =
     { _scriptRedeemerTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
     , _scriptRedeemerTxIndex = 0
     , _scriptRedeemerPurpose = Spend
+    , _scriptRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
     , _scriptRedeemerUnitMem = 1700
     , _scriptRedeemerUnitSteps = 476468
     , _scriptRedeemerFee = 172033
