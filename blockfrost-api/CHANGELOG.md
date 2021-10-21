@@ -21,6 +21,9 @@
   * `/scripts/${script_hash}` endpoint with `Script` data type
   * `/scripts/${script_hash}/redeemers` endpoint with `ScriptRedeemer` data type
 
+* Other
+ * Added `liveDelegators` field to `PoolInfo`
+
 # Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
 
 * Initial release
