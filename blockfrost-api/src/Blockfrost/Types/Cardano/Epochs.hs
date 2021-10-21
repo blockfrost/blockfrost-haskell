@@ -77,8 +77,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMaxBlockExMem          :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single block
   , _protocolParamsMaxBlockExSteps        :: Quantity -- ^ The maximum number of execution steps allowed to be used in a single block
   , _protocolParamsMaxValSize             :: Quantity -- ^ The maximum Val size
-  -- TODO: Integer https://github.com/blockfrost/openapi/pull/146
-  , _protocolParamsCollateralPercent      :: Double -- ^ The percentage of the transactions fee which must be provided as collateral when including non-native scripts
+  , _protocolParamsCollateralPercent      :: Integer -- ^ The percentage of the transactions fee which must be provided as collateral when including non-native scripts
   , _protocolParamsMaxCollateralInputs    :: Integer -- ^ The maximum number of collateral inputs allowed in a transaction
   , _protocolParamsCoinsPerUtxoWord       :: Lovelaces -- ^ The cost per UTxO word
   }

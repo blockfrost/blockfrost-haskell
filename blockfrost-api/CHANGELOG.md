@@ -2,6 +2,7 @@
 
 * Breaking changes
   * `AddressUTXO` renamed to `AddressUtxo` along with its fields
+  * `ProtocolParams` `collateralPercent` field type changed from `Double` to `Integer`
 
 * Alonzo additions
   * `collateral` field to `UtxoInput`
