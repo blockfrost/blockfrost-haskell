@@ -8,6 +8,7 @@ module Blockfrost.Types.Shared
   , module Blockfrost.Types.Shared.BlockHash
   , module Blockfrost.Types.Shared.BlockIndex
   , module Blockfrost.Types.Shared.CBOR
+  , module Blockfrost.Types.Shared.DatumHash
   , module Blockfrost.Types.Shared.Epoch
   , module Blockfrost.Types.Shared.Opts
   , module Blockfrost.Types.Shared.POSIXMillis
@@ -26,6 +27,7 @@ import Blockfrost.Types.Shared.AssetId
 import Blockfrost.Types.Shared.BlockHash
 import Blockfrost.Types.Shared.BlockIndex
 import Blockfrost.Types.Shared.CBOR
+import Blockfrost.Types.Shared.DatumHash
 import Blockfrost.Types.Shared.Epoch
 import Blockfrost.Types.Shared.Opts
 import Blockfrost.Types.Shared.POSIXMillis

@@ -4,8 +4,11 @@ module Blockfrost.Types.Cardano.Scripts
   ( Script (..)
   , ScriptType (..)
   , ScriptRedeemer (..)
+  , ScriptDatum (..)
   ) where
 
+import Data.Aeson (Value)
+import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
 
@@ -64,3 +67,8 @@ instance ToSample ScriptRedeemer where
       , _scriptRedeemerUnitSteps = 476468
       , _scriptRedeemerFee = 172033
       }
+
+newtype ScriptDatum = ScriptDatum { _scriptDatumJsonValue :: Value }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptDatum", CamelToSnake]] ScriptDatum

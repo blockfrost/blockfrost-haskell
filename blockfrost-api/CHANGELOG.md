@@ -21,6 +21,7 @@
   * `/scripts` endpoint and `ScriptHash` newtype
   * `/scripts/${script_hash}` endpoint with `Script` data type
   * `/scripts/${script_hash}/redeemers` endpoint with `ScriptRedeemer` data type
+  * `/scripts/datum/${datum_hash}` endpoint with `ScriptDatum` data type
 
 * Other
  * Added `liveDelegators` field to `PoolInfo`

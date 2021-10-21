@@ -38,4 +38,11 @@ data ScriptsAPI route =
         :> Sorting
         :> "redeemers"
         :> Get '[JSON] [ScriptRedeemer]
+     , _getScriptDatum
+        :: route
+        :- Summary "Datum value"
+        :> Description "Query JSON value of a datum by its hash"
+        :> "datum"
+        :> Capture "datum_hash" DatumHash
+        :> Get '[JSON] ScriptDatum
     } deriving (Generic)

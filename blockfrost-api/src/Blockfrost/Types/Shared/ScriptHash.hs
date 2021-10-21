@@ -13,7 +13,7 @@ import GHC.Generics
 import Servant.API (Capture, FromHttpApiData (..), ToHttpApiData (..))
 import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 
--- | Id (hash) of the transaction
+-- | Script Hash newtype
 newtype ScriptHash = ScriptHash { unScriptHash :: Text }
   deriving stock (Show, Eq, Generic)
   deriving newtype (FromHttpApiData, ToHttpApiData)

@@ -101,6 +101,7 @@ library
                       , Blockfrost.Types.Shared.BlockIndex
                       , Blockfrost.Types.Shared.Epoch
                       , Blockfrost.Types.Shared.CBOR
+                      , Blockfrost.Types.Shared.DatumHash
                       , Blockfrost.Types.Shared.Opts
                       , Blockfrost.Types.Shared.POSIXMillis
                       , Blockfrost.Types.Shared.ScriptHash

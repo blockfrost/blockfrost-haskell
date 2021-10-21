@@ -6,7 +6,7 @@
 module Cardano.Scripts
   where
 
-import Data.Aeson (decode, eitherDecode, encode)
+import Data.Aeson (decode, eitherDecode, encode, object, (.=))
 import Data.Text (Text)
 import qualified Money
 import Test.Hspec
@@ -31,6 +31,11 @@ spec_scripts = do
     eitherDecode scriptRedeemerSample
     `shouldBe`
     Right scriptRedeemerExpected
+
+  it "parses script datum sample" $ do
+    eitherDecode scriptDatumSample
+    `shouldBe`
+    Right scriptDatumExpected
 
 scriptListSample = [r|
 [
@@ -90,3 +95,13 @@ scriptRedeemerExpected =
     , _scriptRedeemerUnitSteps = 476468
     , _scriptRedeemerFee = 172033
     }
+
+scriptDatumSample = [r|
+{
+  "json_value": {
+    "int": 42
+  }
+}
+|]
+
+scriptDatumExpected = ScriptDatum $ object ["int" .= (42 :: Int)]
