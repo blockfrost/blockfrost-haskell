@@ -37,6 +37,11 @@ spec_sample = do
     `shouldBe`
     Right accountDelegationHistoryExpected
 
+  it "parses account registration sample" $ do
+    eitherDecode accountRegistrationSample
+    `shouldBe`
+    Right accountRegistrationExpected
+
   it "parses account withdrawal history sample" $ do
     eitherDecode accountWithdrawalsSample
     `shouldBe`
