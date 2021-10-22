@@ -6,6 +6,7 @@ module Blockfrost.Client.Cardano.Scripts
   , getScript
   , getScriptRedeemers
   , getScriptRedeemers'
+  , getScriptDatum
   ) where
 
 import Blockfrost.API
@@ -45,3 +46,10 @@ getScriptRedeemers' sh pg s = go (\p -> getScriptRedeemers_ p sh pg s)
 -- | Get redeemers of a specific script
 getScriptRedeemers :: ScriptHash -> BlockfrostClient [ScriptRedeemer]
 getScriptRedeemers sh = getScriptRedeemers' sh def def
+
+getScriptDatum_ :: Project -> DatumHash -> BlockfrostClient ScriptDatum
+getScriptDatum_ = _getScriptDatum . scriptsClient
+
+-- | Get specific datum
+getScriptDatum :: DatumHash -> BlockfrostClient ScriptDatum
+getScriptDatum sh = go (`getScriptDatum_` sh)

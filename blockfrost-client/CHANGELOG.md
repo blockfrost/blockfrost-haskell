@@ -6,6 +6,7 @@
   * `getScript` for `/scripts/${script_hash}` endpoint
   * `getScriptRedeemers` for `/scripts/${script_hash}/redeemers` endpoint, principled `getScriptRedeemers'`
   * `getAddressUtxosAsset` for `/addresses/${address}/utxos/${asset}`, principled `getAddressUtxosAsset'`
+  * `getScriptDatum` for `/scripts/datum/${datum_hash}` endpoint
 
 # Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
 

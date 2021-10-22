@@ -117,6 +117,7 @@ module Blockfrost.Client
   , getScript
   , getScriptRedeemers
   , getScriptRedeemers'
+  , getScriptDatum
     -- Cardano - Transactions
   , getTx
   , getTxUtxos
