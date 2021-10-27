@@ -45,4 +45,18 @@ data ScriptsAPI route =
         :> "datum"
         :> Capture "datum_hash" DatumHash
         :> Get '[JSON] ScriptDatum
+      , _getScriptJSON
+        :: route
+        :- Summary "Script JSON"
+        :> Description "JSON representation of a `timelock` script"
+        :> Capture "script_hash" ScriptHash
+        :> "json"
+        :> Get '[JSON] ScriptJSON
+      , _getScriptCBOR
+        :: route
+        :- Summary "Script CBOR"
+        :> Description "CBOR representation of a `plutus` script"
+        :> Capture "script_hash" ScriptHash
+        :> "cbor"
+        :> Get '[JSON] ScriptCBOR
     } deriving (Generic)

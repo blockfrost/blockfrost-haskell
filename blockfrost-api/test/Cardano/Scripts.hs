@@ -37,6 +37,16 @@ spec_scripts = do
     `shouldBe`
     Right scriptDatumExpected
 
+  it "parses script JSON sample" $ do
+    eitherDecode scriptJSONSample
+    `shouldBe`
+    Right scriptJSONExpected
+
+  it "parses script CBOR sample" $ do
+    eitherDecode scriptCBORSample
+    `shouldBe`
+    Right scriptCBORExpected
+
 scriptListSample = [r|
 [
   {
@@ -105,3 +115,23 @@ scriptDatumSample = [r|
 |]
 
 scriptDatumExpected = ScriptDatum $ object ["int" .= (42 :: Int)]
+
+scriptJSONSample = [r|
+{
+   "json": {
+     "type": "sig",
+     "keyHash": "8ed9e675aaf99868736c372d5eac9f5b3deae4568f0cde6a7d9e1422"
+   }
+}
+|]
+
+scriptJSONExpected = ScriptJSON $ Just $
+  object ["type" .= ("sig" :: String), "keyHash" .= ("8ed9e675aaf99868736c372d5eac9f5b3deae4568f0cde6a7d9e1422" :: String)]
+
+scriptCBORSample = [r|
+{
+  "cbor": "4e4d01000033222220051200120011"
+}
+|]
+
+scriptCBORExpected = ScriptCBOR $ Just "4e4d01000033222220051200120011"

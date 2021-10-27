@@ -5,6 +5,8 @@ module Blockfrost.Types.Cardano.Scripts
   , ScriptType (..)
   , ScriptRedeemer (..)
   , ScriptDatum (..)
+  , ScriptJSON (..)
+  , ScriptCBOR (..)
   ) where
 
 import Data.Aeson (Value)
@@ -72,3 +74,13 @@ newtype ScriptDatum = ScriptDatum { _scriptDatumJsonValue :: Value }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptDatum", CamelToSnake]] ScriptDatum
+
+newtype ScriptJSON = ScriptJSON { _scriptJsonJson :: Maybe Value }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptJson", CamelToSnake]] ScriptJSON
+
+newtype ScriptCBOR = ScriptCBOR { _scriptCborCbor :: Maybe Text }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptCbor", CamelToSnake]] ScriptCBOR
