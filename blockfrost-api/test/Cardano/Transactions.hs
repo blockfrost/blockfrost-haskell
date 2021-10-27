@@ -213,6 +213,8 @@ transactionRedeemerSample = [r|
 {
   "tx_index": 0,
   "purpose": "spend",
+  "script_hash": "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824",
+  "datum_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
   "unit_mem": "1700",
   "unit_steps": "476468",
   "fee": "172033"
@@ -223,6 +225,8 @@ transactionRedeemerExpected =
   TransactionRedeemer
     { _transactionRedeemerTxIndex = 0
     , _transactionRedeemerPurpose = Spend
+    , _transactionRedeemerScriptHash = "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824"
+    , _transactionRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
     , _transactionRedeemerUnitMem = 1700
     , _transactionRedeemerUnitSteps = 476468
     , _transactionRedeemerFee = 172033
