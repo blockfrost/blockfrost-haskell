@@ -1,4 +1,4 @@
-# Version [0.2.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/0.1.0.0...0.2.0.0) (2021-10-14)
+# Version [0.2.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/0.1.0.0...0.2.0.0) (2021-10-29)
 
 * Breaking changes
   * `AddressUTXO` renamed to `AddressUtxo` along with its fields

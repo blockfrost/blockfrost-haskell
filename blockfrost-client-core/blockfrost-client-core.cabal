@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-client-core
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            blockfrost.io common client definitions / instances
 description:         HasClient for our auth
 homepage:            https://github.com/blockfrost/blockfrost-haskell
