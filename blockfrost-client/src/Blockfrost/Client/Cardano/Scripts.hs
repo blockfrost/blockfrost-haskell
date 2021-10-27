@@ -7,6 +7,8 @@ module Blockfrost.Client.Cardano.Scripts
   , getScriptRedeemers
   , getScriptRedeemers'
   , getScriptDatum
+  , getScriptJSON
+  , getScriptCBOR
   ) where
 
 import Blockfrost.API
@@ -53,3 +55,17 @@ getScriptDatum_ = _getScriptDatum . scriptsClient
 -- | Get specific datum
 getScriptDatum :: DatumHash -> BlockfrostClient ScriptDatum
 getScriptDatum sh = go (`getScriptDatum_` sh)
+
+getScriptJSON_ :: Project -> ScriptHash -> BlockfrostClient ScriptJSON
+getScriptJSON_ = _getScriptJSON . scriptsClient
+
+-- | Get a JSON representation of a `timelock` script
+getScriptJSON :: ScriptHash -> BlockfrostClient ScriptJSON
+getScriptJSON sh = go (`getScriptJSON_` sh)
+
+getScriptCBOR_ :: Project -> ScriptHash -> BlockfrostClient ScriptCBOR
+getScriptCBOR_ = _getScriptCBOR . scriptsClient
+
+-- | Get a CBOR representation of a `plutus` script
+getScriptCBOR :: ScriptHash -> BlockfrostClient ScriptCBOR
+getScriptCBOR sh = go (`getScriptCBOR_` sh)
