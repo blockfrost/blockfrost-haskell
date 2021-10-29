@@ -4,11 +4,12 @@ module Blockfrost.Types.Cardano.Addresses
   ( AddressInfo (..)
   , AddressType (..)
   , AddressDetails (..)
-  , AddressUTXO (..)
+  , AddressUtxo (..)
   , AddressTransaction (..)
   ) where
 
 import Blockfrost.Types.Shared
+import Data.Text (Text)
 import Deriving.Aeson
 import qualified Money
 import Servant.Docs (ToSample (..), samples, singleSample)
@@ -19,6 +20,7 @@ data AddressInfo = AddressInfo
   , _addressInfoAmount       :: [Amount] -- ^ Lovelaces or tokens stored on this address
   , _addressInfoStakeAddress :: Maybe Address -- ^ Stake address that controls the key
   , _addressInfoType         :: AddressType -- ^ Address era
+  , _addressInfoScript       :: Bool -- ^ True if this is a script address
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressInfo", CamelToSnake]] AddressInfo
@@ -37,6 +39,7 @@ instance ToSample AddressInfo where
         ]
       , _addressInfoStakeAddress = pure "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
       , _addressInfoType = Shelley
+      , _addressInfoScript = False
       }
 
 -- | Type (era) of an address
@@ -76,33 +79,36 @@ instance ToSample AddressDetails where
             ]
 
 -- | UTxOs of the address
-data AddressUTXO = AddressUTXO
-  { _addressUTXOTxHash      :: TxHash -- ^ Transaction hash of the UTXO
-  , _addressUTXOOutputIndex :: Integer -- ^ UTXO index in the transaction
-  , _addressUTXOAmount      :: [Amount] -- ^ Amounts of Lovelaces or tokens
-  , _addressUTXOBlock       :: BlockHash -- ^ Block hash of the UTXO
+data AddressUtxo = AddressUtxo
+  { _addressUtxoTxHash      :: TxHash -- ^ Transaction hash of the UTXO
+  , _addressUtxoOutputIndex :: Integer -- ^ UTXO index in the transaction
+  , _addressUtxoAmount      :: [Amount] -- ^ Amounts of Lovelaces or tokens
+  , _addressUtxoBlock       :: BlockHash -- ^ Block hash of the UTXO
+  , _addressUtxoDataHash    :: Maybe Text -- ^ Block hash of the UTXO
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressUTXO", CamelToSnake]] AddressUTXO
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressUtxo", CamelToSnake]] AddressUtxo
 
-instance ToSample AddressUTXO where
+instance ToSample AddressUtxo where
   toSamples = pure $ samples
-    [ AddressUTXO
-      { _addressUTXOTxHash = "39a7a284c2a0948189dc45dec670211cd4d72f7b66c5726c08d9b3df11e44d58"
-      , _addressUTXOOutputIndex = 0
-      , _addressUTXOAmount = [ AdaAmount 42000000 ]
-      , _addressUTXOBlock = "7eb8e27d18686c7db9a18f8bbcfe34e3fed6e047afaa2d969904d15e934847e6"
+    [ AddressUtxo
+      { _addressUtxoTxHash = "39a7a284c2a0948189dc45dec670211cd4d72f7b66c5726c08d9b3df11e44d58"
+      , _addressUtxoOutputIndex = 0
+      , _addressUtxoAmount = [ AdaAmount 42000000 ]
+      , _addressUtxoBlock = "7eb8e27d18686c7db9a18f8bbcfe34e3fed6e047afaa2d969904d15e934847e6"
+      , _addressUtxoDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
       }
-    , AddressUTXO
-      { _addressUTXOTxHash = "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49"
-      , _addressUTXOOutputIndex = 0
-      , _addressUTXOAmount = [ AdaAmount 729235000 ]
-      , _addressUTXOBlock = "953f1b80eb7c11a7ffcd67cbd4fde66e824a451aca5a4065725e5174b81685b7"
+    , AddressUtxo
+      { _addressUtxoTxHash = "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49"
+      , _addressUtxoOutputIndex = 0
+      , _addressUtxoAmount = [ AdaAmount 729235000 ]
+      , _addressUtxoBlock = "953f1b80eb7c11a7ffcd67cbd4fde66e824a451aca5a4065725e5174b81685b7"
+      , _addressUtxoDataHash = Nothing
       }
-    , AddressUTXO
-      { _addressUTXOTxHash = "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2"
-      , _addressUTXOOutputIndex = 1
-      , _addressUTXOAmount =
+    , AddressUtxo
+      { _addressUtxoTxHash = "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2"
+      , _addressUtxoOutputIndex = 1
+      , _addressUtxoAmount =
           [ AdaAmount 42000000
           , AssetAmount
               $ Money.mkSomeDiscrete
@@ -110,7 +116,8 @@ instance ToSample AddressUTXO where
                    unitScale
                    12
           ]
-      , _addressUTXOBlock = "5c571f83fe6c784d3fbc223792627ccf0eea96773100f9aedecf8b1eda4544d7"
+      , _addressUtxoBlock = "5c571f83fe6c784d3fbc223792627ccf0eea96773100f9aedecf8b1eda4544d7"
+      , _addressUtxoDataHash = Nothing
       }
     ]
 

@@ -27,6 +27,13 @@ data TransactionsAPI route =
         :> Capture "hash" TxHash
         :> "utxos"
         :> Get '[JSON] TransactionUtxos
+    , _txRedeemers
+        :: route
+        :- Summary "Transaction redeemers"
+        :> Description "Obtain the transaction redeemers."
+        :> Capture "hash" TxHash
+        :> "redeemers"
+        :> Get '[JSON] [TransactionRedeemer]
     , _txStakes
         :: route
         :- Summary "Transaction stake addresses certificates "

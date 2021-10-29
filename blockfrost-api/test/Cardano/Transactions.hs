@@ -27,6 +27,11 @@ spec_txs = do
     `shouldBe`
     Right transactionUtxosExpected
 
+  it "parses transaction redeemers sample" $ do
+    eitherDecode transactionRedeemerSample
+    `shouldBe`
+    Right transactionRedeemerExpected
+
   it "parses transaction stake sample" $ do
     eitherDecode transactionStakeSample
     `shouldBe`
@@ -96,7 +101,8 @@ transactionSample = [r|
   "stake_cert_count": 0,
   "pool_update_count": 0,
   "pool_retire_count": 0,
-  "asset_mint_or_burn_count": 0
+  "asset_mint_or_burn_count": 0,
+  "redeemer_count": 0
 }
 |]
 
@@ -131,6 +137,7 @@ transactionExpected =
     , _transactionPoolUpdateCount = 0
     , _transactionPoolRetireCount = 0
     , _transactionAssetMintOrBurnCount = 0
+    , _transactionRedeemerCount = 0
     }
 
 transactionUtxosSample = [r|
@@ -150,7 +157,9 @@ transactionUtxosSample = [r|
         }
       ],
       "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0",
-      "output_index": 0
+      "output_index": 0,
+      "collateral": false,
+      "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     }
   ],
   "outputs": [
@@ -165,7 +174,9 @@ transactionUtxosSample = [r|
           "unit": "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e",
           "quantity": "12"
         }
-      ]
+      ],
+      "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
+      "output_index": 0
     }
   ]
 }
@@ -178,6 +189,8 @@ utxoInSample =
       , _utxoInputAmount = sampleAmounts
       , _utxoInputTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
       , _utxoInputOutputIndex = 0
+      , _utxoInputCollateral = False
+      , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
       }
 
 utxoOutSample :: UtxoOutput
@@ -185,6 +198,8 @@ utxoOutSample =
   UtxoOutput
     { _utxoOutputAddress = "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv"
     , _utxoOutputAmount = sampleAmounts
+    , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+    , _utxoOutputOutputIndex = 0
     }
 
 transactionUtxosExpected =
@@ -192,6 +207,29 @@ transactionUtxosExpected =
     { _transactionUtxosHash = "1e043f100dce12d107f679685acd2fc0610e10f72a92d412794c9773d11d8477"
     , _transactionUtxosInputs = pure utxoInSample
     , _transactionUtxosOutputs = pure utxoOutSample
+    }
+
+transactionRedeemerSample = [r|
+{
+  "tx_index": 0,
+  "purpose": "spend",
+  "script_hash": "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824",
+  "datum_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
+  "unit_mem": "1700",
+  "unit_steps": "476468",
+  "fee": "172033"
+}
+|]
+
+transactionRedeemerExpected =
+  TransactionRedeemer
+    { _transactionRedeemerTxIndex = 0
+    , _transactionRedeemerPurpose = Spend
+    , _transactionRedeemerScriptHash = "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824"
+    , _transactionRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
+    , _transactionRedeemerUnitMem = 1700
+    , _transactionRedeemerUnitSteps = 476468
+    , _transactionRedeemerFee = 172033
     }
 
 transactionStakeSample = [r|
@@ -377,11 +415,11 @@ transactionMetaJSONExpected =
 transactionMetaCBORSample = [r|
 {
   "label": "1968",
-  "cbor_metadata": "\\xa100a16b436f6d62696e6174696f6e8601010101010c"
+  "metadata": "a100a16b436f6d62696e6174696f6e8601010101010c"
 }
 |]
 
 transactionMetaCBORExpected =
     TransactionMetaCBOR
       "1968"
-      (Just "\\xa100a16b436f6d62696e6174696f6e8601010101010c")
+      (Just "a100a16b436f6d62696e6174696f6e8601010101010c")

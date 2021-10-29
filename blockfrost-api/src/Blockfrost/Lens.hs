@@ -22,7 +22,7 @@ makeFields ''AccountMir
 
 makeLensesWith blockfrostFieldRules ''AddressInfo
 makeFields ''AddressDetails
-makeFields ''AddressUTXO
+makeFields ''AddressUtxo
 makeFields ''AddressTransaction
 
 makeFields ''AssetInfo

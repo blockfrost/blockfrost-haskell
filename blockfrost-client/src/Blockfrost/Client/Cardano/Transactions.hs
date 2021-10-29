@@ -3,6 +3,7 @@
 module Blockfrost.Client.Cardano.Transactions
   ( getTx
   , getTxUtxos
+  , getTxRedeemers
   , getTxStakes
   , getTxDelegations
   , getTxWithdrawals
@@ -34,6 +35,13 @@ getTxUtxos_ = _txUtxos . transactionsClient
 -- | Get transaction UTXOs
 getTxUtxos :: TxHash -> BlockfrostClient TransactionUtxos
 getTxUtxos t = go (`getTxUtxos_` t)
+
+getTxRedeemers_ :: Project -> TxHash -> BlockfrostClient [TransactionRedeemer]
+getTxRedeemers_ = _txRedeemers . transactionsClient
+
+-- | Get transaction redeemers
+getTxRedeemers :: TxHash -> BlockfrostClient [TransactionRedeemer]
+getTxRedeemers t = go (`getTxRedeemers_` t)
 
 getTxStakes_ :: Project -> TxHash -> BlockfrostClient [TransactionStake]
 getTxStakes_ = _txStakes . transactionsClient

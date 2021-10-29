@@ -120,6 +120,7 @@ poolInfoExpected =
     , _poolInfoLiveStake = 6900000000
     , _poolInfoLiveSize = 0.42
     , _poolInfoLiveSaturation = 0.93
+    , _poolInfoLiveDelegators = 127
     , _poolInfoActiveStake = 4200000000
     , _poolInfoActiveSize = 0.43
     , _poolInfoDeclaredPledge = 5000000000

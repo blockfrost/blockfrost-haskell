@@ -79,7 +79,7 @@ data EpochsAPI route =
         :> Get '[JSON] [BlockHash]
      , _getEpochBlocksByPool
         :: route
-        :- Summary "Block distribution"
+        :- Summary "Block distribution by pool"
         :> Description "Return the block minted for the epoch specified by stake pool."
         :> Capture "epoch_number" Epoch
         :> "blocks"

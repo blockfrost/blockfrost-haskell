@@ -8,6 +8,7 @@ module Blockfrost.Types.Cardano.Epochs
   ) where
 
 import Blockfrost.Types.Shared
+import Data.Aeson (Value)
 import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), singleSample)
@@ -61,13 +62,24 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsRho                   :: Double -- ^ Monetary expansion
   , _protocolParamsTau                   :: Double -- ^ Treasury expansion
   , _protocolParamsDecentralisationParam :: Double -- ^ Percentage of blocks produced by federated nodes
--- ?? TODO: object Nullable
---  , protocolParamsExtraEntropy :: Maybe Value
+  , _protocolParamsExtraEntropy          :: Maybe Value -- ^ Seed for extra entropy
   , _protocolParamsProtocolMajorVer      :: Integer -- ^ Accepted protocol major version
   , _protocolParamsProtocolMinorVer      :: Integer -- ^ Accepted protocol minor version
   , _protocolParamsMinUtxo               :: Lovelaces -- ^ Minimum UTXO value
   , _protocolParamsMinPoolCost           :: Lovelaces  -- ^ Minimum stake cost forced on the pool
   , _protocolParamsNonce                 :: Text -- ^ Epoch number only used once
+  -- cost models
+  -- https://github.com/input-output-hk/cardano-db-sync/pull/758
+  , _protocolParamsPriceMem               :: Double -- ^ The per word cost of script memory usage
+  , _protocolParamsPriceStep              :: Double -- ^ The cost of script execution step usage
+  , _protocolParamsMaxTxExMem             :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single transaction
+  , _protocolParamsMaxTxExSteps           :: Quantity -- ^ The maximum number of execution steps allowed to be used in a single transaction
+  , _protocolParamsMaxBlockExMem          :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single block
+  , _protocolParamsMaxBlockExSteps        :: Quantity -- ^ The maximum number of execution steps allowed to be used in a single block
+  , _protocolParamsMaxValSize             :: Quantity -- ^ The maximum Val size
+  , _protocolParamsCollateralPercent      :: Integer -- ^ The percentage of the transactions fee which must be provided as collateral when including non-native scripts
+  , _protocolParamsMaxCollateralInputs    :: Integer -- ^ The maximum number of collateral inputs allowed in a transaction
+  , _protocolParamsCoinsPerUtxoWord       :: Lovelaces -- ^ The cost per UTxO word
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -90,12 +102,22 @@ instance ToSample ProtocolParams where
       , _protocolParamsRho = 0.003
       , _protocolParamsTau = 0.2
       , _protocolParamsDecentralisationParam = 0.5
---      , _protocolParamsExtraEntropy = Nothing
+      , _protocolParamsExtraEntropy = Nothing
       , _protocolParamsProtocolMajorVer = 2
       , _protocolParamsProtocolMinorVer = 0
       , _protocolParamsMinUtxo = 1000000
       , _protocolParamsMinPoolCost = 340000000
       , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+      , _protocolParamsPriceMem = 0.0577
+      , _protocolParamsPriceStep = 0.0000721
+      , _protocolParamsMaxTxExMem = 10000000
+      , _protocolParamsMaxTxExSteps = 10000000000
+      , _protocolParamsMaxBlockExMem = 50000000
+      , _protocolParamsMaxBlockExSteps = 40000000000
+      , _protocolParamsMaxValSize = 5000
+      , _protocolParamsCollateralPercent = 150
+      , _protocolParamsMaxCollateralInputs = 3
+      , _protocolParamsCoinsPerUtxoWord = 34482
       }
 
 -- | Active stake distribution for an epoch

@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-client
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            blockfrost.io basic client
 description:         Simple Blockfrost clients for use with transformers or mtl
 homepage:            https://github.com/blockfrost/blockfrost-haskell
@@ -9,7 +9,7 @@ license-file:        LICENSE
 author:              blockfrost.io
 maintainer:          srk@48.io
 copyright:           2021 blockfrost.io
-category:            Web
+category:            Cardano
 build-type:          Simple
 
 
@@ -59,11 +59,12 @@ library
                       , Blockfrost.Client.Cardano.Metadata
                       , Blockfrost.Client.Cardano.Network
                       , Blockfrost.Client.Cardano.Pools
+                      , Blockfrost.Client.Cardano.Scripts
                       , Blockfrost.Client.Cardano.Transactions
                       , Blockfrost.Client.IPFS
                       , Blockfrost.Client.NutLink
    build-depends:       base >= 4.7 && < 5
-                      , blockfrost-api
+                      , blockfrost-api ^>= 0.2
                       , blockfrost-client-core
                       , bytestring
                       , directory

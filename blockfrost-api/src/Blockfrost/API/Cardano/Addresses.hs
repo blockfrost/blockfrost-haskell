@@ -37,7 +37,17 @@ data AddressesAPI route =
         :> "utxos"
         :> Pagination
         :> Sorting
-        :> Get '[JSON] [AddressUTXO]
+        :> Get '[JSON] [AddressUtxo]
+    , _addressUtxosAsset
+        :: route
+        :- Summary "Address UTXOs of a given asset"
+        :> Description "UTXOs of the address."
+        :> Capture "address" Address
+        :> "utxos"
+        :> Capture "asset" AssetId
+        :> Pagination
+        :> Sorting
+        :> Get '[JSON] [AddressUtxo]
     , _addressTransactions
         :: route
         :- Summary "Address transactions"

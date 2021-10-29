@@ -5,6 +5,8 @@ module Blockfrost.Client.Cardano.Addresses
   , getAddressDetails
   , getAddressUtxos
   , getAddressUtxos'
+  , getAddressUtxosAsset
+  , getAddressUtxosAsset'
   , getAddressTransactions
   , getAddressTransactions'
   ) where
@@ -30,17 +32,29 @@ getAddressDetails_ = _addressDetails . addressesClient
 getAddressDetails :: Address -> BlockfrostClient AddressDetails
 getAddressDetails a = go (`getAddressDetails_` a)
 
-getAddressUtxos_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AddressUTXO]
+getAddressUtxos_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
 getAddressUtxos_ = _addressUtxos . addressesClient
 
 -- | UTXOs of the address.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAddressUtxos' :: Address -> Paged -> SortOrder -> BlockfrostClient [AddressUTXO]
+getAddressUtxos' :: Address -> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
 getAddressUtxos' a pg s = go (\p -> getAddressUtxos_ p a pg s)
 
 -- | UTXOs of the address.
-getAddressUtxos :: Address -> BlockfrostClient [AddressUTXO]
+getAddressUtxos :: Address -> BlockfrostClient [AddressUtxo]
 getAddressUtxos a = getAddressUtxos' a def def
+
+getAddressUtxosAsset_ :: Project -> Address -> AssetId -> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
+getAddressUtxosAsset_ = _addressUtxosAsset . addressesClient
+
+-- | UTXOs of the address containing specific asset.
+-- Allows custom paging and ordering using @Paged@ and @SortOrder@.
+getAddressUtxosAsset' :: Address -> AssetId-> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
+getAddressUtxosAsset' addr asset pg s = go (\p -> getAddressUtxosAsset_ p addr asset pg s)
+
+-- | UTXOs of the address containing specific asset.
+getAddressUtxosAsset :: Address -> AssetId -> BlockfrostClient [AddressUtxo]
+getAddressUtxosAsset addr asset = getAddressUtxosAsset' addr asset def def
 
 getAddressTransactions_ ::
 --- Project -> Address -> BlockfrostClient [AddressTransaction]

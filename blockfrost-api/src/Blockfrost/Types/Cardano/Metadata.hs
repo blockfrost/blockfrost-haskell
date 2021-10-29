@@ -62,8 +62,8 @@ instance ToSample TxMetaJSON where
 
 -- | Transaction metadata content in CBOR
 data TxMetaCBOR = TxMetaCBOR
-  { _txMetaCBORTxHash       :: Text -- ^ Transaction hash that contains the specific metadata
-  , _txMetaCBORCBORMetadata :: Maybe Text -- ^ Content of the CBOR metadata
+  { _txMetaCBORTxHash   :: Text -- ^ Transaction hash that contains the specific metadata
+  , _txMetaCBORMetadata :: Maybe Text -- ^ Content of the CBOR metadata
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -79,5 +79,5 @@ instance ToSample TxMetaCBOR where
         Nothing
     , TxMetaCBOR
         "4237501da3cfdd53ade91e8911e764bd0699d88fd43b12f44a1f459b89bc91be"
-        (Just "\\xa100a16b436f6d62696e6174696f6e8601010101010c")
+        (Just "a100a16b436f6d62696e6174696f6e8601010101010c")
     ]

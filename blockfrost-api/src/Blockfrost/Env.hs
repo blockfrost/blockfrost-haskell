@@ -15,8 +15,7 @@ import qualified Text.Read
 -- Corresponds to Network when creating a Blockfrost project.
 -- Each environment has separate token.
 data Env =
-    Alonzo
-  | Ipfs
+    Ipfs
   | Mainnet
   | Testnet
   | Localhost
@@ -29,4 +28,4 @@ parseEnv tEnv = case Text.Read.readMaybe (Data.Text.unpack $ Data.Text.toTitle t
   Nothing ->
     Left
       $ "Unknown environment: `" <> tEnv <> "`"
-      <> " expecting one of `alonzo`, `ipfs`, `mainnet`, `testnet`, `localhost`"
+      <> " expecting one of `ipfs`, `mainnet`, `testnet`, `localhost`"

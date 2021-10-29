@@ -29,6 +29,7 @@ import Blockfrost.API.NutLink
 import Blockfrost.Auth
 import Blockfrost.Types
 import Blockfrost.Util.Tag (Tag)
+import Blockfrost.Util.UserAgent (UserAgent)
 
 -- * API
 
@@ -47,6 +48,7 @@ newtype BlockfrostAPI route =
       :- "api"
       :> "v0"
       :> BlockfrostAuth
+      :> UserAgent
       :> ToServantApi BlockfrostV0API
     } deriving (Generic)
 
@@ -111,6 +113,11 @@ data CardanoAPI route =
       :- "pools"
       :> Tag "Cardano » Pools"
       :> ToServantApi PoolsAPI
+    , _scripts
+      :: route
+      :- "scripts"
+      :> Tag "Cardano » Scripts"
+      :> ToServantApi ScriptsAPI
     , _transactions
       :: route
       :- "txs"

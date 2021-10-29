@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-api
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            API definitions for blockfrost.io
 description:         Core types and Servant API description
 homepage:            https://github.com/blockfrost/blockfrost-haskell
@@ -9,7 +9,7 @@ license-file:        LICENSE
 author:              blockfrost.io
 maintainer:          srk@48.io
 copyright:           2021 blockfrost.io
-category:            Web
+category:            Cardano
 build-type:          Simple
 
 extra-source-files:
@@ -70,6 +70,7 @@ library
                       , Blockfrost.API.Cardano.Metadata
                       , Blockfrost.API.Cardano.Network
                       , Blockfrost.API.Cardano.Pools
+                      , Blockfrost.API.Cardano.Scripts
                       , Blockfrost.API.Cardano.Transactions
                       , Blockfrost.API.IPFS
                       , Blockfrost.API.NutLink
@@ -89,6 +90,7 @@ library
                       , Blockfrost.Types.Cardano.Metadata
                       , Blockfrost.Types.Cardano.Network
                       , Blockfrost.Types.Cardano.Pools
+                      , Blockfrost.Types.Cardano.Scripts
                       , Blockfrost.Types.Cardano.Transactions
                       , Blockfrost.Types.IPFS
                       , Blockfrost.Types.NutLink
@@ -99,8 +101,10 @@ library
                       , Blockfrost.Types.Shared.BlockIndex
                       , Blockfrost.Types.Shared.Epoch
                       , Blockfrost.Types.Shared.CBOR
+                      , Blockfrost.Types.Shared.DatumHash
                       , Blockfrost.Types.Shared.Opts
                       , Blockfrost.Types.Shared.POSIXMillis
+                      , Blockfrost.Types.Shared.ScriptHash
                       , Blockfrost.Types.Shared.Slot
                       , Blockfrost.Types.Shared.TxHash
                       , Blockfrost.Types.Shared.Amount
@@ -112,6 +116,8 @@ library
                       , Blockfrost.Util.Pagination
                       , Blockfrost.Util.Sorting
                       , Blockfrost.Util.Tag
+                      , Blockfrost.Util.UserAgent
+                      , Paths_blockfrost_api
    build-depends:       base >= 4.7 && < 5
                       , bytestring
                       , data-default-class
@@ -127,6 +133,7 @@ library
                       , safe-money
                       , quickcheck-instances
                       , QuickCheck
+                      , vector
 
 test-suite blockfrost-api-tests
   type:                exitcode-stdio-1.0
@@ -142,6 +149,7 @@ test-suite blockfrost-api-tests
                      , Cardano.Metadata
                      , Cardano.Network
                      , Cardano.Pools
+                     , Cardano.Scripts
                      , Cardano.Transactions
                      , IPFS
                      , NutLink

@@ -28,6 +28,7 @@ import Blockfrost.Client.Auth ()
 import Blockfrost.Client.Pagination
 import Blockfrost.Client.Sorting
 import Blockfrost.Client.Tag ()
+import Blockfrost.Client.UserAgent ()
 import Blockfrost.Types.ApiError
 import Data.Aeson (eitherDecode)
 import Data.Default (Default (def))
@@ -62,7 +63,6 @@ baseUrlByEnv Localhost = BaseUrl Http "localhost" 8000 ""
 baseUrlByEnv e         = maybe (error "absurd") buildUrl (subdomainByEnv e)
 
 subdomainByEnv :: Env -> Maybe String
-subdomainByEnv Alonzo    = pure "cardano-alonzo"
 subdomainByEnv Ipfs      = pure "ipfs"
 subdomainByEnv Mainnet   = pure "cardano-mainnet"
 subdomainByEnv Testnet   = pure "cardano-testnet"

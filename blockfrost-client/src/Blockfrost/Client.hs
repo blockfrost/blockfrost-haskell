@@ -36,6 +36,8 @@ module Blockfrost.Client
   , getAddressDetails
   , getAddressUtxos
   , getAddressUtxos'
+  , getAddressUtxosAsset
+  , getAddressUtxosAsset'
   , getAddressTransactions
   , getAddressTransactions'
     -- Cardano - Assets
@@ -109,6 +111,15 @@ module Blockfrost.Client
   , getPoolBlocks'
   , getPoolUpdates
   , getPoolUpdates'
+    -- Cardano - Scripts
+  , listScripts
+  , listScripts'
+  , getScript
+  , getScriptRedeemers
+  , getScriptRedeemers'
+  , getScriptDatum
+  , getScriptJSON
+  , getScriptCBOR
     -- Cardano - Transactions
   , getTx
   , getTxUtxos
@@ -154,6 +165,7 @@ import Blockfrost.Client.Cardano.Ledger
 import Blockfrost.Client.Cardano.Metadata
 import Blockfrost.Client.Cardano.Network
 import Blockfrost.Client.Cardano.Pools
+import Blockfrost.Client.Cardano.Scripts
 import Blockfrost.Client.Cardano.Transactions
 import Blockfrost.Client.IPFS
 import Blockfrost.Client.NutLink

@@ -5,6 +5,8 @@ module Blockfrost.Types.Cardano.Transactions
   , TransactionUtxos (..)
   , UtxoInput (..)
   , UtxoOutput (..)
+  , ValidationPurpose (..)
+  , TransactionRedeemer (..)
   , TransactionStake (..)
   , TransactionDelegation (..)
   , TransactionWithdrawal (..)
@@ -37,7 +39,6 @@ data Transaction = Transaction
   , _transactionFees                 :: Lovelaces -- ^ Fees of the transaction in Lovelaces
   , _transactionDeposit              :: Lovelaces -- ^ Deposit within the transaction in Lovelaces
   , _transactionSize                 :: Integer -- ^ Size of the transaction in Bytes
-  --_ TODO: Text Slots?
   , _transactionInvalidBefore        :: Maybe Text -- ^ Left (included) endpoint of the timelock validity intervals
   , _transactionInvalidHereafter     :: Maybe Text -- ^ Right (excluded) endpoint of the timelock validity intervals
   , _transactionUtxoCount            :: Integer -- ^ Count of UTXOs within the transaction
@@ -48,6 +49,7 @@ data Transaction = Transaction
   , _transactionPoolUpdateCount      :: Integer -- ^ Count of the stake pool registration and update certificates within the transaction
   , _transactionPoolRetireCount      :: Integer -- ^ Count of the stake pool retirement certificates within the transaction
   , _transactionAssetMintOrBurnCount :: Integer -- ^ Count of asset mints and burns within the transaction
+  , _transactionRedeemerCount        :: Integer -- ^ Count of redeemers within the transaction
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -75,6 +77,7 @@ instance ToSample Transaction where
       , _transactionPoolUpdateCount = 0
       , _transactionPoolRetireCount = 0
       , _transactionAssetMintOrBurnCount = 0
+      , _transactionRedeemerCount = 0
       }
 
 -- | Transaction input UTxO
@@ -83,6 +86,8 @@ data UtxoInput = UtxoInput
   , _utxoInputAmount      :: [Amount]
   , _utxoInputTxHash      :: Text -- ^ Hash of the UTXO transaction
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
+  , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
+  , _utxoInputDataHash    :: Maybe Text -- ^ The hash of the transaction output datum
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -98,12 +103,16 @@ utxoInSample =
     , _utxoInputAmount = sampleAmounts
     , _utxoInputTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
     , _utxoInputOutputIndex = 0
+    , _utxoInputCollateral = False
+    , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     }
 
 -- | Transaction output UTxO
 data UtxoOutput = UtxoOutput
-  { _utxoOutputAddress :: Address -- ^ Output address
-  , _utxoOutputAmount  :: [Amount]
+  { _utxoOutputAddress     :: Address -- ^ Output address
+  , _utxoOutputAmount      :: [Amount] -- ^ Transaction output amounts
+  , _utxoOutputDataHash    :: Maybe Text -- ^ The hash of the transaction output datum
+  , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_utxoOutput", CamelToSnake]] UtxoOutput
@@ -116,13 +125,15 @@ utxoOutSample =
   UtxoOutput
     { _utxoOutputAddress = "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv"
     , _utxoOutputAmount = sampleAmounts
+    , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+    , _utxoOutputOutputIndex = 0
     }
 
 -- | Transaction UTxOs
 data TransactionUtxos = TransactionUtxos
   { _transactionUtxosHash    :: TxHash -- ^ Transaction hash
-  , _transactionUtxosInputs  :: [UtxoInput]
-  , _transactionUtxosOutputs :: [UtxoOutput]
+  , _transactionUtxosInputs  :: [UtxoInput] -- ^ Transaction inputs
+  , _transactionUtxosOutputs :: [UtxoOutput] -- ^ Transaction outputs
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -145,6 +156,41 @@ sampleAmounts =
           unitScale
           12
   ]
+
+-- | Validation purpose
+data ValidationPurpose = Spend | Mint | Cert | Reward
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[ConstructorTagModifier '[ToLower]] ValidationPurpose
+
+instance ToSample ValidationPurpose where
+  toSamples = pure $ samples [ Spend, Mint, Cert, Reward ]
+
+-- | Transaction redeemer
+data TransactionRedeemer = TransactionRedeemer
+  { _transactionRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
+  , _transactionRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
+  , _transactionRedeemerScriptHash:: Text -- ^ Script hash
+  , _transactionRedeemerDatumHash :: Text -- ^ Datum hash
+  , _transactionRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
+  , _transactionRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
+  , _transactionRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_transactionRedeemer", CamelToSnake]] TransactionRedeemer
+
+instance ToSample TransactionRedeemer where
+  toSamples = pure $ singleSample
+    TransactionRedeemer
+      { _transactionRedeemerTxIndex = 0
+      , _transactionRedeemerPurpose = Spend
+      , _transactionRedeemerScriptHash = "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824"
+      , _transactionRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
+      , _transactionRedeemerUnitMem = 1700
+      , _transactionRedeemerUnitSteps = 476468
+      , _transactionRedeemerFee = 172033
+      }
 
 -- | Information about (de-)registration of a stake address
 -- within a transaction
@@ -317,7 +363,7 @@ instance ToSample TransactionMetaJSON where
 -- | Transaction metadata in CBOR
 data TransactionMetaCBOR = TransactionMetaCBOR
   { _transactionMetaCBORLabel        :: Text -- ^ Metadata label
-  , _transactionMetaCBORCBORMetadata :: Maybe Text -- ^ Content of the CBOR metadata
+  , _transactionMetaCBORMetadata     :: Maybe Text -- ^ Content of the CBOR metadata
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -327,7 +373,7 @@ instance ToSample TransactionMetaCBOR where
   toSamples = pure $ singleSample $
     TransactionMetaCBOR
       "1968"
-      (Just "\\xa100a16b436f6d62696e6174696f6e8601010101010c")
+      (Just "a100a16b436f6d62696e6174696f6e8601010101010c")
 
 -- | Update of a pool metadata
 data PoolUpdateMetadata = PoolUpdateMetadata
