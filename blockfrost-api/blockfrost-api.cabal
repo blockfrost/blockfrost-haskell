@@ -116,6 +116,8 @@ library
                       , Blockfrost.Util.Pagination
                       , Blockfrost.Util.Sorting
                       , Blockfrost.Util.Tag
+                      , Blockfrost.Util.UserAgent
+                      , Paths_blockfrost_api
    build-depends:       base >= 4.7 && < 5
                       , bytestring
                       , data-default-class

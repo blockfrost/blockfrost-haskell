@@ -28,6 +28,7 @@ import Blockfrost.Client.Auth ()
 import Blockfrost.Client.Pagination
 import Blockfrost.Client.Sorting
 import Blockfrost.Client.Tag ()
+import Blockfrost.Client.UserAgent ()
 import Blockfrost.Types.ApiError
 import Data.Aeson (eitherDecode)
 import Data.Default (Default (def))

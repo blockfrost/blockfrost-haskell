@@ -42,6 +42,7 @@ library
                       , Blockfrost.Client.Pagination
                       , Blockfrost.Client.Sorting
                       , Blockfrost.Client.Tag
+                      , Blockfrost.Client.UserAgent
    build-depends:       base >= 4.7 && < 5
                       , blockfrost-api
                       , aeson
