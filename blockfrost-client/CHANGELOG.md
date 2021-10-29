@@ -1,4 +1,4 @@
-# Version [0.2.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/0.1.0.0...0.2.0.0) (2021-10-29)
+# Version [0.2.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.1.0.0...v0.2.0.0) (2021-10-29)
 
 * Alonzo additions
   * `getTxRedeemers` for `/txs/${hash}/redeemers` endpoint
@@ -10,7 +10,7 @@
   * `getScriptJSON` for `/scripts/${script_hash}/json` endpoint
   * `getScriptCBOR` for `/scripts/${script_hash}/cbor` endpoint
 
-# Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...0.1.0.0) (2021-09-14)
+# Version [0.1.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/initial...v0.1.0.0) (2021-09-14)
 
 * Added `allPages`, re-exported couple more pagination helpers
 * Initial release
