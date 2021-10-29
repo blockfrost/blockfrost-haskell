@@ -415,11 +415,11 @@ transactionMetaJSONExpected =
 transactionMetaCBORSample = [r|
 {
   "label": "1968",
-  "cbor_metadata": "\\xa100a16b436f6d62696e6174696f6e8601010101010c"
+  "metadata": "a100a16b436f6d62696e6174696f6e8601010101010c"
 }
 |]
 
 transactionMetaCBORExpected =
     TransactionMetaCBOR
       "1968"
-      (Just "\\xa100a16b436f6d62696e6174696f6e8601010101010c")
+      (Just "a100a16b436f6d62696e6174696f6e8601010101010c")

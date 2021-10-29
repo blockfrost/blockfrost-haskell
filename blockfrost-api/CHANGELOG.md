@@ -3,6 +3,7 @@
 * Breaking changes
   * `AddressUTXO` renamed to `AddressUtxo` along with its fields
   * `ProtocolParams` `collateralPercent` field type changed from `Double` to `Integer`
+  * `TransactionMetaCBOR` now uses `metadata` field instead of `CBORMetadata` which holds the same CBOR value as before but without `\\x` prefix
 
 * Alonzo additions
   * `collateral` field to `UtxoInput`

@@ -363,7 +363,7 @@ instance ToSample TransactionMetaJSON where
 -- | Transaction metadata in CBOR
 data TransactionMetaCBOR = TransactionMetaCBOR
   { _transactionMetaCBORLabel        :: Text -- ^ Metadata label
-  , _transactionMetaCBORCBORMetadata :: Maybe Text -- ^ Content of the CBOR metadata
+  , _transactionMetaCBORMetadata     :: Maybe Text -- ^ Content of the CBOR metadata
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -373,7 +373,7 @@ instance ToSample TransactionMetaCBOR where
   toSamples = pure $ singleSample $
     TransactionMetaCBOR
       "1968"
-      (Just "\\xa100a16b436f6d62696e6174696f6e8601010101010c")
+      (Just "a100a16b436f6d62696e6174696f6e8601010101010c")
 
 -- | Update of a pool metadata
 data PoolUpdateMetadata = PoolUpdateMetadata
