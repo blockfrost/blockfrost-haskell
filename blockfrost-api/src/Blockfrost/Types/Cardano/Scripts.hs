@@ -9,7 +9,7 @@ module Blockfrost.Types.Cardano.Scripts
   , ScriptCBOR (..)
   ) where
 
-import Data.Aeson (Value)
+import Data.Aeson (Value, object, (.=))
 import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
@@ -75,12 +75,35 @@ newtype ScriptDatum = ScriptDatum { _scriptDatumJsonValue :: Value }
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptDatum", CamelToSnake]] ScriptDatum
 
+instance ToSample ScriptDatum where
+  toSamples =
+      pure
+    $ singleSample
+    $ ScriptDatum
+    $ object [ "int" .= (42 :: Int) ]
+
 newtype ScriptJSON = ScriptJSON { _scriptJsonJson :: Maybe Value }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptJson", CamelToSnake]] ScriptJSON
 
+instance ToSample ScriptJSON where
+  toSamples =
+      pure
+    $ singleSample
+    $ ScriptJSON
+    $ pure
+    $ object [ "type" .= ("sig" :: String)
+             , "keyHash" .= ("8ed9e675aaf99868736c372d5eac9f5b3deae4568f0cde6a7d9e1422" :: String)]
+
 newtype ScriptCBOR = ScriptCBOR { _scriptCborCbor :: Maybe Text }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptCbor", CamelToSnake]] ScriptCBOR
+
+instance ToSample ScriptCBOR where
+  toSamples =
+      pure
+    $ singleSample
+    $ ScriptCBOR
+    $ pure "4e4d01000033222220051200120011"
