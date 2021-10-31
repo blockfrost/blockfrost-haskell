@@ -32,5 +32,5 @@ instance ToSample DatumHash where
       , "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
       ]
 
-instance ToCapture (Capture "script_hash" DatumHash) where
-  toCapture _ = DocCapture "script_hash" "Hash of the script."
+instance ToCapture (Capture "datum_hash" DatumHash) where
+  toCapture _ = DocCapture "datum_hash" "Datum hash."
