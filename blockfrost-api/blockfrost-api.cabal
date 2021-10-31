@@ -145,6 +145,7 @@ test-suite blockfrost-api-tests
                      , Cardano.Accounts
                      , Cardano.Addresses
                      , Cardano.Assets
+                     , Cardano.Blocks
                      , Cardano.Epochs
                      , Cardano.Ledger
                      , Cardano.Metadata
