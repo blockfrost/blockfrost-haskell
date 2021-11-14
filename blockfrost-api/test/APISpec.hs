@@ -17,6 +17,16 @@ import Blockfrost.Types
 
 spec_sample :: Spec
 spec_sample = do
+  it "parses urlVersion sample" $ do
+    decode urlVersionSample
+    `shouldBe`
+    Just (URLVersion "https://blockfrost.io/" "0.1.0")
+
+  it "parses health sample" $ do
+    decode healthSample
+    `shouldBe`
+    Just (Healthy True)
+
   it "parses server time sample" $ do
     decode serverTimeSample
     `shouldBe`
@@ -31,6 +41,16 @@ spec_sample = do
     eitherDecode metricsEndpointsSample
     `shouldBe`
     Right metricsEndpointsExpected
+
+
+urlVersionSample = [r|
+{
+  "url": "https://blockfrost.io/",
+  "version": "0.1.0"
+}
+|]
+
+healthSample = [r| { "is_healthy": true } |]
 
 serverTimeSample = [r| { "server_time": 1603400958947 } |]
 
