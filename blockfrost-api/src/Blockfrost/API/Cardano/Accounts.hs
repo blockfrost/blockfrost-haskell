@@ -76,4 +76,13 @@ data AccountsAPI route =
         :> Pagination
         :> Sorting
         :> Get '[JSON] [AccountMir]
+     , _accountAssociatedAddresses
+        :: route
+        :- Summary "Account associated addresses"
+        :> Description "Obtain information about the addresses of a specific account."
+        :> Capture "stake_address" Address
+        :> "addresses"
+        :> Pagination
+        :> Sorting
+        :> Get '[JSON] [AddressAssociated]
     } deriving (Generic)

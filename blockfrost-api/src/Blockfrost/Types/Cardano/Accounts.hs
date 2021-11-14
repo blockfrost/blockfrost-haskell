@@ -9,6 +9,7 @@ module Blockfrost.Types.Cardano.Accounts
   , AccountRegistrationAction (..)
   , AccountWithdrawal (..)
   , AccountMir (..)
+  , AddressAssociated (..)
   ) where
 
 import Blockfrost.Types.Shared
@@ -202,3 +203,9 @@ instance ToSample AccountMir where
         , _accountMirTxHash = "1dd15e0ef6e6a17841cb9541c27724072ce4d4b79b91e58432fbaa32d9572531"
         }
     ]
+
+-- | Address associated with an account address
+newtype AddressAssociated = AddressAssociated {_addressAssociatedAddress :: Address}
+  deriving stock (Eq, Show, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressAssociated", CamelToSnake]] AddressAssociated
