@@ -15,6 +15,8 @@ newtype Address = Address Text
   deriving stock (Eq, Show, Generic)
   deriving newtype (FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
 
+
+
 mkAddress :: Text -> Address
 mkAddress = Address
 

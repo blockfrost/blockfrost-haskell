@@ -9,11 +9,18 @@ module Blockfrost.Types.Cardano.Accounts
   , AccountRegistrationAction (..)
   , AccountWithdrawal (..)
   , AccountMir (..)
+  , AddressAssociated (..)
   ) where
 
 import Blockfrost.Types.Shared
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
+
+
+newtype AddressAssociated = AddressAssociated {_addressAssociatedAddress :: Address}
+  deriving stock (Eq, Show, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressAssociated", CamelToSnake]] AddressAssociated
 
 -- | Information about an account, identified by its stake address
 data AccountInfo = AccountInfo
