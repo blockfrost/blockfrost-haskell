@@ -31,6 +31,10 @@ module Blockfrost.Client
   , getAccountWithdrawals'
   , getAccountMirs
   , getAccountMirs'
+  , getAccountAssociatedAddresses
+  , getAccountAssociatedAddresses'
+  , getAccountAssociatedAssets
+  , getAccountAssociatedAssets'
     -- Cardano - Addresses
   , getAddressInfo
   , getAddressDetails

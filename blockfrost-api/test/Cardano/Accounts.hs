@@ -52,6 +52,11 @@ spec_sample = do
     `shouldBe`
     Right accountMirsExpected
 
+  it "parses account associated addresses sample" $ do
+    eitherDecode accountAssociatedAddressesSample
+    `shouldBe`
+    Right accountAssociatedAddressesExpected
+
 accountSample = [r|
 {
     "stake_address": "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7",
@@ -269,3 +274,19 @@ accountMirsExpected =
       , _accountMirTxHash = "baaa77b63d4d7d2bb3ab02c9b85978c2092c336dede7f59e31ad65452d510c13"
       }
   ]
+
+accountAssociatedAddressesSample = [r|
+[
+  {
+    "address": "addr1qx2kd28nq8ac5prwg32hhvudlwggpgfp8utlyqxu6wqgz62f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sy0f4qd"
+  },
+  {
+    "address": "addr1q8j55h253zcvl326sk5qdt2n8z7eghzspe0ekxgncr796s2f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sjmd35m"
+  }
+]
+|]
+
+accountAssociatedAddressesExpected =
+    [ AddressAssociated "addr1qx2kd28nq8ac5prwg32hhvudlwggpgfp8utlyqxu6wqgz62f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sy0f4qd"
+    , AddressAssociated "addr1q8j55h253zcvl326sk5qdt2n8z7eghzspe0ekxgncr796s2f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sjmd35m"
+    ]

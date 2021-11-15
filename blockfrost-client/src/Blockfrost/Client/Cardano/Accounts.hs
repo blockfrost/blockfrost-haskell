@@ -14,6 +14,10 @@ module Blockfrost.Client.Cardano.Accounts
   , getAccountWithdrawals'
   , getAccountMirs
   , getAccountMirs'
+  , getAccountAssociatedAddresses
+  , getAccountAssociatedAddresses'
+  , getAccountAssociatedAssets
+  , getAccountAssociatedAssets'
   ) where
 
 import Blockfrost.API
@@ -101,3 +105,27 @@ getAccountMirs' a pg s = go (\p -> getAccountMirs_ p a pg s)
 -- | Obtain information about the MIRs of a specific account.
 getAccountMirs :: Address -> BlockfrostClient [AccountMir]
 getAccountMirs a = getAccountMirs' a def def
+
+getAccountAssociatedAddresses_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AddressAssociated]
+getAccountAssociatedAddresses_ = _accountAssociatedAddresses . accountsClient
+
+-- | Obtain information about the addresses of a specific account.
+-- Allows custom paging and ordering using @Paged@ and @SortOrder@.
+getAccountAssociatedAddresses' :: Address -> Paged -> SortOrder -> BlockfrostClient [AddressAssociated]
+getAccountAssociatedAddresses' a pg s = go (\p -> getAccountAssociatedAddresses_ p a pg s)
+
+-- | Obtain information about the addresses of a specific account.
+getAccountAssociatedAddresses :: Address -> BlockfrostClient [AddressAssociated]
+getAccountAssociatedAddresses a = getAccountAssociatedAddresses' a def def
+
+getAccountAssociatedAssets_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [Amount]
+getAccountAssociatedAssets_ = _accountAssociatedAssets . accountsClient
+
+-- | Obtain information about assets associated with addresses of a specific account.
+-- Allows custom paging and ordering using @Paged@ and @SortOrder@.
+getAccountAssociatedAssets' :: Address -> Paged -> SortOrder -> BlockfrostClient [Amount]
+getAccountAssociatedAssets' a pg s = go (\p -> getAccountAssociatedAssets_ p a pg s)
+
+-- | Obtain information about assets associated with addresses of a specific account.
+getAccountAssociatedAssets :: Address -> BlockfrostClient [Amount]
+getAccountAssociatedAssets a = getAccountAssociatedAssets' a def def
