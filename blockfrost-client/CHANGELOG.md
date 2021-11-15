@@ -1,3 +1,9 @@
+# Version [0.2.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.2.0.0...v0.2.1.0) (2021-11-15)
+
+* Additions
+  * `getAccountAssociatedAddresses` query for `/accounts/{stake_address}/addresses` endpoint
+  * `getAccountAssociatedAssets` query for `/accounts/{stake_address}/addresses/assets` endpoint
+
 # Version [0.2.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.1.0.0...v0.2.0.0) (2021-10-29)
 
 * Alonzo additions
