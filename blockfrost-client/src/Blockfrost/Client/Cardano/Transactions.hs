@@ -19,89 +19,89 @@ import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
 
-transactionsClient :: Project -> TransactionsAPI (AsClientT BlockfrostClient)
+transactionsClient :: MonadBlockfrost m => Project -> TransactionsAPI (AsClientT m)
 transactionsClient = fromServant . _transactions . cardanoClient
 
-getTx_ :: Project -> TxHash -> BlockfrostClient Transaction
+getTx_ :: MonadBlockfrost m => Project -> TxHash -> m Transaction
 getTx_ = _tx . transactionsClient
 
 -- | Get specific transaction
-getTx :: TxHash -> BlockfrostClient Transaction
+getTx :: MonadBlockfrost m => TxHash -> m Transaction
 getTx t = go (`getTx_` t)
 
-getTxUtxos_ :: Project -> TxHash -> BlockfrostClient TransactionUtxos
+getTxUtxos_ :: MonadBlockfrost m => Project -> TxHash -> m TransactionUtxos
 getTxUtxos_ = _txUtxos . transactionsClient
 
 -- | Get transaction UTXOs
-getTxUtxos :: TxHash -> BlockfrostClient TransactionUtxos
+getTxUtxos :: MonadBlockfrost m => TxHash -> m TransactionUtxos
 getTxUtxos t = go (`getTxUtxos_` t)
 
-getTxRedeemers_ :: Project -> TxHash -> BlockfrostClient [TransactionRedeemer]
+getTxRedeemers_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionRedeemer]
 getTxRedeemers_ = _txRedeemers . transactionsClient
 
 -- | Get transaction redeemers
-getTxRedeemers :: TxHash -> BlockfrostClient [TransactionRedeemer]
+getTxRedeemers :: MonadBlockfrost m => TxHash -> m [TransactionRedeemer]
 getTxRedeemers t = go (`getTxRedeemers_` t)
 
-getTxStakes_ :: Project -> TxHash -> BlockfrostClient [TransactionStake]
+getTxStakes_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionStake]
 getTxStakes_ = _txStakes . transactionsClient
 
 -- | Get transaction UTXOs
-getTxStakes :: TxHash -> BlockfrostClient [TransactionStake]
+getTxStakes :: MonadBlockfrost m => TxHash -> m [TransactionStake]
 getTxStakes t = go (`getTxStakes_` t)
 
-getTxDelegations_ :: Project -> TxHash -> BlockfrostClient [TransactionDelegation]
+getTxDelegations_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionDelegation]
 getTxDelegations_ = _txDelegations . transactionsClient
 
 -- | Get transaction delegation certificates
-getTxDelegations :: TxHash -> BlockfrostClient [TransactionDelegation]
+getTxDelegations :: MonadBlockfrost m => TxHash -> m [TransactionDelegation]
 getTxDelegations t = go (`getTxDelegations_` t)
 
-getTxWithdrawals_ :: Project -> TxHash -> BlockfrostClient [TransactionWithdrawal]
+getTxWithdrawals_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionWithdrawal]
 getTxWithdrawals_ = _txWithdrawals . transactionsClient
 
 -- | Get transaction withdrawals
-getTxWithdrawals :: TxHash -> BlockfrostClient [TransactionWithdrawal]
+getTxWithdrawals :: MonadBlockfrost m => TxHash -> m [TransactionWithdrawal]
 getTxWithdrawals t = go (`getTxWithdrawals_` t)
 
-getTxMirs_ :: Project -> TxHash -> BlockfrostClient [TransactionMir]
+getTxMirs_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionMir]
 getTxMirs_ = _txMirs . transactionsClient
 
 -- | Get transaction MIRs (Move Instantaneous Rewards)
-getTxMirs :: TxHash -> BlockfrostClient [TransactionMir]
+getTxMirs :: MonadBlockfrost m => TxHash -> m [TransactionMir]
 getTxMirs t = go (`getTxMirs_` t)
 
-getTxPoolUpdates_ :: Project -> TxHash -> BlockfrostClient [TransactionPoolUpdate]
+getTxPoolUpdates_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionPoolUpdate]
 getTxPoolUpdates_ = _txPoolUpdates . transactionsClient
 
 -- | Get transaction stake pool registration and update certificates
-getTxPoolUpdates :: TxHash -> BlockfrostClient [TransactionPoolUpdate]
+getTxPoolUpdates :: MonadBlockfrost m => TxHash -> m [TransactionPoolUpdate]
 getTxPoolUpdates t = go (`getTxPoolUpdates_` t)
 
-getTxPoolRetiring_ :: Project -> TxHash -> BlockfrostClient [TransactionPoolRetiring]
+getTxPoolRetiring_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionPoolRetiring]
 getTxPoolRetiring_ = _txPoolRetiring . transactionsClient
 
 -- | Get transaction stake pool retirement certificates
-getTxPoolRetiring :: TxHash -> BlockfrostClient [TransactionPoolRetiring]
+getTxPoolRetiring :: MonadBlockfrost m => TxHash -> m [TransactionPoolRetiring]
 getTxPoolRetiring t = go (`getTxPoolRetiring_` t)
 
-getTxMetadataJSON_ :: Project -> TxHash -> BlockfrostClient [TransactionMetaJSON]
+getTxMetadataJSON_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionMetaJSON]
 getTxMetadataJSON_ = _txMetadataJSON . transactionsClient
 
 -- | Get transaction metadata in JSON
-getTxMetadataJSON :: TxHash -> BlockfrostClient [TransactionMetaJSON]
+getTxMetadataJSON :: MonadBlockfrost m => TxHash -> m [TransactionMetaJSON]
 getTxMetadataJSON t = go (`getTxMetadataJSON_` t)
 
-getTxMetadataCBOR_ :: Project -> TxHash -> BlockfrostClient [TransactionMetaCBOR]
+getTxMetadataCBOR_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionMetaCBOR]
 getTxMetadataCBOR_ = _txMetadataCBOR . transactionsClient
 
 -- | Get transaction metadata in CBOR
-getTxMetadataCBOR :: TxHash -> BlockfrostClient [TransactionMetaCBOR]
+getTxMetadataCBOR :: MonadBlockfrost m => TxHash -> m [TransactionMetaCBOR]
 getTxMetadataCBOR t = go (`getTxMetadataCBOR_` t)
 
-submitTx_ :: Project -> CBORString -> BlockfrostClient TxHash
+submitTx_ :: MonadBlockfrost m => Project -> CBORString -> m TxHash
 submitTx_ = _txSubmit . cardanoClient
 
 -- | Submit an already serialized transaction to the network.
-submitTx :: CBORString -> BlockfrostClient TxHash
+submitTx :: MonadBlockfrost m => CBORString -> m TxHash
 submitTx txCbor = go (`submitTx_` txCbor)

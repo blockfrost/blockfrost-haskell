@@ -1,7 +1,5 @@
 -- | Blockfrost client
 {-# LANGUAGE CPP #-}
-{-# LANGUAGE DeriveFunctor #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Blockfrost.Client
   ( module Blockfrost.API
@@ -180,37 +178,37 @@ import Data.Text (Text)
 -- ** Client functions
 -- *** Health
 
-getRoot' :: Project -> BlockfrostClient URLVersion
+getRoot' :: MonadBlockfrost m => Project -> m URLVersion
 getRoot' = _getRoot . commonClient
 
 -- | Root endpoint has no other function than to point end users to documentation
-getRoot  :: BlockfrostClient URLVersion
+getRoot  :: MonadBlockfrost m => m URLVersion
 getRoot = go getRoot'
 
-getHealth' :: Project -> BlockfrostClient Healthy
+getHealth' :: MonadBlockfrost m => Project -> m Healthy
 getHealth' = _getHealth . commonClient
 
 -- | Return backend status. Your application should handle situations when backend for the given chain is unavailable.
-getHealth  :: BlockfrostClient Healthy
+getHealth  :: MonadBlockfrost m => m Healthy
 getHealth = go getHealth'
 
-getClock':: Project -> BlockfrostClient ServerTime
+getClock':: MonadBlockfrost m => Project -> m ServerTime
 getClock' = _getClock . commonClient
 
 -- | Get current backend time
-getClock:: BlockfrostClient ServerTime
+getClock :: MonadBlockfrost m => m ServerTime
 getClock = go getClock'
 
-getMetrics':: Project -> BlockfrostClient [Metric]
+getMetrics' :: MonadBlockfrost m => Project -> m [Metric]
 getMetrics' = _metrics . commonClient
 
 -- | Get Blockfrost usage metrics over last 30 days
-getMetrics:: BlockfrostClient [Metric]
+getMetrics :: MonadBlockfrost m => m [Metric]
 getMetrics = go getMetrics'
 
-getMetricsEndpoints':: Project -> BlockfrostClient [(Text, Metric)]
+getMetricsEndpoints' :: MonadBlockfrost m => Project -> m [(Text, Metric)]
 getMetricsEndpoints' = _metricsEndpoints . commonClient
 
 -- | Get Blockfrost endpoint usage metrics over last 30 days
-getMetricsEndpoints:: BlockfrostClient [(Text, Metric)]
+getMetricsEndpoints :: MonadBlockfrost m => m [(Text, Metric)]
 getMetricsEndpoints = go getMetricsEndpoints'

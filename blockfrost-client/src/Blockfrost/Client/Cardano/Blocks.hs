@@ -19,80 +19,80 @@ import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
 
-blocksClient :: Project -> BlocksAPI (AsClientT BlockfrostClient)
+blocksClient :: MonadBlockfrost m => Project -> BlocksAPI (AsClientT m)
 blocksClient = fromServant . _blocks . cardanoClient
 
-getLatestBlock_ :: Project -> BlockfrostClient Block
+getLatestBlock_ :: MonadBlockfrost m => Project -> m Block
 getLatestBlock_ = _latest . blocksClient
 
 -- | Return the latest block available to the backends, also known as the tip of the blockchain.
-getLatestBlock :: BlockfrostClient Block
+getLatestBlock :: MonadBlockfrost m => m Block
 getLatestBlock = go getLatestBlock_
 
-getLatestBlockTxs_ :: Project -> Paged -> SortOrder -> BlockfrostClient [TxHash]
+getLatestBlockTxs_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [TxHash]
 getLatestBlockTxs_ = _latestTxs . blocksClient
 
 -- | Return the transactions within the latest block.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getLatestBlockTxs' :: Paged -> SortOrder -> BlockfrostClient [TxHash]
+getLatestBlockTxs' :: MonadBlockfrost m => Paged -> SortOrder -> m [TxHash]
 getLatestBlockTxs' pg s = go (\p -> getLatestBlockTxs_ p pg s)
 
-getLatestBlockTxs :: BlockfrostClient [TxHash]
+getLatestBlockTxs :: MonadBlockfrost m => m [TxHash]
 getLatestBlockTxs = getLatestBlockTxs' def def
 
-getBlock_ :: Project -> Either Integer BlockHash -> BlockfrostClient Block
+getBlock_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> m Block
 getBlock_ = _block . blocksClient
 
 -- | Return the content of a requested block.
-getBlock :: Either Integer BlockHash -> BlockfrostClient Block
+getBlock :: MonadBlockfrost m => Either Integer BlockHash -> m Block
 getBlock a = go (`getBlock_` a)
 
-getBlockSlot_ :: Project -> Slot -> BlockfrostClient Block
+getBlockSlot_ :: MonadBlockfrost m => Project -> Slot -> m Block
 getBlockSlot_ = __blockSlot . blocksClient
 
 -- | Return the content of a requested block for a specific slot.
-getBlockSlot :: Slot -> BlockfrostClient Block
+getBlockSlot :: MonadBlockfrost m => Slot -> m Block
 getBlockSlot i = go (`getBlockSlot_` i)
 
-getBlockEpochSlot_ :: Project -> Epoch -> Slot -> BlockfrostClient Block
+getBlockEpochSlot_ :: MonadBlockfrost m => Project -> Epoch -> Slot -> m Block
 getBlockEpochSlot_ = __blockEpochSlot . blocksClient
 
 -- | Return the content of a requested block for a specific slot in an epoch.
-getBlockEpochSlot :: Epoch -> Slot -> BlockfrostClient Block
+getBlockEpochSlot :: MonadBlockfrost m => Epoch -> Slot -> m Block
 getBlockEpochSlot ep sl = go (\p -> getBlockEpochSlot_ p ep sl)
 
-getNextBlocks_ :: Project -> Either Integer BlockHash -> Paged -> BlockfrostClient [Block]
+getNextBlocks_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> Paged -> m [Block]
 getNextBlocks_ = _blockNext . blocksClient
 
 -- | Return the list of blocks following a specific block.
 -- Allows custom paging using @Paged@.
-getNextBlocks' :: Either Integer BlockHash -> Paged -> BlockfrostClient [Block]
+getNextBlocks' :: MonadBlockfrost m => Either Integer BlockHash -> Paged -> m [Block]
 getNextBlocks' a pg = go (\p -> getNextBlocks_ p a pg)
 
 -- | Return the list of blocks following a specific block.
-getNextBlocks :: Either Integer BlockHash -> BlockfrostClient [Block]
+getNextBlocks :: MonadBlockfrost m => Either Integer BlockHash -> m [Block]
 getNextBlocks a = getNextBlocks' a def
 
-getPreviousBlocks_ :: Project -> Either Integer BlockHash -> Paged -> BlockfrostClient [Block]
+getPreviousBlocks_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> Paged -> m [Block]
 getPreviousBlocks_ = _blockPrevious . blocksClient
 
 -- | Return the list of blocks preceding a specific block.
 -- Allows custom paging using @Paged@.
-getPreviousBlocks' :: Either Integer BlockHash -> Paged -> BlockfrostClient [Block]
+getPreviousBlocks' :: MonadBlockfrost m => Either Integer BlockHash -> Paged -> m [Block]
 getPreviousBlocks' a pg = go (\p -> getPreviousBlocks_ p a pg)
 
 -- | Return the list of blocks preceding a specific block.
-getPreviousBlocks :: Either Integer BlockHash -> BlockfrostClient [Block]
+getPreviousBlocks :: MonadBlockfrost m => Either Integer BlockHash -> m [Block]
 getPreviousBlocks a = getPreviousBlocks' a def
 
-getBlockTxs_ :: Project -> Either Integer BlockHash -> Paged -> SortOrder -> BlockfrostClient [TxHash]
+getBlockTxs_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> Paged -> SortOrder -> m [TxHash]
 getBlockTxs_ = _blockTxs . blocksClient
 
 -- | Return the transactions within the block.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getBlockTxs' :: Either Integer BlockHash -> Paged -> SortOrder -> BlockfrostClient [TxHash]
+getBlockTxs' :: MonadBlockfrost m => Either Integer BlockHash -> Paged -> SortOrder -> m [TxHash]
 getBlockTxs' a pg s = go (\p -> getBlockTxs_ p a pg s)
 
 -- | Return the transactions within the block.
-getBlockTxs :: Either Integer BlockHash -> BlockfrostClient [TxHash]
+getBlockTxs :: MonadBlockfrost m => Either Integer BlockHash -> m [TxHash]
 getBlockTxs a = getBlockTxs' a def def

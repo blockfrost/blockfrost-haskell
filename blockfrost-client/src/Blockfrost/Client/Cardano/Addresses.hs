@@ -15,56 +15,56 @@ import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
 
-addressesClient :: Project -> AddressesAPI (AsClientT BlockfrostClient)
+addressesClient :: MonadBlockfrost m => Project -> AddressesAPI (AsClientT m)
 addressesClient = fromServant . _addresses . cardanoClient
 
-getAddressInfo_ :: Project -> Address -> BlockfrostClient AddressInfo
+getAddressInfo_ :: MonadBlockfrost m => Project -> Address -> m AddressInfo
 getAddressInfo_ = _addressInfo . addressesClient
 
 -- | Obtain information about a specific address.
-getAddressInfo :: Address -> BlockfrostClient AddressInfo
+getAddressInfo :: MonadBlockfrost m => Address -> m AddressInfo
 getAddressInfo a = go (`getAddressInfo_` a)
 
-getAddressDetails_ :: Project -> Address -> BlockfrostClient AddressDetails
+getAddressDetails_ :: MonadBlockfrost m => Project -> Address -> m AddressDetails
 getAddressDetails_ = _addressDetails . addressesClient
 
 -- | Obtain details about an address.
-getAddressDetails :: Address -> BlockfrostClient AddressDetails
+getAddressDetails :: MonadBlockfrost m => Address -> m AddressDetails
 getAddressDetails a = go (`getAddressDetails_` a)
 
-getAddressUtxos_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
+getAddressUtxos_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AddressUtxo]
 getAddressUtxos_ = _addressUtxos . addressesClient
 
 -- | UTXOs of the address.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAddressUtxos' :: Address -> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
+getAddressUtxos' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AddressUtxo]
 getAddressUtxos' a pg s = go (\p -> getAddressUtxos_ p a pg s)
 
 -- | UTXOs of the address.
-getAddressUtxos :: Address -> BlockfrostClient [AddressUtxo]
+getAddressUtxos :: MonadBlockfrost m => Address -> m [AddressUtxo]
 getAddressUtxos a = getAddressUtxos' a def def
 
-getAddressUtxosAsset_ :: Project -> Address -> AssetId -> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
+getAddressUtxosAsset_ :: MonadBlockfrost m => Project -> Address -> AssetId -> Paged -> SortOrder -> m [AddressUtxo]
 getAddressUtxosAsset_ = _addressUtxosAsset . addressesClient
 
 -- | UTXOs of the address containing specific asset.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAddressUtxosAsset' :: Address -> AssetId-> Paged -> SortOrder -> BlockfrostClient [AddressUtxo]
+getAddressUtxosAsset' :: MonadBlockfrost m => Address -> AssetId-> Paged -> SortOrder -> m [AddressUtxo]
 getAddressUtxosAsset' addr asset pg s = go (\p -> getAddressUtxosAsset_ p addr asset pg s)
 
 -- | UTXOs of the address containing specific asset.
-getAddressUtxosAsset :: Address -> AssetId -> BlockfrostClient [AddressUtxo]
+getAddressUtxosAsset :: MonadBlockfrost m => Address -> AssetId -> m [AddressUtxo]
 getAddressUtxosAsset addr asset = getAddressUtxosAsset' addr asset def def
 
 getAddressTransactions_ ::
---- Project -> Address -> BlockfrostClient [AddressTransaction]
-     Project
+     MonadBlockfrost m
+  => Project
   -> Address
   -> Paged
   -> SortOrder
   -> Maybe BlockIndex
   -> Maybe BlockIndex
-  -> BlockfrostClient [AddressTransaction]
+  -> m [AddressTransaction]
 getAddressTransactions_ = _addressTransactions . addressesClient
 
 -- | Transactions on the address.
@@ -72,14 +72,15 @@ getAddressTransactions_ = _addressTransactions . addressesClient
 -- Also allows support for limiting block ranges using `from`/`to`
 -- @BlockIndex@es.
 getAddressTransactions' ::
-     Address
+     MonadBlockfrost m
+  => Address
   -> Paged
   -> SortOrder
   -> Maybe BlockIndex
   -> Maybe BlockIndex
-  -> BlockfrostClient [AddressTransaction]
+  -> m [AddressTransaction]
 getAddressTransactions' a pg s from to = go (\p -> getAddressTransactions_ p a pg s from to)
 
 -- | Transactions on the address.
-getAddressTransactions :: Address -> BlockfrostClient [AddressTransaction]
+getAddressTransactions :: MonadBlockfrost m => Address -> m [AddressTransaction]
 getAddressTransactions a = getAddressTransactions' a def def Nothing Nothing

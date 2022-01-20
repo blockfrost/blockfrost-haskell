@@ -14,41 +14,41 @@ import Blockfrost.Client.Types
 import Blockfrost.Types
 import Data.Text (Text)
 
-metadataClient :: Project -> MetadataAPI (AsClientT BlockfrostClient)
+metadataClient :: MonadBlockfrost m => Project -> MetadataAPI (AsClientT m)
 metadataClient = fromServant . _metadata . cardanoClient
 
-getTxMetadataLabels_ :: Project -> Paged -> SortOrder -> BlockfrostClient [TxMeta]
+getTxMetadataLabels_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [TxMeta]
 getTxMetadataLabels_ = _txMetadataLabels . metadataClient
 
 -- | List of all used transaction metadata labels.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getTxMetadataLabels' :: Paged -> SortOrder -> BlockfrostClient [TxMeta]
+getTxMetadataLabels' :: MonadBlockfrost m => Paged -> SortOrder -> m [TxMeta]
 getTxMetadataLabels' pg s = go (\p -> getTxMetadataLabels_ p pg s)
 
 -- | List of all used transaction metadata labels.
-getTxMetadataLabels :: BlockfrostClient [TxMeta]
+getTxMetadataLabels :: MonadBlockfrost m => m [TxMeta]
 getTxMetadataLabels = getTxMetadataLabels' def def
 
-getTxMetadataByLabelJSON_ :: Project -> Text -> Paged -> SortOrder -> BlockfrostClient [TxMetaJSON]
+getTxMetadataByLabelJSON_ :: MonadBlockfrost m => Project -> Text -> Paged -> SortOrder -> m [TxMetaJSON]
 getTxMetadataByLabelJSON_ = _txMetadataByLabelJSON . metadataClient
 
 -- | Transaction metadata per label (JSON @Value@)
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getTxMetadataByLabelJSON' :: Text -> Paged -> SortOrder -> BlockfrostClient [TxMetaJSON]
+getTxMetadataByLabelJSON' :: MonadBlockfrost m => Text -> Paged -> SortOrder -> m [TxMetaJSON]
 getTxMetadataByLabelJSON' t pg s = go (\p -> getTxMetadataByLabelJSON_ p t pg s)
 
 -- | Transaction metadata per label (JSON @Value@)
-getTxMetadataByLabelJSON :: Text -> BlockfrostClient [TxMetaJSON]
+getTxMetadataByLabelJSON :: MonadBlockfrost m => Text -> m [TxMetaJSON]
 getTxMetadataByLabelJSON t = getTxMetadataByLabelJSON' t def def
 
-getTxMetadataByLabelCBOR_ :: Project -> Text -> Paged -> SortOrder -> BlockfrostClient [TxMetaCBOR]
+getTxMetadataByLabelCBOR_ :: MonadBlockfrost m => Project -> Text -> Paged -> SortOrder -> m [TxMetaCBOR]
 getTxMetadataByLabelCBOR_ = _txMetadataByLabelCBOR . metadataClient
 
 -- | Transaction metadata per label (CBOR @ByteString@)
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getTxMetadataByLabelCBOR' :: Text -> Paged -> SortOrder -> BlockfrostClient [TxMetaCBOR]
+getTxMetadataByLabelCBOR' :: MonadBlockfrost m => Text -> Paged -> SortOrder -> m [TxMetaCBOR]
 getTxMetadataByLabelCBOR' t pg s = go (\p -> getTxMetadataByLabelCBOR_ p t pg s)
 
 -- | Transaction metadata per label (CBOR @ByteString@)
-getTxMetadataByLabelCBOR :: Text -> BlockfrostClient [TxMetaCBOR]
+getTxMetadataByLabelCBOR :: MonadBlockfrost m => Text -> m [TxMetaCBOR]
 getTxMetadataByLabelCBOR t = getTxMetadataByLabelCBOR' t def def

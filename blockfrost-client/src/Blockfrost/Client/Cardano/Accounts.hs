@@ -24,108 +24,108 @@ import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
 
-accountsClient :: Project -> AccountsAPI (AsClientT BlockfrostClient)
+accountsClient :: MonadBlockfrost m => Project -> AccountsAPI (AsClientT m)
 accountsClient = fromServant . _accounts . cardanoClient
 
-getAccount_ :: Project -> Address -> BlockfrostClient AccountInfo
+getAccount_ :: MonadBlockfrost m => Project -> Address -> m AccountInfo
 getAccount_ = _account . accountsClient
 
 -- | Obtain information about a specific stake account.
-getAccount :: Address -> BlockfrostClient AccountInfo
+getAccount :: MonadBlockfrost m => Address -> m AccountInfo
 getAccount a = go (`getAccount_` a)
 
-getAccountRewards_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AccountReward]
+getAccountRewards_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AccountReward]
 getAccountRewards_ = _accountRewards . accountsClient
 
 -- | Obtain information about the history of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountRewards' :: Address -> Paged -> SortOrder -> BlockfrostClient [AccountReward]
+getAccountRewards' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AccountReward]
 getAccountRewards' a pg s = go (\p -> getAccountRewards_ p a pg s)
 
 -- | Obtain information about the history of a specific account.
-getAccountRewards :: Address -> BlockfrostClient [AccountReward]
+getAccountRewards :: MonadBlockfrost m => Address -> m [AccountReward]
 getAccountRewards a = getAccountRewards' a def def
 
-getAccountHistory_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AccountHistory]
+getAccountHistory_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AccountHistory]
 getAccountHistory_ = _accountHistory . accountsClient
 
 -- | Obtain information about the history of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountHistory' :: Address -> Paged -> SortOrder -> BlockfrostClient [AccountHistory]
+getAccountHistory' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AccountHistory]
 getAccountHistory' a pg s = go (\p -> getAccountHistory_ p a pg s)
 
 -- | Obtain information about the history of a specific account.
-getAccountHistory :: Address -> BlockfrostClient [AccountHistory]
+getAccountHistory :: MonadBlockfrost m => Address -> m [AccountHistory]
 getAccountHistory a = getAccountHistory' a def def
 
-getAccountDelegations_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AccountDelegation]
+getAccountDelegations_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AccountDelegation]
 getAccountDelegations_ = _accountDelegations . accountsClient
 
 -- | Obtain information about the delegation of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountDelegations' :: Address -> Paged -> SortOrder -> BlockfrostClient [AccountDelegation]
+getAccountDelegations' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AccountDelegation]
 getAccountDelegations' a pg s = go (\p -> getAccountDelegations_ p a pg s)
 
 -- | Obtain information about the delegation of a specific account.
-getAccountDelegations :: Address -> BlockfrostClient [AccountDelegation]
+getAccountDelegations :: MonadBlockfrost m => Address -> m [AccountDelegation]
 getAccountDelegations a = getAccountDelegations' a def def
 
-getAccountRegistrations_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AccountRegistration]
+getAccountRegistrations_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AccountRegistration]
 getAccountRegistrations_ = _accountRegistrations . accountsClient
 
 -- | Obtain information about the registrations and deregistrations of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountRegistrations' :: Address -> Paged -> SortOrder -> BlockfrostClient [AccountRegistration]
+getAccountRegistrations' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AccountRegistration]
 getAccountRegistrations' a pg s = go (\p -> getAccountRegistrations_ p a pg s)
 
 -- | Obtain information about the registrations and deregistrations of a specific account.
-getAccountRegistrations :: Address -> BlockfrostClient [AccountRegistration]
+getAccountRegistrations :: MonadBlockfrost m => Address -> m [AccountRegistration]
 getAccountRegistrations a = getAccountRegistrations' a def def
 
-getAccountWithdrawals_ :: Project -> Address -> Paged -> SortOrder ->  BlockfrostClient [AccountWithdrawal]
+getAccountWithdrawals_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder ->  m [AccountWithdrawal]
 getAccountWithdrawals_ = _accountWithdrawals . accountsClient
 
 -- | Obtain information about the withdrawals of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountWithdrawals' :: Address -> Paged -> SortOrder -> BlockfrostClient [AccountWithdrawal]
+getAccountWithdrawals' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AccountWithdrawal]
 getAccountWithdrawals' a pg s = go (\p -> getAccountWithdrawals_ p a pg s)
 
 -- | Obtain information about the withdrawals of a specific account.
-getAccountWithdrawals :: Address -> BlockfrostClient [AccountWithdrawal]
+getAccountWithdrawals :: MonadBlockfrost m => Address -> m [AccountWithdrawal]
 getAccountWithdrawals a = getAccountWithdrawals' a def def
 
-getAccountMirs_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AccountMir]
+getAccountMirs_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AccountMir]
 getAccountMirs_ = _accountMirs . accountsClient
 
 -- | Obtain information about the MIRs of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountMirs' :: Address -> Paged -> SortOrder -> BlockfrostClient [AccountMir]
+getAccountMirs' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AccountMir]
 getAccountMirs' a pg s = go (\p -> getAccountMirs_ p a pg s)
 
 -- | Obtain information about the MIRs of a specific account.
-getAccountMirs :: Address -> BlockfrostClient [AccountMir]
+getAccountMirs :: MonadBlockfrost m => Address -> m [AccountMir]
 getAccountMirs a = getAccountMirs' a def def
 
-getAccountAssociatedAddresses_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [AddressAssociated]
+getAccountAssociatedAddresses_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [AddressAssociated]
 getAccountAssociatedAddresses_ = _accountAssociatedAddresses . accountsClient
 
 -- | Obtain information about the addresses of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountAssociatedAddresses' :: Address -> Paged -> SortOrder -> BlockfrostClient [AddressAssociated]
+getAccountAssociatedAddresses' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [AddressAssociated]
 getAccountAssociatedAddresses' a pg s = go (\p -> getAccountAssociatedAddresses_ p a pg s)
 
 -- | Obtain information about the addresses of a specific account.
-getAccountAssociatedAddresses :: Address -> BlockfrostClient [AddressAssociated]
+getAccountAssociatedAddresses :: MonadBlockfrost m => Address -> m [AddressAssociated]
 getAccountAssociatedAddresses a = getAccountAssociatedAddresses' a def def
 
-getAccountAssociatedAssets_ :: Project -> Address -> Paged -> SortOrder -> BlockfrostClient [Amount]
+getAccountAssociatedAssets_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [Amount]
 getAccountAssociatedAssets_ = _accountAssociatedAssets . accountsClient
 
 -- | Obtain information about assets associated with addresses of a specific account.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAccountAssociatedAssets' :: Address -> Paged -> SortOrder -> BlockfrostClient [Amount]
+getAccountAssociatedAssets' :: MonadBlockfrost m => Address -> Paged -> SortOrder -> m [Amount]
 getAccountAssociatedAssets' a pg s = go (\p -> getAccountAssociatedAssets_ p a pg s)
 
 -- | Obtain information about assets associated with addresses of a specific account.
-getAccountAssociatedAssets :: Address -> BlockfrostClient [Amount]
+getAccountAssociatedAssets :: MonadBlockfrost m => Address -> m [Amount]
 getAccountAssociatedAssets a = getAccountAssociatedAssets' a def def

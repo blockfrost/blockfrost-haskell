@@ -15,57 +15,57 @@ import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
 
-scriptsClient :: Project -> ScriptsAPI (AsClientT BlockfrostClient)
+scriptsClient :: MonadBlockfrost m => Project -> ScriptsAPI (AsClientT m)
 scriptsClient = fromServant . _scripts . cardanoClient
 
-listScripts_ :: Project -> Paged -> SortOrder -> BlockfrostClient [ScriptHash]
+listScripts_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [ScriptHash]
 listScripts_ = _listScripts . scriptsClient
 
 -- | List scripts
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-listScripts' :: Paged -> SortOrder -> BlockfrostClient [ScriptHash]
+listScripts' :: MonadBlockfrost m => Paged -> SortOrder -> m [ScriptHash]
 listScripts' pg s = go (\p -> listScripts_ p pg s)
 
 -- | List scripts
-listScripts :: BlockfrostClient [ScriptHash]
+listScripts :: MonadBlockfrost m => m [ScriptHash]
 listScripts = listScripts' def def
 
-getScript_ :: Project -> ScriptHash -> BlockfrostClient Script
+getScript_ :: MonadBlockfrost m => Project -> ScriptHash -> m Script
 getScript_ = _getScript . scriptsClient
 
 -- | Get specific script information
-getScript:: ScriptHash -> BlockfrostClient Script
+getScript :: MonadBlockfrost m => ScriptHash -> m Script
 getScript sh = go (`getScript_` sh)
 
-getScriptRedeemers_ :: Project -> ScriptHash -> Paged -> SortOrder -> BlockfrostClient [ScriptRedeemer]
+getScriptRedeemers_ :: MonadBlockfrost m => Project -> ScriptHash -> Paged -> SortOrder -> m [ScriptRedeemer]
 getScriptRedeemers_ = _getScriptRedeemers . scriptsClient
 
 -- | Get redeemers of a specific script
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getScriptRedeemers' :: ScriptHash -> Paged -> SortOrder -> BlockfrostClient [ScriptRedeemer]
+getScriptRedeemers' :: MonadBlockfrost m => ScriptHash -> Paged -> SortOrder -> m [ScriptRedeemer]
 getScriptRedeemers' sh pg s = go (\p -> getScriptRedeemers_ p sh pg s)
 
 -- | Get redeemers of a specific script
-getScriptRedeemers :: ScriptHash -> BlockfrostClient [ScriptRedeemer]
+getScriptRedeemers :: MonadBlockfrost m => ScriptHash -> m [ScriptRedeemer]
 getScriptRedeemers sh = getScriptRedeemers' sh def def
 
-getScriptDatum_ :: Project -> DatumHash -> BlockfrostClient ScriptDatum
+getScriptDatum_ :: MonadBlockfrost m => Project -> DatumHash -> m ScriptDatum
 getScriptDatum_ = _getScriptDatum . scriptsClient
 
 -- | Get specific datum
-getScriptDatum :: DatumHash -> BlockfrostClient ScriptDatum
+getScriptDatum :: MonadBlockfrost m => DatumHash -> m ScriptDatum
 getScriptDatum sh = go (`getScriptDatum_` sh)
 
-getScriptJSON_ :: Project -> ScriptHash -> BlockfrostClient ScriptJSON
+getScriptJSON_ :: MonadBlockfrost m => Project -> ScriptHash -> m ScriptJSON
 getScriptJSON_ = _getScriptJSON . scriptsClient
 
 -- | Get a JSON representation of a `timelock` script
-getScriptJSON :: ScriptHash -> BlockfrostClient ScriptJSON
+getScriptJSON :: MonadBlockfrost m => ScriptHash -> m ScriptJSON
 getScriptJSON sh = go (`getScriptJSON_` sh)
 
-getScriptCBOR_ :: Project -> ScriptHash -> BlockfrostClient ScriptCBOR
+getScriptCBOR_ :: MonadBlockfrost m => Project -> ScriptHash -> m ScriptCBOR
 getScriptCBOR_ = _getScriptCBOR . scriptsClient
 
 -- | Get a CBOR representation of a `plutus` script
-getScriptCBOR :: ScriptHash -> BlockfrostClient ScriptCBOR
+getScriptCBOR :: MonadBlockfrost m => ScriptHash -> m ScriptCBOR
 getScriptCBOR sh = go (`getScriptCBOR_` sh)
