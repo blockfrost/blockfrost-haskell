@@ -87,7 +87,7 @@ data UtxoInput = UtxoInput
   , _utxoInputTxHash      :: Text -- ^ Hash of the UTXO transaction
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
-  , _utxoInputDataHash    :: Maybe Text -- ^ The hash of the transaction output datum
+  , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -111,7 +111,7 @@ utxoInSample =
 data UtxoOutput = UtxoOutput
   { _utxoOutputAddress     :: Address -- ^ Output address
   , _utxoOutputAmount      :: [Amount] -- ^ Transaction output amounts
-  , _utxoOutputDataHash    :: Maybe Text -- ^ The hash of the transaction output datum
+  , _utxoOutputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
