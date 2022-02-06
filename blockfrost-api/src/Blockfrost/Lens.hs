@@ -72,6 +72,7 @@ makeFields ''PoolUpdateMetadata
 makeFields ''TransactionPoolRetiring
 makeFields ''TransactionMetaJSON
 makeFields ''TransactionMetaCBOR
+makeFields ''TransactionRedeemer
 
 makeLensesWith blockfrostFieldRules ''IPFSAdd
 makeLensesWith blockfrostFieldRules ''IPFSPinChange
