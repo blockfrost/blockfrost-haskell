@@ -102,7 +102,8 @@ transactionSample = [r|
   "pool_update_count": 0,
   "pool_retire_count": 0,
   "asset_mint_or_burn_count": 0,
-  "redeemer_count": 0
+  "redeemer_count": 0,
+  "valid_contract": true
 }
 |]
 
@@ -138,6 +139,7 @@ transactionExpected =
     , _transactionPoolRetireCount = 0
     , _transactionAssetMintOrBurnCount = 0
     , _transactionRedeemerCount = 0
+    , _transactionValidContract = True
     }
 
 transactionUtxosSample = [r|
