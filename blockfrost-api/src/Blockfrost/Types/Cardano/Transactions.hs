@@ -170,8 +170,8 @@ instance ToSample ValidationPurpose where
 data TransactionRedeemer = TransactionRedeemer
   { _transactionRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
   , _transactionRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
-  , _transactionRedeemerScriptHash:: Text -- ^ Script hash
-  , _transactionRedeemerDatumHash :: Text -- ^ Datum hash
+  , _transactionRedeemerScriptHash:: ScriptHash -- ^ Script hash
+  , _transactionRedeemerDatumHash :: DatumHash -- ^ Datum hash
   , _transactionRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
   , _transactionRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
   , _transactionRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script

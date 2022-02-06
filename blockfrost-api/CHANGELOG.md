@@ -2,6 +2,9 @@
 
 * Changes
   * `UtxoInput` and `UtxoOutput` `dataHash` fields changed from `Maybe Text` to `Maybe DataHash`
+  * `TransactionRedeemer`
+    * `scriptHash` field changed from `Maybe Text` to `Maybe ScriptHash`
+    * `datumHash` field changed from `Maybe Text` to `Maybe DatumHash`
 
 * Additions
 
