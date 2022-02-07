@@ -18,72 +18,72 @@ import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
 
-assetsClient :: Project -> AssetsAPI (AsClientT BlockfrostClient)
+assetsClient :: MonadBlockfrost m => Project -> AssetsAPI (AsClientT m)
 assetsClient = fromServant . _assets . cardanoClient
 
-getAssets_ :: Project -> Paged -> SortOrder -> BlockfrostClient [AssetInfo]
+getAssets_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [AssetInfo]
 getAssets_ = _listAssets . assetsClient
 
 -- | List all assets
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAssets' :: Paged -> SortOrder -> BlockfrostClient [AssetInfo]
+getAssets' :: MonadBlockfrost m => Paged -> SortOrder -> m [AssetInfo]
 getAssets' pg s = go (\p -> getAssets_ p pg s)
 
 -- | List all assets
-getAssets :: BlockfrostClient [AssetInfo]
+getAssets :: MonadBlockfrost m => m [AssetInfo]
 getAssets = getAssets' def def
 
-getAssetDetails_ :: Project -> AssetId -> BlockfrostClient AssetDetails
+getAssetDetails_ :: MonadBlockfrost m => Project -> AssetId -> m AssetDetails
 getAssetDetails_ = _assetDetails . assetsClient
 
 -- | Information about a specific asset
-getAssetDetails :: AssetId -> BlockfrostClient AssetDetails
+getAssetDetails :: MonadBlockfrost m => AssetId -> m AssetDetails
 getAssetDetails a = go (`getAssetDetails_` a)
 
-getAssetHistory_ :: Project -> AssetId -> Paged -> SortOrder -> BlockfrostClient [AssetHistory]
+getAssetHistory_ :: MonadBlockfrost m => Project -> AssetId -> Paged -> SortOrder -> m [AssetHistory]
 getAssetHistory_ = _assetHistory . assetsClient
 
 -- | History of a specific asset
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAssetHistory' :: AssetId -> Paged -> SortOrder -> BlockfrostClient [AssetHistory]
+getAssetHistory' :: MonadBlockfrost m => AssetId -> Paged -> SortOrder -> m [AssetHistory]
 getAssetHistory' a pg s = go (\p -> getAssetHistory_ p a pg s)
 
 -- | History of a specific asset
-getAssetHistory :: AssetId -> BlockfrostClient [AssetHistory]
+getAssetHistory :: MonadBlockfrost m => AssetId -> m [AssetHistory]
 getAssetHistory a = getAssetHistory' a def def
 
-getAssetTransactions_ :: Project -> AssetId -> Paged -> SortOrder -> BlockfrostClient [AssetTransaction]
+getAssetTransactions_ :: MonadBlockfrost m => Project -> AssetId -> Paged -> SortOrder -> m [AssetTransaction]
 getAssetTransactions_ = _assetTransactions . assetsClient
 
 -- | List of a specific asset transactions
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAssetTransactions' :: AssetId -> Paged -> SortOrder -> BlockfrostClient [AssetTransaction]
+getAssetTransactions' :: MonadBlockfrost m => AssetId -> Paged -> SortOrder -> m [AssetTransaction]
 getAssetTransactions' a pg s = go (\p -> getAssetTransactions_ p a pg s)
 
 -- | List of a specific asset transactions
-getAssetTransactions :: AssetId -> BlockfrostClient [AssetTransaction]
+getAssetTransactions :: MonadBlockfrost m => AssetId -> m [AssetTransaction]
 getAssetTransactions a = getAssetTransactions' a def def
 
-getAssetAddresses_ :: Project -> AssetId -> Paged -> SortOrder -> BlockfrostClient [AssetAddress]
+getAssetAddresses_ :: MonadBlockfrost m => Project -> AssetId -> Paged -> SortOrder -> m [AssetAddress]
 getAssetAddresses_ = _assetAddresses . assetsClient
 
 -- | List of a addresses containing a specific asset
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAssetAddresses' :: AssetId -> Paged -> SortOrder -> BlockfrostClient [AssetAddress]
+getAssetAddresses' :: MonadBlockfrost m => AssetId -> Paged -> SortOrder -> m [AssetAddress]
 getAssetAddresses' a pg s = go (\p -> getAssetAddresses_ p a pg s)
 
 -- | List of a addresses containing a specific asset
-getAssetAddresses :: AssetId -> BlockfrostClient [AssetAddress]
+getAssetAddresses :: MonadBlockfrost m => AssetId -> m [AssetAddress]
 getAssetAddresses a = getAssetAddresses' a def def
 
-getAssetsByPolicy_ :: Project -> PolicyId -> Paged -> SortOrder -> BlockfrostClient [AssetInfo]
+getAssetsByPolicy_ :: MonadBlockfrost m => Project -> PolicyId -> Paged -> SortOrder -> m [AssetInfo]
 getAssetsByPolicy_ = _listAssetsPolicy . assetsClient
 
 -- | List of asset minted under a specific policy
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getAssetsByPolicy' :: PolicyId -> Paged -> SortOrder -> BlockfrostClient [AssetInfo]
+getAssetsByPolicy' :: MonadBlockfrost m => PolicyId -> Paged -> SortOrder -> m [AssetInfo]
 getAssetsByPolicy' a pg s = go (\p -> getAssetsByPolicy_ p a pg s)
 
 -- | List of asset minted under a specific policy
-getAssetsByPolicy :: PolicyId -> BlockfrostClient [AssetInfo]
+getAssetsByPolicy :: MonadBlockfrost m => PolicyId -> m [AssetInfo]
 getAssetsByPolicy a = getAssetsByPolicy' a def def

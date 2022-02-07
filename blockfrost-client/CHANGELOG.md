@@ -1,3 +1,9 @@
+# Version [0.3.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.2.1.0...v0.3.0.0) (2022-02-07)
+
+* Changes
+  * Client functions switched to tagless variants using `MonadBlockfrost` allowing to use custom base monad
+    for client functions.  Provided instances for `BlockfrostClient`, `IO` and `ClientM`.
+
 # Version [0.2.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.2.0.0...v0.2.1.0) (2021-11-15)
 
 * Additions

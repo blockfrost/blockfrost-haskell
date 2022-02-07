@@ -24,105 +24,105 @@ import Blockfrost.Client.Types
 import Blockfrost.Types
 
 
-epochsClient :: Project -> EpochsAPI (AsClientT BlockfrostClient)
+epochsClient :: MonadBlockfrost m => Project -> EpochsAPI (AsClientT m)
 epochsClient = fromServant . _epochs . cardanoClient
 
-getLatestEpoch_ :: Project -> BlockfrostClient EpochInfo
+getLatestEpoch_ :: MonadBlockfrost m => Project -> m EpochInfo
 getLatestEpoch_ = _latestEpoch . epochsClient
 
 -- | Get the information about the latest, therefore current, epoch.
-getLatestEpoch :: BlockfrostClient EpochInfo
+getLatestEpoch :: MonadBlockfrost m => m EpochInfo
 getLatestEpoch = go getLatestEpoch_
 
-getLatestEpochProtocolParams_ :: Project -> BlockfrostClient ProtocolParams
+getLatestEpochProtocolParams_ :: MonadBlockfrost m => Project -> m ProtocolParams
 getLatestEpochProtocolParams_ = _latestEpochProtocolParams . epochsClient
 
 -- | Get the protocol parameters for the latest epoch.
-getLatestEpochProtocolParams :: BlockfrostClient ProtocolParams
+getLatestEpochProtocolParams :: MonadBlockfrost m => m ProtocolParams
 getLatestEpochProtocolParams = go getLatestEpochProtocolParams_
 
-getEpoch_ :: Project -> Epoch -> BlockfrostClient EpochInfo
+getEpoch_ :: MonadBlockfrost m => Project -> Epoch -> m EpochInfo
 getEpoch_ = _getEpoch . epochsClient
 
 -- | Get the information about specific epoch.
-getEpoch :: Epoch -> BlockfrostClient EpochInfo
+getEpoch :: MonadBlockfrost m => Epoch -> m EpochInfo
 getEpoch e = go (`getEpoch_` e)
 
-getNextEpochs_ :: Project -> Epoch -> Paged -> BlockfrostClient [EpochInfo]
+getNextEpochs_ :: MonadBlockfrost m => Project -> Epoch -> Paged -> m [EpochInfo]
 getNextEpochs_ = _getNextEpochs . epochsClient
 
 -- | Return the list of epochs following a specific epoch.
 -- Allows custom paging using @Paged@.
-getNextEpochs' :: Epoch -> Paged -> BlockfrostClient [EpochInfo]
+getNextEpochs' :: MonadBlockfrost m => Epoch -> Paged -> m [EpochInfo]
 getNextEpochs' e pg = go (\p -> getNextEpochs_ p e pg)
 
 -- | Return the list of epochs following a specific epoch.
-getNextEpochs :: Epoch -> BlockfrostClient [EpochInfo]
+getNextEpochs :: MonadBlockfrost m => Epoch -> m [EpochInfo]
 getNextEpochs e = getNextEpochs' e def
 
-getPreviousEpochs_ :: Project -> Epoch -> Paged -> BlockfrostClient [EpochInfo]
+getPreviousEpochs_ :: MonadBlockfrost m => Project -> Epoch -> Paged -> m [EpochInfo]
 getPreviousEpochs_ = _getPreviousEpochs . epochsClient
 
 -- | Return the list of epochs preceding a specific epoch.
 -- Allows custom paging using @Paged@.
-getPreviousEpochs' :: Epoch -> Paged -> BlockfrostClient [EpochInfo]
+getPreviousEpochs' :: MonadBlockfrost m => Epoch -> Paged -> m [EpochInfo]
 getPreviousEpochs' e pg = go (\p -> getPreviousEpochs_ p e pg)
 
 -- | Return the list of epochs preceding a specific epoch.
-getPreviousEpochs :: Epoch -> BlockfrostClient [EpochInfo]
+getPreviousEpochs :: MonadBlockfrost m => Epoch -> m [EpochInfo]
 getPreviousEpochs e = getPreviousEpochs' e def
 
-getEpochStake_ :: Project -> Epoch -> Paged -> BlockfrostClient [StakeDistribution]
+getEpochStake_ :: MonadBlockfrost m => Project -> Epoch -> Paged -> m [StakeDistribution]
 getEpochStake_ = _getEpochStake . epochsClient
 
 -- | Return the active stake distribution for the specified epoch.
 -- Allows custom paging using @Paged@.
-getEpochStake' :: Epoch -> Paged -> BlockfrostClient [StakeDistribution]
+getEpochStake' :: MonadBlockfrost m => Epoch -> Paged -> m [StakeDistribution]
 getEpochStake' e pg = go (\p -> getEpochStake_ p e pg)
 
 -- | Return the active stake distribution for the specified epoch.
-getEpochStake :: Epoch -> BlockfrostClient [StakeDistribution]
+getEpochStake :: MonadBlockfrost m => Epoch -> m [StakeDistribution]
 getEpochStake e = getEpochStake' e def
 
-getEpochStakeByPool_ :: Project -> Epoch -> PoolId -> Paged -> BlockfrostClient [StakeDistribution]
+getEpochStakeByPool_ :: MonadBlockfrost m => Project -> Epoch -> PoolId -> Paged -> m [StakeDistribution]
 getEpochStakeByPool_ = _getEpochStakeByPool . epochsClient
 
 -- | Return the active stake distribution for the epoch specified by stake pool.
 -- Allows custom paging using @Paged@.
-getEpochStakeByPool' :: Epoch -> PoolId -> Paged -> BlockfrostClient [StakeDistribution]
+getEpochStakeByPool' :: MonadBlockfrost m => Epoch -> PoolId -> Paged -> m [StakeDistribution]
 getEpochStakeByPool' e i pg = go (\p -> getEpochStakeByPool_ p e i pg)
 
 -- | Return the active stake distribution for the epoch specified by stake pool.
-getEpochStakeByPool :: Epoch -> PoolId -> BlockfrostClient [StakeDistribution]
+getEpochStakeByPool :: MonadBlockfrost m => Epoch -> PoolId -> m [StakeDistribution]
 getEpochStakeByPool e i = getEpochStakeByPool' e i def
 
-getEpochBlocks_ :: Project -> Epoch -> Paged -> SortOrder -> BlockfrostClient [BlockHash]
+getEpochBlocks_ :: MonadBlockfrost m => Project -> Epoch -> Paged -> SortOrder -> m [BlockHash]
 getEpochBlocks_ = _getEpochBlocks . epochsClient
 
 -- | Return the blocks minted for the epoch specified.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getEpochBlocks' :: Epoch -> Paged -> SortOrder -> BlockfrostClient [BlockHash]
+getEpochBlocks' :: MonadBlockfrost m => Epoch -> Paged -> SortOrder -> m [BlockHash]
 getEpochBlocks' e pg s = go (\p -> getEpochBlocks_ p e pg s)
 
 -- | Return the blocks minted for the epoch specified.
-getEpochBlocks :: Epoch -> BlockfrostClient [BlockHash]
+getEpochBlocks :: MonadBlockfrost m => Epoch -> m [BlockHash]
 getEpochBlocks e = getEpochBlocks' e def def
 
-getEpochBlocksByPool_ :: Project -> Epoch -> PoolId -> Paged -> SortOrder -> BlockfrostClient [BlockHash]
+getEpochBlocksByPool_ :: MonadBlockfrost m => Project -> Epoch -> PoolId -> Paged -> SortOrder -> m [BlockHash]
 getEpochBlocksByPool_ = _getEpochBlocksByPool . epochsClient
 
 -- | Return the block minted for the epoch specified by stake pool.
 -- Allows custom paging and ordering using @Paged@ and @SortOrder@.
-getEpochBlocksByPool' :: Epoch -> PoolId -> Paged -> SortOrder -> BlockfrostClient [BlockHash]
+getEpochBlocksByPool' :: MonadBlockfrost m => Epoch -> PoolId -> Paged -> SortOrder -> m [BlockHash]
 getEpochBlocksByPool' e i pg s = go (\p -> getEpochBlocksByPool_ p e i pg s)
 
 -- | Return the block minted for the epoch specified by stake pool.
-getEpochBlocksByPool :: Epoch -> PoolId -> BlockfrostClient [BlockHash]
+getEpochBlocksByPool :: MonadBlockfrost m => Epoch -> PoolId -> m [BlockHash]
 getEpochBlocksByPool e i = getEpochBlocksByPool' e i def def
 
-getEpochProtocolParams_ :: Project -> Epoch -> BlockfrostClient ProtocolParams
+getEpochProtocolParams_ :: MonadBlockfrost m => Project -> Epoch -> m ProtocolParams
 getEpochProtocolParams_ = _getEpochProtocolParams . epochsClient
 
 -- | Return the protocol parameters for the specified epoch.
-getEpochProtocolParams :: Epoch -> BlockfrostClient ProtocolParams
+getEpochProtocolParams :: MonadBlockfrost m => Epoch -> m ProtocolParams
 getEpochProtocolParams e = go (`getEpochProtocolParams_` e)
