@@ -1,3 +1,15 @@
+# Version [0.3.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.2.1.0...v0.3.0.0) (2022-02-07)
+
+* Changes
+  * `UtxoInput` and `UtxoOutput` `dataHash` fields changed from `Maybe Text` to `Maybe DataHash`
+  * `TransactionRedeemer`
+    * `scriptHash` field changed from `Maybe Text` to `Maybe ScriptHash`
+    * `datumHash` field changed from `Maybe Text` to `Maybe DatumHash`
+
+* Additions
+  * `Transaction` grows `Bool`ean `validContract` field
+  * Lenses for `TransactionRedeemer`
+
 # Version [0.2.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.2.0.0...v0.2.1.0) (2021-11-15)
 
 * Additions

@@ -50,6 +50,7 @@ data Transaction = Transaction
   , _transactionPoolRetireCount      :: Integer -- ^ Count of the stake pool retirement certificates within the transaction
   , _transactionAssetMintOrBurnCount :: Integer -- ^ Count of asset mints and burns within the transaction
   , _transactionRedeemerCount        :: Integer -- ^ Count of redeemers within the transaction
+  , _transactionValidContract        :: Bool    -- ^ True if this is a valid transaction, False in case of contract validation failure
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -78,6 +79,7 @@ instance ToSample Transaction where
       , _transactionPoolRetireCount = 0
       , _transactionAssetMintOrBurnCount = 0
       , _transactionRedeemerCount = 0
+      , _transactionValidContract = True
       }
 
 -- | Transaction input UTxO
@@ -87,7 +89,7 @@ data UtxoInput = UtxoInput
   , _utxoInputTxHash      :: Text -- ^ Hash of the UTXO transaction
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
-  , _utxoInputDataHash    :: Maybe Text -- ^ The hash of the transaction output datum
+  , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -111,7 +113,7 @@ utxoInSample =
 data UtxoOutput = UtxoOutput
   { _utxoOutputAddress     :: Address -- ^ Output address
   , _utxoOutputAmount      :: [Amount] -- ^ Transaction output amounts
-  , _utxoOutputDataHash    :: Maybe Text -- ^ The hash of the transaction output datum
+  , _utxoOutputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -170,8 +172,8 @@ instance ToSample ValidationPurpose where
 data TransactionRedeemer = TransactionRedeemer
   { _transactionRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
   , _transactionRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
-  , _transactionRedeemerScriptHash:: Text -- ^ Script hash
-  , _transactionRedeemerDatumHash :: Text -- ^ Datum hash
+  , _transactionRedeemerScriptHash:: ScriptHash -- ^ Script hash
+  , _transactionRedeemerDatumHash :: DatumHash -- ^ Datum hash
   , _transactionRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
   , _transactionRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
   , _transactionRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script

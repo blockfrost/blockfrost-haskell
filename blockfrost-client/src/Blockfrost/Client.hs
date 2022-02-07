@@ -133,6 +133,7 @@ module Blockfrost.Client
   , getTxPoolRetiring
   , getTxMetadataJSON
   , getTxMetadataCBOR
+  , getTxRedeemers
   , submitTx
     -- IPFS
   , ipfsAdd
