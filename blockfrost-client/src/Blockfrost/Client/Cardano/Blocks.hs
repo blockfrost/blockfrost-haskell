@@ -13,6 +13,8 @@ module Blockfrost.Client.Cardano.Blocks
   , getPreviousBlocks'
   , getBlockTxs
   , getBlockTxs'
+  , getBlockAffectedAddresses'
+  , getBlockAffectedAddresses
   ) where
 
 import Blockfrost.API
@@ -96,3 +98,15 @@ getBlockTxs' a pg s = go (\p -> getBlockTxs_ p a pg s)
 -- | Return the transactions within the block.
 getBlockTxs :: MonadBlockfrost m => Either Integer BlockHash -> m [TxHash]
 getBlockTxs a = getBlockTxs' a def def
+
+getBlockAffectedAddresses_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> Paged -> m [(Address, [TxHash])]
+getBlockAffectedAddresses_ = _blockAffectedAddresses . blocksClient
+
+-- | Return list of addresses affected in the specified block with additional information, sorted by the bech32 address, ascending.
+-- Allows custom paging using @Paged@.
+getBlockAffectedAddresses' :: MonadBlockfrost m => Either Integer BlockHash -> Paged -> m [(Address, [TxHash])]
+getBlockAffectedAddresses' a pg = go (\p -> getBlockAffectedAddresses_ p a pg)
+
+-- | Return list of addresses affected in the specified block with additional information, sorted by the bech32 address, ascending.
+getBlockAffectedAddresses :: MonadBlockfrost m => Either Integer BlockHash -> m [(Address, [TxHash])]
+getBlockAffectedAddresses a = getBlockAffectedAddresses' a def

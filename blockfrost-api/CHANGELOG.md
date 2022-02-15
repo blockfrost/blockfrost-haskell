@@ -1,3 +1,8 @@
+# Version [0.3.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.3.0.0...v0.3.1.0) (2022-02-17)
+
+* Additions
+  * `/blocks/${hash_or_number}/addresses` endpoint (Affected addresses in a block)
+
 # Version [0.3.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.2.1.0...v0.3.0.0) (2022-02-07)
 
 * Changes

@@ -67,6 +67,8 @@ module Blockfrost.Client
   , getPreviousBlocks'
   , getBlockTxs
   , getBlockTxs'
+  , getBlockAffectedAddresses'
+  , getBlockAffectedAddresses
     -- Cardano - Epochs
   , getLatestEpoch
   , getLatestEpochProtocolParams

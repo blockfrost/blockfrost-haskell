@@ -79,4 +79,13 @@ data BlocksAPI route =
         :> Pagination
         :> Sorting
         :> Get '[JSON] [TxHash]
+      , _blockAffectedAddresses
+        :: route
+        :- Summary "Addresses affected in a specific block"
+        :> Description "Return list of addresses affected in the specified block with additional information, \
+                       \sorted by the bech32 address, ascending."
+        :> Capture "hash_or_number" (Either Integer BlockHash)
+        :> "addresses"
+        :> Pagination
+        :> Get '[JSON] [(Address, [TxHash])]
     } deriving (Generic)
