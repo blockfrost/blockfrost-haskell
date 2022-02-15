@@ -14,7 +14,7 @@ import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 
 -- | Id (hash) of the transaction
 newtype TxHash = TxHash { unTxHash :: Text }
-  deriving stock (Show, Eq, Generic)
+  deriving stock (Show, Eq, Ord, Generic)
   deriving newtype (FromHttpApiData, ToHttpApiData)
 
 instance IsString TxHash where

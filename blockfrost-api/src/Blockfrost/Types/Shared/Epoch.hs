@@ -9,7 +9,7 @@ import Servant.API (Capture, FromHttpApiData (..), ToHttpApiData (..))
 import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 
 newtype Epoch = Epoch Integer
-  deriving stock (Eq, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
   deriving newtype (Num, FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
 
 unEpoch :: Epoch -> Integer

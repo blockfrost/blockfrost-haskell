@@ -14,7 +14,7 @@ import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 -- | Concatenation of asset policy ID
 -- and hex-encoded asset name
 newtype AssetId = AssetId Text
-  deriving stock (Eq, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
   deriving newtype (FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
 
 mkAssetId :: Text -> AssetId
