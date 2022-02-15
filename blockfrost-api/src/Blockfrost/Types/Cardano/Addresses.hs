@@ -126,6 +126,7 @@ data AddressTransaction = AddressTransaction {
     _addressTransactionTxHash      :: TxHash -- ^ Hash of the transaction
   , _addressTransactionTxIndex     :: Integer -- ^ Transaction index within the block
   , _addressTransactionBlockHeight :: Integer -- ^ Block height
+  , _addressTransactionBlockTime   :: POSIXTime -- ^ Block creation time in UNIX time
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressTransaction", CamelToSnake]] AddressTransaction
@@ -136,15 +137,18 @@ instance ToSample AddressTransaction where
       { _addressTransactionTxHash = "8788591983aa73981fc92d6cddbbe643959f5a784e84b8bee0db15823f575a5b"
       , _addressTransactionTxIndex = 6
       , _addressTransactionBlockHeight = 69
+      , _addressTransactionBlockTime = 1635505891
       }
     , AddressTransaction
       { _addressTransactionTxHash = "52e748c4dec58b687b90b0b40d383b9fe1f24c1a833b7395cdf07dd67859f46f"
       , _addressTransactionTxIndex = 9
       , _addressTransactionBlockHeight = 4547
+      , _addressTransactionBlockTime = 1635505987
       }
     , AddressTransaction
       { _addressTransactionTxHash = "e8073fd5318ff43eca18a852527166aa8008bee9ee9e891f585612b7e4ba700b"
       , _addressTransactionTxIndex = 0
       , _addressTransactionBlockHeight = 564654
+      , _addressTransactionBlockTime = 1834505492
       }
     ]
