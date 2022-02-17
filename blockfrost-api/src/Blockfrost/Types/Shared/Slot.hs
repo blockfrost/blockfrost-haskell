@@ -9,8 +9,8 @@ import Servant.API (Capture, FromHttpApiData (..), ToHttpApiData (..))
 import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 
 newtype Slot = Slot Integer
-  deriving stock (Eq, Show, Generic)
-  deriving newtype (Num, FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
+  deriving stock (Eq, Ord, Show, Generic)
+  deriving newtype (Num, Enum, Real, Integral, FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
 
 unSlot :: Slot -> Integer
 unSlot (Slot i) = i

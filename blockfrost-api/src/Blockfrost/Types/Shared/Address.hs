@@ -12,7 +12,7 @@ import Servant.API (Capture, FromHttpApiData (..), ToHttpApiData (..))
 import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 
 newtype Address = Address Text
-  deriving stock (Eq, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
   deriving newtype (FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
 
 mkAddress :: Text -> Address

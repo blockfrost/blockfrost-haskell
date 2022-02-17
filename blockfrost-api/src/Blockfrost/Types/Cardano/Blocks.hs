@@ -5,6 +5,9 @@ module Blockfrost.Types.Cardano.Blocks
   ) where
 
 import Data.Text (Text)
+import Data.Aeson
+import Data.Aeson.Types (explicitParseField)
+import qualified Data.Vector
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), singleSample)
 
@@ -50,3 +53,19 @@ instance ToSample Block where
     , _blockNextBlock = pure "8367f026cf4b03e116ff8ee5daf149b55ba5a6ec6dec04803b8dc317721d15fa"
     , _blockConfirmations = 4698
     }
+
+-- instances for getBlockAffectedAddreses response
+instance {-# OVERLAPS #-} ToJSON (Address, [TxHash]) where
+  toJSON (addr, txs) = object [
+        "address" .= toJSON addr
+      , "transactions" .= map (\tx -> object [ "tx_hash" .= toJSON tx ]) txs
+      ]
+
+instance {-# OVERLAPS #-} FromJSON (Address, [TxHash]) where
+  parseJSON = withObject "addrTxs" $ \o -> do
+    addr <- o .: "address"
+    txs <- explicitParseField
+      (withArray "a" $ \a -> mapM (withObject "txHashes" $ \to -> to .: "tx_hash") (Data.Vector.toList a))
+      o
+      "transactions"
+    pure (addr, txs)

@@ -14,7 +14,7 @@ import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
 import qualified Text.Read
 
 newtype BlockHash = BlockHash Text
-  deriving stock (Eq, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
   deriving newtype (FromHttpApiData, ToHttpApiData, FromJSON, ToJSON)
 
 mkBlockHash :: Text -> BlockHash
