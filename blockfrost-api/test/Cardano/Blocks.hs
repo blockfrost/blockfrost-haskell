@@ -22,6 +22,11 @@ spec_blocks = do
     `shouldBe`
     Right blockExpected
 
+  it "parses afftected addresses sample" $ do
+    eitherDecode affectedAddrsSample
+    `shouldBe`
+    Right affectedAddrsExpected
+
 blockSample = [r|
 {
     "time": 1641338934,
@@ -59,3 +64,32 @@ blockExpected = Block
   , _blockNextBlock = pure "8367f026cf4b03e116ff8ee5daf149b55ba5a6ec6dec04803b8dc317721d15fa"
   , _blockConfirmations = 4698
   }
+
+affectedAddrsSample = [r|
+[
+  {
+    "address": "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv",
+    "transactions": [
+      {
+        "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
+      }
+    ]
+  },
+  {
+    "address": "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz",
+    "transactions": [
+      {
+        "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157d0"
+      }
+    ]
+  }
+]
+|]
+
+affectedAddrsExpected :: [(Address, [TxHash])]
+affectedAddrsExpected =
+  [ (Address "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv",
+     [TxHash "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"])
+  , (Address "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz",
+     [TxHash "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157d0"])
+  ]
