@@ -1,3 +1,7 @@
+# Version [0.4.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.3.1.0...v0.4.0.0) (2022-03-09)
+
+* Build with `blockfrost-api 0.4`
+
 # Version [0.3.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.3.0.0...v0.3.1.0) (2022-02-17)
 
 * Additions
