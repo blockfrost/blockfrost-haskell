@@ -20,7 +20,7 @@ import Servant.Docs (ToSample (..), samples, singleSample)
 data AccountInfo = AccountInfo
   { _accountInfoStakeAddress       :: Address -- ^ Bech32 stake address
   , _accountInfoActive             :: Bool -- ^ Registration state of an account
-  , _accountInfoActiveEpoch        :: Integer -- ^ Epoch of the most recent action - registration or deregistration
+  , _accountInfoActiveEpoch        :: Maybe Integer -- ^ Epoch of the most recent action - registration or deregistration
   , _accountInfoControlledAmount   :: Lovelaces  -- ^ Balance of the account in Lovelaces
   , _accountInfoRewardsSum         :: Lovelaces -- ^ Sum of all funds rewards for the account in the Lovelaces
   , _accountInfoWithdrawalsSum     :: Lovelaces -- ^ Sum of all the withdrawals for the account in the Lovelaces
@@ -37,7 +37,7 @@ instance ToSample AccountInfo where
   toSamples = pure $ singleSample $ AccountInfo
     { _accountInfoStakeAddress = "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
     , _accountInfoActive = True
-    , _accountInfoActiveEpoch = 412
+    , _accountInfoActiveEpoch = pure 412
     , _accountInfoControlledAmount = 619154618165
     , _accountInfoRewardsSum = 319154618165
     , _accountInfoWithdrawalsSum = 12125369253
