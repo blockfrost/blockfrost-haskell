@@ -17,6 +17,7 @@ module Blockfrost.Client.Core
   , page
   , paged
   , allPages
+  , nextPage
   , projectFromEnv
   , projectFromEnv'
   , projectFromFile
