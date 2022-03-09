@@ -32,7 +32,7 @@ instance ToSample TxMeta where
 
 -- | Transaction metadata content in JSON
 data TxMetaJSON = TxMetaJSON
-  { _txMetaJSONTxHash       :: Text -- ^ Transaction hash that contains the specific metadata
+  { _txMetaJSONTxHash       :: TxHash -- ^ Transaction hash that contains the specific metadata
   , _txMetaJSONJSONMetadata :: Maybe Value -- ^ Content of the JSON metadata
   }
   deriving stock (Show, Eq, Generic)
@@ -62,7 +62,7 @@ instance ToSample TxMetaJSON where
 
 -- | Transaction metadata content in CBOR
 data TxMetaCBOR = TxMetaCBOR
-  { _txMetaCBORTxHash   :: Text -- ^ Transaction hash that contains the specific metadata
+  { _txMetaCBORTxHash   :: TxHash -- ^ Transaction hash that contains the specific metadata
   , _txMetaCBORMetadata :: Maybe Text -- ^ Content of the CBOR metadata
   }
   deriving stock (Show, Eq, Generic)

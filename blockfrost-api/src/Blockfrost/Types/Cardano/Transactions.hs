@@ -86,7 +86,7 @@ instance ToSample Transaction where
 data UtxoInput = UtxoInput
   { _utxoInputAddress     :: Address -- ^ Input address
   , _utxoInputAmount      :: [Amount]
-  , _utxoInputTxHash      :: Text -- ^ Hash of the UTXO transaction
+  , _utxoInputTxHash      :: TxHash -- ^ Hash of the UTXO transaction
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
   , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
