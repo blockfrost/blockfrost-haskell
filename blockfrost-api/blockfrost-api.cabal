@@ -128,7 +128,7 @@ library
                       , deriving-aeson
                       , lens
                       , template-haskell
-                      , servant                  ^>= 0.18
+                      , servant                  >= 0.19
                       , servant-docs
                       , servant-multipart-api
                       , safe-money

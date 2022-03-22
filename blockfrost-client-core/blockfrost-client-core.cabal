@@ -53,7 +53,7 @@ library
                       , http-client
                       , http-client-tls
                       , http-types
-                      , servant                  ^>= 0.18
+                      , servant                  >= 0.19
                       , servant-client
                       , servant-client-core
                       , servant-multipart-api
