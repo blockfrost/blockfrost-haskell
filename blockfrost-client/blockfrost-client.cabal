@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-client
-version:             0.4.0.0
+version:             0.4.0.1
 synopsis:            blockfrost.io basic client
 description:         Simple Blockfrost clients for use with transformers or mtl
 homepage:            https://github.com/blockfrost/blockfrost-haskell
