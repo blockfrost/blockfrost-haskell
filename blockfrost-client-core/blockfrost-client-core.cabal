@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-client-core
-version:             0.4.0.0
+version:             0.4.0.1
 synopsis:            blockfrost.io common client definitions / instances
 description:         HasClient for our auth
 homepage:            https://github.com/blockfrost/blockfrost-haskell
@@ -43,8 +43,8 @@ library
                       , Blockfrost.Client.Sorting
                       , Blockfrost.Client.Tag
                       , Blockfrost.Client.UserAgent
-   build-depends:       base >= 4.7 && < 5
-                      , blockfrost-api
+   build-depends:       base                     >= 4.7 && < 5
+                      , blockfrost-api           ^>= 0.4
                       , aeson
                       , bytestring
                       , case-insensitive
@@ -53,7 +53,7 @@ library
                       , http-client
                       , http-client-tls
                       , http-types
-                      , servant                  ^>= 0.18
+                      , servant                  >= 0.18 && < 0.20
                       , servant-client
                       , servant-client-core
                       , servant-multipart-api

@@ -1,3 +1,7 @@
+# Version [0.4.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.4.0.0) (2022-04-05)
+
+* Allow servant `0.19`
+
 # Version [0.4.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.3.1.0...v0.4.0.0) (2022-03-09)
 
 * Changes

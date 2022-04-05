@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-api
-version:             0.4.0.0
+version:             0.4.0.1
 synopsis:            API definitions for blockfrost.io
 description:         Core types and Servant API description
 homepage:            https://github.com/blockfrost/blockfrost-haskell
@@ -119,19 +119,19 @@ library
                       , Blockfrost.Util.UserAgent
                       , Paths_blockfrost_api
    autogen-modules:     Paths_blockfrost_api
-   build-depends:       base >= 4.7 && < 5
+   build-depends:       base                     >= 4.7 && < 5
                       , bytestring
                       , data-default-class
                       , text
                       , time
                       , aeson
                       , deriving-aeson
-                      , lens
+                      , lens                     >= 5.0 && < 5.1
                       , template-haskell
-                      , servant                  ^>= 0.18
+                      , servant                  >= 0.18 && < 0.20
                       , servant-docs
                       , servant-multipart-api
-                      , safe-money
+                      , safe-money               >= 0.9 && < 0.10
                       , quickcheck-instances
                       , QuickCheck
                       , vector
