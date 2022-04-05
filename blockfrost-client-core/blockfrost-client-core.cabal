@@ -43,8 +43,8 @@ library
                       , Blockfrost.Client.Sorting
                       , Blockfrost.Client.Tag
                       , Blockfrost.Client.UserAgent
-   build-depends:       base >= 4.7 && < 5
-                      , blockfrost-api
+   build-depends:       base                     >= 4.7 && < 5
+                      , blockfrost-api           ^>= 0.4
                       , aeson
                       , bytestring
                       , case-insensitive
