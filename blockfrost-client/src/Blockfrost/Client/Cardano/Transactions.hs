@@ -46,7 +46,7 @@ getTxRedeemers t = go (`getTxRedeemers_` t)
 getTxStakes_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionStake]
 getTxStakes_ = _txStakes . transactionsClient
 
--- | Get transaction UTXOs
+-- | Get (de-)registrations of a stake address within a transaction
 getTxStakes :: MonadBlockfrost m => TxHash -> m [TransactionStake]
 getTxStakes t = go (`getTxStakes_` t)
 
