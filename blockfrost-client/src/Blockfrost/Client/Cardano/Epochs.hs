@@ -84,16 +84,16 @@ getEpochStake' e pg = go (\p -> getEpochStake_ p e pg)
 getEpochStake :: MonadBlockfrost m => Epoch -> m [StakeDistribution]
 getEpochStake e = getEpochStake' e def
 
-getEpochStakeByPool_ :: MonadBlockfrost m => Project -> Epoch -> PoolId -> Paged -> m [StakeDistribution]
+getEpochStakeByPool_ :: MonadBlockfrost m => Project -> Epoch -> PoolId -> Paged -> m [PoolStakeDistribution]
 getEpochStakeByPool_ = _getEpochStakeByPool . epochsClient
 
 -- | Return the active stake distribution for the epoch specified by stake pool.
 -- Allows custom paging using @Paged@.
-getEpochStakeByPool' :: MonadBlockfrost m => Epoch -> PoolId -> Paged -> m [StakeDistribution]
+getEpochStakeByPool' :: MonadBlockfrost m => Epoch -> PoolId -> Paged -> m [PoolStakeDistribution]
 getEpochStakeByPool' e i pg = go (\p -> getEpochStakeByPool_ p e i pg)
 
 -- | Return the active stake distribution for the epoch specified by stake pool.
-getEpochStakeByPool :: MonadBlockfrost m => Epoch -> PoolId -> m [StakeDistribution]
+getEpochStakeByPool :: MonadBlockfrost m => Epoch -> PoolId -> m [PoolStakeDistribution]
 getEpochStakeByPool e i = getEpochStakeByPool' e i def
 
 getEpochBlocks_ :: MonadBlockfrost m => Project -> Epoch -> Paged -> SortOrder -> m [BlockHash]

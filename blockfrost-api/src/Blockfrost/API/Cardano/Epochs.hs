@@ -67,7 +67,7 @@ data EpochsAPI route =
         :> "stakes"
         :> Capture "pool_id" PoolId
         :> Pagination
-        :> Get '[JSON] [StakeDistribution]
+        :> Get '[JSON] [PoolStakeDistribution]
      , _getEpochBlocks
         :: route
         :- Summary "Block distribution"
