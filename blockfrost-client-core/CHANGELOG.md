@@ -1,3 +1,7 @@
+# Version [0.4.0.2](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...client-core-0.4.0.2) (2022-06-06)
+
+* Allow blockfrost-api `0.5`
+
 # Version [0.4.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.0...v0.4.0.1) (2022-04-05)
 
 * Allow servant `0.19`
