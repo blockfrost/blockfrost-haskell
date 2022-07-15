@@ -41,7 +41,7 @@ allPages act = do
           xs | length xs < maxPageSize -> pure xs
           xs -> do
             next <- fetch (nextPage page')
-            pure $ next ++ xs
+            pure $ xs ++ next
   fetch def
 
 instance HasClient m subApi => HasClient m (Pagination :> subApi) where
