@@ -9,7 +9,6 @@ module Blockfrost.Types.Cardano.Addresses
   ) where
 
 import Blockfrost.Types.Shared
-import Data.Text (Text)
 import Deriving.Aeson
 import qualified Money
 import Servant.Docs (ToSample (..), samples, singleSample)
@@ -84,7 +83,7 @@ data AddressUtxo = AddressUtxo
   , _addressUtxoOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _addressUtxoAmount      :: [Amount] -- ^ Amounts of Lovelaces or tokens
   , _addressUtxoBlock       :: BlockHash -- ^ Block hash of the UTXO
-  , _addressUtxoDataHash    :: Maybe Text -- ^ Block hash of the UTXO
+  , _addressUtxoDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressUtxo", CamelToSnake]] AddressUtxo
