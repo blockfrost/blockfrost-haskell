@@ -45,6 +45,14 @@ data ScriptsAPI route =
         :> "datum"
         :> Capture "datum_hash" DatumHash
         :> Get '[JSON] ScriptDatum
+     , _getScriptDatumCBOR
+        :: route
+        :- Summary "Datum CBOR value"
+        :> Description "Query CBOR serialised datum by its hash"
+        :> "datum"
+        :> Capture "datum_hash" DatumHash
+        :> "cbor"
+        :> Get '[JSON] ScriptDatumCBOR
       , _getScriptJSON
         :: route
         :- Summary "Script JSON"

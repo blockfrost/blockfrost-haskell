@@ -112,6 +112,7 @@ library
                       , Blockfrost.Types.Shared.PolicyId
                       , Blockfrost.Types.Shared.PoolId
                       , Blockfrost.Types.Shared.Quantity
+                      , Blockfrost.Types.Shared.ValidationPurpose
                       , Blockfrost.Util.LensRules
                       , Blockfrost.Util.Pagination
                       , Blockfrost.Util.Sorting

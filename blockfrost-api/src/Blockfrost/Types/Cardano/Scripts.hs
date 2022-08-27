@@ -5,6 +5,7 @@ module Blockfrost.Types.Cardano.Scripts
   , ScriptType (..)
   , ScriptRedeemer (..)
   , ScriptDatum (..)
+  , ScriptDatumCBOR (..)
   , ScriptJSON (..)
   , ScriptCBOR (..)
   ) where
@@ -15,7 +16,6 @@ import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
 
 import Blockfrost.Types.Shared
-import Blockfrost.Types.Cardano.Transactions (ValidationPurpose(Spend))
 
 -- | Script type
 data ScriptType = Plutus | Timelock
@@ -81,6 +81,17 @@ instance ToSample ScriptDatum where
     $ singleSample
     $ ScriptDatum
     $ object [ "int" .= (42 :: Int) ]
+
+newtype ScriptDatumCBOR = ScriptDatumCBOR { _scriptDatumCborCbor :: Text }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_scriptDatumCbor", CamelToSnake]] ScriptDatumCBOR
+
+instance ToSample ScriptDatumCBOR where
+  toSamples =
+      pure
+    $ singleSample
+    $ ScriptDatumCBOR "19a6aa"
 
 newtype ScriptJSON = ScriptJSON { _scriptJsonJson :: Maybe Value }
   deriving stock (Show, Eq, Generic)

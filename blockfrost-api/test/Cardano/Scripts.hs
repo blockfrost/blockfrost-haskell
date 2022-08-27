@@ -37,6 +37,11 @@ spec_scripts = do
     `shouldBe`
     Right scriptDatumExpected
 
+  it "parses script datum cbor sample" $ do
+    eitherDecode scriptDatumCBORSample
+    `shouldBe`
+    Right scriptDatumCBORExpected
+
   it "parses script JSON sample" $ do
     eitherDecode scriptJSONSample
     `shouldBe`
@@ -115,6 +120,14 @@ scriptDatumSample = [r|
 |]
 
 scriptDatumExpected = ScriptDatum $ object ["int" .= (42 :: Int)]
+
+scriptDatumCBORSample = [r|
+{
+  "cbor": "19a6aa"
+}
+|]
+
+scriptDatumCBORExpected = ScriptDatumCBOR "19a6aa"
 
 scriptJSONSample = [r|
 {
