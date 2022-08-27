@@ -6,11 +6,12 @@ module Blockfrost.Types.Cardano.Scripts
   , ScriptRedeemer (..)
   , ScriptDatum (..)
   , ScriptDatumCBOR (..)
+  , InlineDatum (..)
   , ScriptJSON (..)
   , ScriptCBOR (..)
   ) where
 
-import Data.Aeson (Value, object, (.=))
+import Data.Aeson (Value, object, (.=), FromJSON (..), ToJSON (..))
 import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
@@ -91,6 +92,23 @@ instance ToSample ScriptDatumCBOR where
   toSamples =
       pure
     $ singleSample
+    $ ScriptDatumCBOR "19a6aa"
+
+newtype InlineDatum = InlineDatum { unInlineDatum :: ScriptDatumCBOR }
+  deriving stock (Show, Eq, Generic)
+
+instance ToJSON InlineDatum  where
+  toJSON = toJSON . _scriptDatumCborCbor . unInlineDatum
+  toEncoding = toEncoding . _scriptDatumCborCbor . unInlineDatum
+
+instance FromJSON InlineDatum  where
+  parseJSON = fmap (InlineDatum . ScriptDatumCBOR) <$> parseJSON
+
+instance ToSample InlineDatum where
+  toSamples =
+      pure
+    $ singleSample
+    $ InlineDatum
     $ ScriptDatumCBOR "19a6aa"
 
 newtype ScriptJSON = ScriptJSON { _scriptJsonJson :: Maybe Value }

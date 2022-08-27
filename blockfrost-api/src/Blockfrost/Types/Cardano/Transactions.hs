@@ -25,6 +25,7 @@ import qualified Money
 import Servant.Docs (ToSample (..), samples, singleSample)
 
 import Blockfrost.Types.Cardano.Pools
+import Blockfrost.Types.Cardano.Scripts (InlineDatum (..), ScriptDatumCBOR (..))
 import Blockfrost.Types.Shared
 
 -- | Information about a transaction
@@ -89,6 +90,7 @@ data UtxoInput = UtxoInput
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
   , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
+  , _utxoInputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -106,6 +108,7 @@ utxoInSample =
     , _utxoInputOutputIndex = 0
     , _utxoInputCollateral = False
     , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+    , _utxoInputInlineDatum = Nothing
     }
 
 -- | Transaction output UTxO
@@ -114,6 +117,7 @@ data UtxoOutput = UtxoOutput
   , _utxoOutputAmount      :: [Amount] -- ^ Transaction output amounts
   , _utxoOutputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
+  , _utxoOutputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_utxoOutput", CamelToSnake]] UtxoOutput
@@ -128,6 +132,7 @@ utxoOutSample =
     , _utxoOutputAmount = sampleAmounts
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
+    , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
     }
 
 -- | Transaction UTxOs

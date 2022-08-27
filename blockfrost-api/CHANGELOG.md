@@ -4,7 +4,9 @@
   * `AccountReward` now contains additional `type` field refering to `RewardType`
   * `AssetTransaction` grows `blockTime` field
   * `PoolInfo` grows `blocksEpoch` field with number of blocks minted in the current epoch
-  * `ScriptDatumCBOR` type and `_getScriptDatumCBOR` route
+  * Vasil related
+    * `ScriptDatumCBOR` type and `_getScriptDatumCBOR` route
+    * Both `UtxoInput` and `UtxoOutput` now has `inlineDatum` field with `Maybe InlineDatum` type
 
 * Changes
   * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`
