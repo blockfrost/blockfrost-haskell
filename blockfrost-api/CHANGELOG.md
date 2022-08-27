@@ -2,6 +2,7 @@
 
 * Additions
   * `AccountReward` now contains additional `type` field refering to `RewardType`
+  * `AssetTransaction` grows `blockTime` field
   * `PoolInfo` grows `blocksEpoch` field with number of blocks minted in the current epoch
 
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
