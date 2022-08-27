@@ -91,6 +91,7 @@ data BlockfrostError =
   | BlockfrostTokenMissing Text -- 403
   | BlockfrostNotFound          -- 404
   | BlockfrostIPBanned          -- 418
+  | BlockfrostMempoolFull       -- 425
   | BlockfrostUsageLimitReached -- 429
   | BlockfrostFatal Text        -- 500
   | ServantClientError ClientError
@@ -107,6 +108,8 @@ fromServantClientError e = case e of
         BlockfrostNotFound
     | s == status418 ->
         BlockfrostIPBanned
+    | s == mkStatus 425 "Mempool Full" ->
+        BlockfrostMempoolFull
     | s == status429 ->
         BlockfrostUsageLimitReached
     | s == status500 ->

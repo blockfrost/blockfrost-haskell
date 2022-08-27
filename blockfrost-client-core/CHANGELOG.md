@@ -1,5 +1,8 @@
 # Version [0.6.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.5.0.0...v0.6.0.0) (2022-08-31)
 
+* Additions
+  * HTTP `425` - `BlockfrostMempoolFull` to `BlockfrostError` related to `/tx/submit` endpoint
+
 * Changes
   * Order of results returned by `allPages` is now the same as returned by the API. Was unintentionally reversed before.
 
