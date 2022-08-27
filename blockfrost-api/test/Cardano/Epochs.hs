@@ -97,6 +97,7 @@ protocolParamsSample = [r|
     "max_val_size": "5000",
     "collateral_percent": 150,
     "max_collateral_inputs": 3,
+    "coins_per_utxo_size": "34482",
     "coins_per_utxo_word": "34482"
 }
 |]
@@ -132,6 +133,8 @@ protocolParamsExpected =
     , _protocolParamsMaxValSize = 5000
     , _protocolParamsCollateralPercent = 150
     , _protocolParamsMaxCollateralInputs = 3
+    , _protocolParamsCoinsPerUtxoSize = 34482
+    -- deprecated
     , _protocolParamsCoinsPerUtxoWord = 34482
     }
 

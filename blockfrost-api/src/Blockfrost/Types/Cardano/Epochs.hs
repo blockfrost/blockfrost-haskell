@@ -79,7 +79,8 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMaxValSize             :: Quantity -- ^ The maximum Val size
   , _protocolParamsCollateralPercent      :: Integer -- ^ The percentage of the transactions fee which must be provided as collateral when including non-native scripts
   , _protocolParamsMaxCollateralInputs    :: Integer -- ^ The maximum number of collateral inputs allowed in a transaction
-  , _protocolParamsCoinsPerUtxoWord       :: Lovelaces -- ^ The cost per UTxO word
+  , _protocolParamsCoinsPerUtxoSize       :: Lovelaces -- ^ The cost per UTxO size. Cost per UTxO *word* for Alozno. Cost per UTxO *byte* for Babbage and later
+  , _protocolParamsCoinsPerUtxoWord       :: Lovelaces -- ^ The cost per UTxO word (DEPRECATED)
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -117,6 +118,7 @@ instance ToSample ProtocolParams where
       , _protocolParamsMaxValSize = 5000
       , _protocolParamsCollateralPercent = 150
       , _protocolParamsMaxCollateralInputs = 3
+      , _protocolParamsCoinsPerUtxoSize = 34482
       , _protocolParamsCoinsPerUtxoWord = 34482
       }
 
