@@ -7,6 +7,7 @@ module Blockfrost.Client.Cardano.Scripts
   , getScriptRedeemers
   , getScriptRedeemers'
   , getScriptDatum
+  , getScriptDatumCBOR
   , getScriptJSON
   , getScriptCBOR
   ) where
@@ -55,6 +56,13 @@ getScriptDatum_ = _getScriptDatum . scriptsClient
 -- | Get specific datum
 getScriptDatum :: MonadBlockfrost m => DatumHash -> m ScriptDatum
 getScriptDatum sh = go (`getScriptDatum_` sh)
+
+getScriptDatumCBOR_ :: MonadBlockfrost m => Project -> DatumHash -> m ScriptDatumCBOR
+getScriptDatumCBOR_ = _getScriptDatumCBOR . scriptsClient
+
+-- | Get specific datum
+getScriptDatumCBOR :: MonadBlockfrost m => DatumHash -> m ScriptDatumCBOR
+getScriptDatumCBOR sh = go (`getScriptDatumCBOR_` sh)
 
 getScriptJSON_ :: MonadBlockfrost m => Project -> ScriptHash -> m ScriptJSON
 getScriptJSON_ = _getScriptJSON . scriptsClient

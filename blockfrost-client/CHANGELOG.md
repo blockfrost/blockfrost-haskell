@@ -1,3 +1,8 @@
+# Version [0.6.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.5.0.0...v0.6.0.0) (2022-08-31)
+
+* Additions
+  * `getScriptDatumCBOR` query for `/scripts/datum/{datum-hash}/cbor` endpoint
+
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
 
 * Fix return types of `getEpochStakeByPool` and `getEpochStakeByPool'`
