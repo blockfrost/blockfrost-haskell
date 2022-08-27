@@ -182,6 +182,7 @@ transactionUtxosSample = [r|
       ],
       "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
       "output_index": 0,
+      "collateral": false,
       "inline_datum": "19a6aa",
       "reference_script_hash": "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
@@ -210,6 +211,7 @@ utxoOutSample =
     , _utxoOutputAmount = sampleAmounts
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
+    , _utxoOutputCollateral = False
     , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
     , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }

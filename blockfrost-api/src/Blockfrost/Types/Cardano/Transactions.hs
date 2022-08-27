@@ -121,6 +121,7 @@ data UtxoOutput = UtxoOutput
   , _utxoOutputAmount      :: [Amount] -- ^ Transaction output amounts
   , _utxoOutputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
+  , _utxoOutputCollateral  :: Bool -- ^ UTXO is a script collateral output
   , _utxoOutputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
   , _utxoOutputReferenceScriptHash :: Maybe ScriptHash -- ^ The hash of the reference script of the output
   } deriving stock (Show, Eq, Generic)
@@ -137,6 +138,7 @@ utxoOutSample =
     , _utxoOutputAmount = sampleAmounts
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
+    , _utxoOutputCollateral = False
     , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
     , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }

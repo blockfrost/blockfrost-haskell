@@ -10,6 +10,7 @@
       * `inlineDatum` field with `Maybe InlineDatum` type
       * `referenceScriptHash` field with `Maybe ScriptHash` type
     * `UtxoInput` now has `reference` field indicating that input is a reference input
+    * `UtxoOutput` now has `collateral` field when UTXO is a collateral output
     * `AddressUtxo` now also has `inlineDatum` and `referenceScriptHash` fields
 
 * Changes
