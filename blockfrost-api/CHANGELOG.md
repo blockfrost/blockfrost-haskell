@@ -9,6 +9,7 @@
     * Both `UtxoInput` and `UtxoOutput` now has
       * `inlineDatum` field with `Maybe InlineDatum` type
       * `referenceScriptHash` field with `Maybe ScriptHash` type
+    * `UtxoInput` now has `reference` field indicating that input is a reference input
 
 * Changes
   * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`

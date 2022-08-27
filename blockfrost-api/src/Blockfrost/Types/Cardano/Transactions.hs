@@ -92,6 +92,7 @@ data UtxoInput = UtxoInput
   , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoInputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
   , _utxoInputReferenceScriptHash :: Maybe ScriptHash -- ^ The hash of the reference script of the input
+  , _utxoInputReference   :: Bool -- ^ Whether the input is a reference transaction input
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -111,6 +112,7 @@ utxoInSample =
     , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoInputInlineDatum = Nothing
     , _utxoInputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
+    , _utxoInputReference = False
     }
 
 -- | Transaction output UTxO
