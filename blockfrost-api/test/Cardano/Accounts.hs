@@ -90,27 +90,32 @@ accountRewardsSample = [r|
     {
         "epoch": 215,
         "amount": "12695385",
-        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy",
+        "type": "member"
     },
     {
         "epoch": 216,
         "amount": "12695385",
-        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy",
+        "type": "leader"
     },
     {
         "epoch": 216,
         "amount": "3586329",
-        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy",
+        "type": "leader"
     },
     {
         "epoch": 217,
         "amount": "0",
-        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy",
+        "type": "leader"
     },
     {
         "epoch": 218,
         "amount": "1395265",
-        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy",
+        "type": "pool-deposit-refund"
     }
 ]
 |]
@@ -120,26 +125,31 @@ accountRewardsExpected =
       { _accountRewardEpoch = 215
       , _accountRewardAmount = 12695385
       , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+      , _accountRewardType = Member
       }
   , AccountReward
       { _accountRewardEpoch = 216
       , _accountRewardAmount = 12695385
       , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+      , _accountRewardType = Leader
       }
   , AccountReward
       { _accountRewardEpoch = 216
       , _accountRewardAmount = 3586329
       , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+      , _accountRewardType = Leader
       }
   , AccountReward
       { _accountRewardEpoch = 217
       , _accountRewardAmount = 0
       , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+      , _accountRewardType = Leader
       }
   , AccountReward
       { _accountRewardEpoch = 218
       , _accountRewardAmount = 1395265
       , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+      , _accountRewardType = PoolDepositRefund
       }
   ]
 

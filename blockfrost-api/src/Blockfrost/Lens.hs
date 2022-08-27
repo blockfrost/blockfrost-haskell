@@ -13,7 +13,7 @@ import Control.Lens
 makeLensesWith blockfrostFieldRules ''URLVersion
 
 makeFields ''AccountInfo
-makeFields ''AccountReward
+makeLensesWith blockfrostFieldRules ''AccountReward
 makeFields ''AccountHistory
 makeFields ''AccountDelegation
 makeFields ''AccountRegistration
