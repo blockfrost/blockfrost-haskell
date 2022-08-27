@@ -134,7 +134,9 @@ addressUtxosSample = [r|
             }
         ],
         "block": "7eb8e27d18686c7db9a18f8bbcfe34e3fed6e047afaa2d969904d15e934847e6",
-        "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+        "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
+        "inline_datum": null,
+        "reference_script_hash": null
     },
     {
         "tx_hash": "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49",
@@ -147,7 +149,9 @@ addressUtxosSample = [r|
             }
         ],
         "block": "953f1b80eb7c11a7ffcd67cbd4fde66e824a451aca5a4065725e5174b81685b7",
-        "data_hash": null
+        "data_hash": null,
+        "inline_datum": null,
+        "reference_script_hash": null
     },
     {
         "tx_hash": "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2",
@@ -164,7 +168,9 @@ addressUtxosSample = [r|
             }
         ],
         "block": "5c571f83fe6c784d3fbc223792627ccf0eea96773100f9aedecf8b1eda4544d7",
-        "data_hash": null
+        "data_hash": null,
+        "inline_datum": null,
+        "reference_script_hash": null
     }
 ]
 |]
@@ -176,6 +182,8 @@ addressUtxosExpected =
     , _addressUtxoAmount = [ AdaAmount 42000000 ]
     , _addressUtxoBlock = "7eb8e27d18686c7db9a18f8bbcfe34e3fed6e047afaa2d969904d15e934847e6"
     , _addressUtxoDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+    , _addressUtxoInlineDatum = Nothing
+    , _addressUtxoReferenceScriptHash = Nothing
     }
   , AddressUtxo
     { _addressUtxoTxHash = "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49"
@@ -183,6 +191,8 @@ addressUtxosExpected =
     , _addressUtxoAmount = [ AdaAmount 729235000 ]
     , _addressUtxoBlock = "953f1b80eb7c11a7ffcd67cbd4fde66e824a451aca5a4065725e5174b81685b7"
     , _addressUtxoDataHash = Nothing
+    , _addressUtxoInlineDatum = Nothing
+    , _addressUtxoReferenceScriptHash = Nothing
     }
   , AddressUtxo
     { _addressUtxoTxHash = "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2"
@@ -197,6 +207,8 @@ addressUtxosExpected =
         ]
     , _addressUtxoBlock = "5c571f83fe6c784d3fbc223792627ccf0eea96773100f9aedecf8b1eda4544d7"
     , _addressUtxoDataHash = Nothing
+    , _addressUtxoInlineDatum = Nothing
+    , _addressUtxoReferenceScriptHash = Nothing
     }
   ]
 
