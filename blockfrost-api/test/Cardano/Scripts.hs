@@ -76,7 +76,7 @@ scriptListExpected =
 scriptSample = [r|
 {
   "script_hash": "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656",
-  "type": "plutus",
+  "type": "plutusV1",
   "serialised_size": 3119
 }
 |]
@@ -84,7 +84,7 @@ scriptSample = [r|
 scriptSampleExpected =
   Script
     { _scriptScriptHash = "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
-    , _scriptType = Plutus
+    , _scriptType = PlutusV1
     , _scriptSerialisedSize = Just 3119
     }
 

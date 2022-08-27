@@ -19,6 +19,9 @@
   * `datumHash` field of `TransactionRedeemer` is now deprecated in favor of `redeemerDataHash` field
   * `datumHash` field of `ScriptRedeemer` is now deprecated in favor of `redeemerDataHash` field
     * and also changes type from `Text` to `DataHash`
+  * `ScriptType`
+    * `Plutus` type is now `PlutusV1`
+    * adds `PlutusV2`
 
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
 

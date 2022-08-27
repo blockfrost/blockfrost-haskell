@@ -19,13 +19,13 @@ import Servant.Docs (ToSample (..), samples, singleSample)
 import Blockfrost.Types.Shared
 
 -- | Script type
-data ScriptType = Plutus | Timelock
+data ScriptType = PlutusV1 | PlutusV2 | Timelock
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[ConstructorTagModifier '[ToLower]] ScriptType
 
 instance ToSample ScriptType where
-  toSamples = pure $ samples [ Plutus, Timelock ]
+  toSamples = pure $ samples [ PlutusV1, PlutusV2, Timelock ]
 
 -- | Script info
 data Script = Script
@@ -41,7 +41,7 @@ instance ToSample Script where
   toSamples = pure $ singleSample
     Script
       { _scriptScriptHash = "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
-      , _scriptType = Plutus
+      , _scriptType = PlutusV1
       , _scriptSerialisedSize = Just 3119
       }
 
