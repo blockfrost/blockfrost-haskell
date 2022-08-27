@@ -16,6 +16,7 @@
 * Changes
   * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`
   * `dataHash` field of `AddressUtxo` changes type from `Maybe Text` to `Maybe DatumHash`
+  * `datumHash` field of `TransactionRedeemer` is now deprecated in favor of `redeemerDataHash` field
 
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
 

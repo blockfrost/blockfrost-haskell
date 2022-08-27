@@ -176,7 +176,8 @@ data TransactionRedeemer = TransactionRedeemer
   { _transactionRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
   , _transactionRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
   , _transactionRedeemerScriptHash:: ScriptHash -- ^ Script hash
-  , _transactionRedeemerDatumHash :: DatumHash -- ^ Datum hash
+  , _transactionRedeemerRedeemerDataHash  :: DatumHash -- ^ Redeemer data hash
+  , _transactionRedeemerDatumHash :: DatumHash -- ^ Datum hash (DEPRECATED)
   , _transactionRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
   , _transactionRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
   , _transactionRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script
@@ -191,6 +192,7 @@ instance ToSample TransactionRedeemer where
       { _transactionRedeemerTxIndex = 0
       , _transactionRedeemerPurpose = Spend
       , _transactionRedeemerScriptHash = "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824"
+      , _transactionRedeemerRedeemerDataHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
       , _transactionRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
       , _transactionRedeemerUnitMem = 1700
       , _transactionRedeemerUnitSteps = 476468
