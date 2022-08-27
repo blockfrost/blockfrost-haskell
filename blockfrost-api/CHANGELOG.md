@@ -6,7 +6,9 @@
   * `PoolInfo` grows `blocksEpoch` field with number of blocks minted in the current epoch
   * Vasil related
     * `ScriptDatumCBOR` type and `_getScriptDatumCBOR` route
-    * Both `UtxoInput` and `UtxoOutput` now has `inlineDatum` field with `Maybe InlineDatum` type
+    * Both `UtxoInput` and `UtxoOutput` now has
+      * `inlineDatum` field with `Maybe InlineDatum` type
+      * `referenceScriptHash` field with `Maybe ScriptHash` type
 
 * Changes
   * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`

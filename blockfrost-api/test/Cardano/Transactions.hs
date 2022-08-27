@@ -162,7 +162,8 @@ transactionUtxosSample = [r|
       "output_index": 0,
       "collateral": false,
       "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
-      "inline_datum": null
+      "inline_datum": null,
+      "reference_script_hash": "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
   ],
   "outputs": [
@@ -180,7 +181,8 @@ transactionUtxosSample = [r|
       ],
       "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
       "output_index": 0,
-      "inline_datum": "19a6aa"
+      "inline_datum": "19a6aa",
+      "reference_script_hash": "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
   ]
 }
@@ -196,6 +198,7 @@ utxoInSample =
       , _utxoInputCollateral = False
       , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
       , _utxoInputInlineDatum = Nothing
+      , _utxoInputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
       }
 
 utxoOutSample :: UtxoOutput
@@ -206,6 +209,7 @@ utxoOutSample =
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
     , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
+    , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
 
 transactionUtxosExpected =

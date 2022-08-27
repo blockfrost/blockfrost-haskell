@@ -91,6 +91,7 @@ data UtxoInput = UtxoInput
   , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
   , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoInputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
+  , _utxoInputReferenceScriptHash :: Maybe ScriptHash -- ^ The hash of the reference script of the input
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -109,6 +110,7 @@ utxoInSample =
     , _utxoInputCollateral = False
     , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoInputInlineDatum = Nothing
+    , _utxoInputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
 
 -- | Transaction output UTxO
@@ -118,6 +120,7 @@ data UtxoOutput = UtxoOutput
   , _utxoOutputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _utxoOutputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
+  , _utxoOutputReferenceScriptHash :: Maybe ScriptHash -- ^ The hash of the reference script of the output
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_utxoOutput", CamelToSnake]] UtxoOutput
@@ -133,6 +136,7 @@ utxoOutSample =
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
     , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
+    , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
 
 -- | Transaction UTxOs
