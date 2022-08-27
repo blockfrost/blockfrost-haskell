@@ -41,6 +41,7 @@ data PoolInfo = PoolInfo
   , _poolInfoHex            :: Text -- ^ Hexadecimal pool ID.
   , _poolInfoVrfKey         :: Text -- ^ VRF key hash
   , _poolInfoBlocksMinted   :: Integer -- ^ Total minted blocks
+  , _poolInfoBlocksEpoch    :: Integer -- ^ Number of blocks minted in the current epoch
   , _poolInfoLiveStake      :: Lovelaces
   , _poolInfoLiveSize       :: Double
   , _poolInfoLiveSaturation :: Double
@@ -67,6 +68,7 @@ instance ToSample PoolInfo where
       , _poolInfoHex = "0f292fcaa02b8b2f9b3c8f9fd8e0bb21abedb692a6d5058df3ef2735"
       , _poolInfoVrfKey = "0b5245f9934ec2151116fb8ec00f35fd00e0aa3b075c4ed12cce440f999d8233"
       , _poolInfoBlocksMinted = 69
+      , _poolInfoBlocksEpoch = 4
       , _poolInfoLiveStake = 6900000000
       , _poolInfoLiveSize = 0.42
       , _poolInfoLiveSaturation = 0.93
