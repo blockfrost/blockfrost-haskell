@@ -4,14 +4,23 @@ module Blockfrost.Types.Cardano.Epochs
   ( EpochInfo (..)
   , PoolStakeDistribution (..)
   , ProtocolParams (..)
+  , CostModels (..)
   , StakeDistribution (..)
   ) where
 
 import Blockfrost.Types.Shared
-import Data.Aeson (Value)
+import Data.Aeson (object, FromJSON (..), ToJSON (..), withObject)
+import Data.Map (Map)
 import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), singleSample)
+
+import qualified Data.Aeson.Key
+import qualified Data.Aeson.KeyMap
+import qualified Data.Char
+import qualified Data.Map
+
+import Blockfrost.Types.Cardano.Scripts (ScriptType (..))
 
 -- | Information about an epoch
 data EpochInfo = EpochInfo
@@ -45,7 +54,6 @@ instance ToSample EpochInfo where
       , _epochInfoActiveStake = pure 784953934049314
       }
 
-
 -- | Protocol parameters
 data ProtocolParams = ProtocolParams
   { _protocolParamsEpoch                 :: Epoch -- ^ Epoch number
@@ -68,8 +76,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMinUtxo               :: Lovelaces -- ^ Minimum UTXO value
   , _protocolParamsMinPoolCost           :: Lovelaces  -- ^ Minimum stake cost forced on the pool
   , _protocolParamsNonce                 :: Text -- ^ Epoch number only used once
-  -- cost models
-  -- https://github.com/input-output-hk/cardano-db-sync/pull/758
+  , _protocolParamsCostModels            :: CostModels -- ^ Cost models parameters for Plutus Core scripts
   , _protocolParamsPriceMem               :: Double -- ^ The per word cost of script memory usage
   , _protocolParamsPriceStep              :: Double -- ^ The cost of script execution step usage
   , _protocolParamsMaxTxExMem             :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single transaction
@@ -109,6 +116,7 @@ instance ToSample ProtocolParams where
       , _protocolParamsMinUtxo = 1000000
       , _protocolParamsMinPoolCost = 340000000
       , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+      , _protocolParamsCostModels = costModelsSample
       , _protocolParamsPriceMem = 0.0577
       , _protocolParamsPriceStep = 0.0000721
       , _protocolParamsMaxTxExMem = 10000000
@@ -121,6 +129,62 @@ instance ToSample ProtocolParams where
       , _protocolParamsCoinsPerUtxoSize = 34482
       , _protocolParamsCoinsPerUtxoWord = 34482
       }
+
+newtype CostModels = CostModels { unCostModels :: Map ScriptType (Map Text Integer) }
+  deriving (Eq, Show, Generic)
+
+instance ToJSON CostModels where
+  toJSON =
+      object
+    . map (\(lang, params) ->
+        ( Data.Aeson.Key.fromString $ show lang
+        , object
+          $ map (\(key, param) ->
+              ( Data.Aeson.Key.fromText key
+              , toJSON param)
+            )
+            $ Data.Map.toList params
+        ))
+    . Data.Map.toList
+    . unCostModels
+
+instance FromJSON CostModels where
+  parseJSON = withObject "CostModel" $ \o -> do
+    let parseParams = withObject "CostModelParams" $ \po -> do
+          mapM (parseJSON . toJSON) $ Data.Aeson.KeyMap.toList po
+
+    langs <- mapM
+               (\(kLang, vParams) -> do
+                 l <- parseJSON
+                    $ toJSON
+                    $ (\(x:xs) -> Data.Char.toLower x:xs)
+                    $ Data.Aeson.Key.toString kLang
+                 ps <- parseParams vParams
+                 pure (l, Data.Map.fromList ps)
+               )
+               $ Data.Aeson.KeyMap.toList o
+
+    pure $ CostModels $ Data.Map.fromList langs
+
+costModelsSample :: CostModels
+costModelsSample = CostModels
+      $ Data.Map.fromList
+      [ ( PlutusV1
+        , Data.Map.fromList
+          [ ("addInteger-cpu-arguments-intercept", 197209)
+          , ("addInteger-cpu-arguments-slope", 0)
+          ]
+        )
+      , (PlutusV2
+        , Data.Map.fromList
+          [ ("addInteger-cpu-arguments-intercept", 197209)
+          , ("addInteger-cpu-arguments-slope", 0)
+          ]
+        )
+      ]
+
+instance ToSample CostModels where
+  toSamples = pure $ singleSample costModelsSample
 
 -- | Active stake distribution for an epoch
 data StakeDistribution = StakeDistribution

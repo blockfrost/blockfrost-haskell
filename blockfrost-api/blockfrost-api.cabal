@@ -122,10 +122,11 @@ library
    autogen-modules:     Paths_blockfrost_api
    build-depends:       base                     >= 4.7 && < 5
                       , bytestring
+                      , containers
                       , data-default-class
                       , text
                       , time
-                      , aeson
+                      , aeson                    >= 2.0 && < 3.0
                       , deriving-aeson
                       , lens                     >= 5.0 && < 5.1
                       , template-haskell
@@ -160,6 +161,7 @@ test-suite blockfrost-api-tests
                      , blockfrost-api
                      , aeson
                      , bytestring
+                     , containers
                      , text
                      , data-default
                      , safe-money

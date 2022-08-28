@@ -7,6 +7,7 @@ module Cardano.Epochs
   where
 
 import Data.Aeson (decode, eitherDecode, encode)
+import qualified Data.Map
 import Data.Text (Text)
 import qualified Money
 import Test.Hspec
@@ -88,6 +89,17 @@ protocolParamsSample = [r|
     "min_utxo": "1000000",
     "min_pool_cost": "340000000",
     "nonce": "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81",
+    "cost_models": {
+      "PlutusV1": {
+        "addInteger-cpu-arguments-intercept": 197209,
+        "addInteger-cpu-arguments-slope": 0
+      },
+      "PlutusV2":
+      {
+        "addInteger-cpu-arguments-intercept": 197209,
+        "addInteger-cpu-arguments-slope": 0
+      }
+    },
     "price_mem": 0.0577,
     "price_step": 0.0000721,
     "max_tx_ex_mem": "10000000",
@@ -124,6 +136,22 @@ protocolParamsExpected =
     , _protocolParamsMinUtxo = 1000000
     , _protocolParamsMinPoolCost = 340000000
     , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+    , _protocolParamsCostModels =
+        CostModels
+      $ Data.Map.fromList
+      [ ( PlutusV1
+        , Data.Map.fromList
+          [ ("addInteger-cpu-arguments-intercept", 197209)
+          , ("addInteger-cpu-arguments-slope", 0)
+          ]
+        )
+      , (PlutusV2
+        , Data.Map.fromList
+          [ ("addInteger-cpu-arguments-intercept", 197209)
+          , ("addInteger-cpu-arguments-slope", 0)
+          ]
+        )
+      ]
     , _protocolParamsPriceMem = 0.0577
     , _protocolParamsPriceStep = 0.0000721
     , _protocolParamsMaxTxExMem = 10000000

@@ -12,6 +12,7 @@
     * `UtxoInput` now has `reference` field indicating that input is a reference input
     * `UtxoOutput` now has `collateral` field when UTXO is a collateral output
     * `AddressUtxo` now also has `inlineDatum` and `referenceScriptHash` fields
+  * `CostModels` data type which is now returned as part of `ProtocolParameters`
 
 * Changes
   * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`
