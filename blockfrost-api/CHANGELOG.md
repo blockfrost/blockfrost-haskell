@@ -27,6 +27,7 @@
     * `coinsPerUtxoSize` is now
       * Cost per UTxO **word** for Alonzo.
       * Cost per UTxO **byte** for Babbage and later.
+    * `extraEntropy` field changes type from `Maybe Value` to `Maybe Text`
 
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
 

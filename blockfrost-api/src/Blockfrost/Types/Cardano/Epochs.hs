@@ -62,7 +62,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsRho                   :: Double -- ^ Monetary expansion
   , _protocolParamsTau                   :: Double -- ^ Treasury expansion
   , _protocolParamsDecentralisationParam :: Double -- ^ Percentage of blocks produced by federated nodes
-  , _protocolParamsExtraEntropy          :: Maybe Value -- ^ Seed for extra entropy
+  , _protocolParamsExtraEntropy          :: Maybe Text -- ^ Seed for extra entropy
   , _protocolParamsProtocolMajorVer      :: Integer -- ^ Accepted protocol major version
   , _protocolParamsProtocolMinorVer      :: Integer -- ^ Accepted protocol minor version
   , _protocolParamsMinUtxo               :: Lovelaces -- ^ Minimum UTXO value
