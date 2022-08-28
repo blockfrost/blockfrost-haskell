@@ -41,6 +41,8 @@ blockSample = [r|
     "output": "128314491794",
     "fees": "592661",
     "block_vrf": "vrf_vk1wf2k6lhujezqcfe00l6zetxpnmh9n6mwhpmhm0dvfh3fxgmdnrfqkms8ty",
+    "op_cert": "da905277534faf75dae41732650568af545134ee08a3c0392dbefc8096ae177c",
+    "op_cert_counter": "18",
     "previous_block": "43ebccb3ac72c7cebd0d9b755a4b08412c9f5dcb81b8a0ad1e3c197d29d47b05",
     "next_block": "8367f026cf4b03e116ff8ee5daf149b55ba5a6ec6dec04803b8dc317721d15fa",
     "confirmations": 4698
@@ -60,6 +62,8 @@ blockExpected = Block
   , _blockOutput = pure $ 128314491794
   , _blockFees = pure $ 592661
   , _blockBlockVrf = pure "vrf_vk1wf2k6lhujezqcfe00l6zetxpnmh9n6mwhpmhm0dvfh3fxgmdnrfqkms8ty"
+  , _blockOpCert = pure "da905277534faf75dae41732650568af545134ee08a3c0392dbefc8096ae177c"
+  , _blockOpCertCounter = pure 18
   , _blockPreviousBlock = pure "43ebccb3ac72c7cebd0d9b755a4b08412c9f5dcb81b8a0ad1e3c197d29d47b05"
   , _blockNextBlock = pure "8367f026cf4b03e116ff8ee5daf149b55ba5a6ec6dec04803b8dc317721d15fa"
   , _blockConfirmations = 4698
