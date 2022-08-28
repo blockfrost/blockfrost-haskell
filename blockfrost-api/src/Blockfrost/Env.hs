@@ -18,6 +18,8 @@ data Env =
     Ipfs
   | Mainnet
   | Testnet
+  | Preprod
+  | Preview
   | Localhost
   deriving (Eq, Read, Show, Ord, Generic)
 

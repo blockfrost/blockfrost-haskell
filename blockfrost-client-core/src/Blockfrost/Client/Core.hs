@@ -67,6 +67,8 @@ subdomainByEnv :: Env -> Maybe String
 subdomainByEnv Ipfs      = pure "ipfs"
 subdomainByEnv Mainnet   = pure "cardano-mainnet"
 subdomainByEnv Testnet   = pure "cardano-testnet"
+subdomainByEnv Preprod   = pure "cardano-preprod"
+subdomainByEnv Preview   = pure "cardano-preview"
 subdomainByEnv Localhost = Nothing
 
 -- | Read file according to BLOCKFROST_TOKEN_PATH environment variable name.

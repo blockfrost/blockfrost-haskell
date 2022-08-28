@@ -14,6 +14,7 @@
     * `AddressUtxo` now also has `inlineDatum` and `referenceScriptHash` fields
   * `CostModels` data type which is now returned as part of `ProtocolParameters`
   * `Block` now has `opCert` and `opCertCounter` fields
+  * `Preprod` and `Preview` environments
 
 * Changes
   * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`

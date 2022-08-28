@@ -5,6 +5,7 @@
     * `BlockfrostMempoolFullOrPinQueueFull` to `BlockfrostError` 
       * related to `/tx/submit` endpoint
       * or to `IPFS` pinning `/ipfs/pin/add/{IPFS_path}` endpoint
+  * `Preprod` and `Preview` environments
 
 * Changes
   * Order of results returned by `allPages` is now the same as returned by the API. Was unintentionally reversed before.
