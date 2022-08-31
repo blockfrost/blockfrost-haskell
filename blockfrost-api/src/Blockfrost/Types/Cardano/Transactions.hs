@@ -5,7 +5,6 @@ module Blockfrost.Types.Cardano.Transactions
   , TransactionUtxos (..)
   , UtxoInput (..)
   , UtxoOutput (..)
-  , ValidationPurpose (..)
   , TransactionRedeemer (..)
   , TransactionStake (..)
   , TransactionDelegation (..)
@@ -26,6 +25,7 @@ import qualified Money
 import Servant.Docs (ToSample (..), samples, singleSample)
 
 import Blockfrost.Types.Cardano.Pools
+import Blockfrost.Types.Cardano.Scripts (InlineDatum (..), ScriptDatumCBOR (..))
 import Blockfrost.Types.Shared
 
 -- | Information about a transaction
@@ -90,6 +90,9 @@ data UtxoInput = UtxoInput
   , _utxoInputOutputIndex :: Integer -- ^ UTXO index in the transaction
   , _utxoInputCollateral  :: Bool -- ^ UTXO is a script collateral input
   , _utxoInputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
+  , _utxoInputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
+  , _utxoInputReferenceScriptHash :: Maybe ScriptHash -- ^ The hash of the reference script of the input
+  , _utxoInputReference   :: Bool -- ^ Whether the input is a reference transaction input
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -107,6 +110,9 @@ utxoInSample =
     , _utxoInputOutputIndex = 0
     , _utxoInputCollateral = False
     , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+    , _utxoInputInlineDatum = Nothing
+    , _utxoInputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
+    , _utxoInputReference = False
     }
 
 -- | Transaction output UTxO
@@ -115,6 +121,9 @@ data UtxoOutput = UtxoOutput
   , _utxoOutputAmount      :: [Amount] -- ^ Transaction output amounts
   , _utxoOutputDataHash    :: Maybe DatumHash -- ^ The hash of the transaction output datum
   , _utxoOutputOutputIndex :: Integer -- ^ UTXO index in the transaction
+  , _utxoOutputCollateral  :: Bool -- ^ UTXO is a script collateral output
+  , _utxoOutputInlineDatum :: Maybe InlineDatum -- ^ CBOR encoded inline datum
+  , _utxoOutputReferenceScriptHash :: Maybe ScriptHash -- ^ The hash of the reference script of the output
   } deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_utxoOutput", CamelToSnake]] UtxoOutput
@@ -129,6 +138,9 @@ utxoOutSample =
     , _utxoOutputAmount = sampleAmounts
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
+    , _utxoOutputCollateral = False
+    , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
+    , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
 
 -- | Transaction UTxOs
@@ -159,21 +171,13 @@ sampleAmounts =
           12
   ]
 
--- | Validation purpose
-data ValidationPurpose = Spend | Mint | Cert | Reward
-  deriving stock (Show, Eq, Generic)
-  deriving (FromJSON, ToJSON)
-  via CustomJSON '[ConstructorTagModifier '[ToLower]] ValidationPurpose
-
-instance ToSample ValidationPurpose where
-  toSamples = pure $ samples [ Spend, Mint, Cert, Reward ]
-
 -- | Transaction redeemer
 data TransactionRedeemer = TransactionRedeemer
   { _transactionRedeemerTxIndex   :: Integer -- ^ Index of the redeemer within a transaction
   , _transactionRedeemerPurpose   :: ValidationPurpose -- ^ Validation purpose
   , _transactionRedeemerScriptHash:: ScriptHash -- ^ Script hash
-  , _transactionRedeemerDatumHash :: DatumHash -- ^ Datum hash
+  , _transactionRedeemerRedeemerDataHash  :: DatumHash -- ^ Redeemer data hash
+  , _transactionRedeemerDatumHash :: DatumHash -- ^ Datum hash (DEPRECATED)
   , _transactionRedeemerUnitMem   :: Quantity -- ^ The budget in Memory to run a script
   , _transactionRedeemerUnitSteps :: Quantity -- ^ The budget in Steps to run a script
   , _transactionRedeemerFee       :: Lovelaces -- ^ The fee consumed to run the script
@@ -188,6 +192,7 @@ instance ToSample TransactionRedeemer where
       { _transactionRedeemerTxIndex = 0
       , _transactionRedeemerPurpose = Spend
       , _transactionRedeemerScriptHash = "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824"
+      , _transactionRedeemerRedeemerDataHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
       , _transactionRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
       , _transactionRedeemerUnitMem = 1700
       , _transactionRedeemerUnitSteps = 476468

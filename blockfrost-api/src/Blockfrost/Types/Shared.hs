@@ -18,6 +18,7 @@ module Blockfrost.Types.Shared
   , module Blockfrost.Types.Shared.Slot
   , module Blockfrost.Types.Shared.ScriptHash
   , module Blockfrost.Types.Shared.TxHash
+  , module Blockfrost.Types.Shared.ValidationPurpose
   ) where
 
 import Blockfrost.Types.Shared.Ada
@@ -37,3 +38,4 @@ import Blockfrost.Types.Shared.Quantity
 import Blockfrost.Types.Shared.Slot
 import Blockfrost.Types.Shared.ScriptHash
 import Blockfrost.Types.Shared.TxHash
+import Blockfrost.Types.Shared.ValidationPurpose

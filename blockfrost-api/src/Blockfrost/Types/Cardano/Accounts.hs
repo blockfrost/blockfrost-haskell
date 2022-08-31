@@ -2,6 +2,7 @@
 
 module Blockfrost.Types.Cardano.Accounts
   ( AccountInfo (..)
+  , RewardType (..)
   , AccountReward (..)
   , AccountHistory (..)
   , AccountDelegation (..)
@@ -47,11 +48,21 @@ instance ToSample AccountInfo where
     , _accountInfoPoolId = pure "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
     }
 
+-- | Reward type
+data RewardType = Leader | Member | PoolDepositRefund
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[ConstructorTagModifier '[CamelToKebab]] RewardType
+
+instance ToSample RewardType where
+  toSamples = pure $ samples [ Leader, Member, PoolDepositRefund ]
+
 -- | Reward received by an account
 data AccountReward = AccountReward
   { _accountRewardEpoch  :: Epoch -- ^ Epoch of the associated reward
   , _accountRewardAmount :: Lovelaces -- ^ Rewards for given epoch in Lovelaces
   , _accountRewardPoolId :: PoolId -- ^ Bech32 pool ID being delegated to
+  , _accountRewardType   :: RewardType -- ^ Reward type
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -63,21 +74,25 @@ instance ToSample AccountReward where
         { _accountRewardEpoch = 214
         , _accountRewardAmount = 1395265
         , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        , _accountRewardType = Member
         }
     , AccountReward
         { _accountRewardEpoch = 215
         , _accountRewardAmount = 58632
         , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        , _accountRewardType = Leader
         }
     , AccountReward
         { _accountRewardEpoch = 216
         , _accountRewardAmount = 0
         , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        , _accountRewardType = Leader
         }
     , AccountReward
         { _accountRewardEpoch = 217
         , _accountRewardAmount = 1395265
         , _accountRewardPoolId = "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+        , _accountRewardType = PoolDepositRefund
         }
     ]
 

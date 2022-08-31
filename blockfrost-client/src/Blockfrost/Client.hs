@@ -122,6 +122,7 @@ module Blockfrost.Client
   , getScriptRedeemers
   , getScriptRedeemers'
   , getScriptDatum
+  , getScriptDatumCBOR
   , getScriptJSON
   , getScriptCBOR
     -- Cardano - Transactions

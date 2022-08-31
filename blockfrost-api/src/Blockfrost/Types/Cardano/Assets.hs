@@ -172,6 +172,7 @@ data AssetTransaction = AssetTransaction
   { _assetTransactionTxHash      :: TxHash -- ^ Hash of the transaction
   , _assetTransactionTxIndex     :: Integer -- ^ Transaction index within the block
   , _assetTransactionBlockHeight :: Integer -- ^ Block height
+  , _assetTransactionBlockTime   :: POSIXTime -- ^ Block creation time in UNIX time
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -183,16 +184,19 @@ instance ToSample AssetTransaction where
         { _assetTransactionTxHash = "8788591983aa73981fc92d6cddbbe643959f5a784e84b8bee0db15823f575a5b"
         , _assetTransactionTxIndex = 6
         , _assetTransactionBlockHeight = 69
+        , _assetTransactionBlockTime = 1635505891
         }
     , AssetTransaction
         { _assetTransactionTxHash = "52e748c4dec58b687b90b0b40d383b9fe1f24c1a833b7395cdf07dd67859f46f"
         , _assetTransactionTxIndex = 9
         , _assetTransactionBlockHeight = 4547
+        , _assetTransactionBlockTime = 1635505987
         }
      , AssetTransaction
         { _assetTransactionTxHash = "e8073fd5318ff43eca18a852527166aa8008bee9ee9e891f585612b7e4ba700b"
         , _assetTransactionTxIndex = 0
         , _assetTransactionBlockHeight = 564654
+        , _assetTransactionBlockTime = 1834505492
         }
     ]
 

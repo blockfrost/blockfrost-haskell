@@ -1,3 +1,49 @@
+# Version [0.6.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.5.0.0...v0.6.0.0) (2022-08-31)
+
+* Additions
+  * `AccountReward` now contains additional `type` field refering to `RewardType`
+  * `AssetTransaction` grows `blockTime` field
+  * `PoolInfo` grows `blocksEpoch` field with number of blocks minted in the current epoch
+  * Vasil related
+    * `ScriptDatumCBOR` type and `_getScriptDatumCBOR` route
+    * Both `UtxoInput` and `UtxoOutput` now has
+      * `inlineDatum` field with `Maybe InlineDatum` type
+      * `referenceScriptHash` field with `Maybe ScriptHash` type
+    * `UtxoInput` now has `reference` field indicating that input is a reference input
+    * `UtxoOutput` now has `collateral` field when UTXO is a collateral output
+    * `AddressUtxo` now also has `inlineDatum` and `referenceScriptHash` fields
+  * `CostModels` data type which is now returned as part of `ProtocolParameters`
+  * `Block` now has `opCert` and `opCertCounter` fields
+  * `Preprod` and `Preview` environments
+
+* Changes
+  * `ValidationPurpose` type moved from `Blockfrost.Types.Cardano.Transactions` to `Blockfrost.Types.Shared.ValidationPurpose`
+  * `dataHash` field of `AddressUtxo` changes type from `Maybe Text` to `Maybe DatumHash`
+  * `datumHash` field of `TransactionRedeemer` is now deprecated in favor of `redeemerDataHash` field
+  * `datumHash` field of `ScriptRedeemer` is now deprecated in favor of `redeemerDataHash` field
+    * and also changes type from `Text` to `DataHash`
+  * `ScriptType`
+    * `Plutus` type is now `PlutusV1`
+    * adds `PlutusV2`
+  * `ProtocolParameters`
+    * `coinsPerUtxoWord` is now deprecated, prefer `coinsPerUtxoSize`
+    * `coinsPerUtxoSize` is now
+      * Cost per UTxO **word** for Alonzo.
+      * Cost per UTxO **byte** for Babbage and later.
+    * `extraEntropy` field changes type from `Maybe Value` to `Maybe Text`
+  * `ProtocolParams`
+    * types of following fields changed from `Double` to `Rational`
+      * `a0`
+      * `rho`
+      * `tau`
+      * `decentralisationParam`
+      * `priceMem`
+      * `priceStep`
+  * `PoolInfo`
+    * type of `marginCost` field changes from `Double` to `Rational`
+  * `Genesis`
+    * type of `activeSlotsCoefficient` field changes from `Double` to `Rational`
+
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
 
 * Fix return type of `_getEpochStakeByPool` from `StakeDistribution` to `PoolStakeDistribution`

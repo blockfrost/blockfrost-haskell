@@ -161,7 +161,10 @@ transactionUtxosSample = [r|
       "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0",
       "output_index": 0,
       "collateral": false,
-      "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+      "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
+      "inline_datum": null,
+      "reference_script_hash": "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1",
+      "reference": false
     }
   ],
   "outputs": [
@@ -178,7 +181,10 @@ transactionUtxosSample = [r|
         }
       ],
       "data_hash": "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710",
-      "output_index": 0
+      "output_index": 0,
+      "collateral": false,
+      "inline_datum": "19a6aa",
+      "reference_script_hash": "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
   ]
 }
@@ -193,6 +199,9 @@ utxoInSample =
       , _utxoInputOutputIndex = 0
       , _utxoInputCollateral = False
       , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
+      , _utxoInputInlineDatum = Nothing
+      , _utxoInputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
+      , _utxoInputReference = False
       }
 
 utxoOutSample :: UtxoOutput
@@ -202,6 +211,9 @@ utxoOutSample =
     , _utxoOutputAmount = sampleAmounts
     , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
     , _utxoOutputOutputIndex = 0
+    , _utxoOutputCollateral = False
+    , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
+    , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
     }
 
 transactionUtxosExpected =
@@ -216,6 +228,7 @@ transactionRedeemerSample = [r|
   "tx_index": 0,
   "purpose": "spend",
   "script_hash": "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824",
+  "redeemer_data_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
   "datum_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
   "unit_mem": "1700",
   "unit_steps": "476468",
@@ -228,6 +241,8 @@ transactionRedeemerExpected =
     { _transactionRedeemerTxIndex = 0
     , _transactionRedeemerPurpose = Spend
     , _transactionRedeemerScriptHash = "ec26b89af41bef0f7585353831cb5da42b5b37185e0c8a526143b824"
+    , _transactionRedeemerRedeemerDataHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
+    -- deprecated
     , _transactionRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
     , _transactionRedeemerUnitMem = 1700
     , _transactionRedeemerUnitSteps = 476468

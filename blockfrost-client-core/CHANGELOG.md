@@ -1,3 +1,15 @@
+# Version [0.6.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.5.0.0...v0.6.0.0) (2022-08-31)
+
+* Additions
+  * HTTP Error `425`
+    * `BlockfrostMempoolFullOrPinQueueFull` to `BlockfrostError` 
+      * related to `/tx/submit` endpoint
+      * or to `IPFS` pinning `/ipfs/pin/add/{IPFS_path}` endpoint
+  * `Preprod` and `Preview` environments
+
+* Changes
+  * Order of results returned by `allPages` is now the same as returned by the API. Was unintentionally reversed before.
+
 # Version [0.4.0.2](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...client-core-0.4.0.2) (2022-06-06)
 
 * Allow blockfrost-api `0.5`

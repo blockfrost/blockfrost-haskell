@@ -67,6 +67,8 @@ subdomainByEnv :: Env -> Maybe String
 subdomainByEnv Ipfs      = pure "ipfs"
 subdomainByEnv Mainnet   = pure "cardano-mainnet"
 subdomainByEnv Testnet   = pure "cardano-testnet"
+subdomainByEnv Preprod   = pure "cardano-preprod"
+subdomainByEnv Preview   = pure "cardano-preview"
 subdomainByEnv Localhost = Nothing
 
 -- | Read file according to BLOCKFROST_TOKEN_PATH environment variable name.
@@ -91,6 +93,7 @@ data BlockfrostError =
   | BlockfrostTokenMissing Text -- 403
   | BlockfrostNotFound          -- 404
   | BlockfrostIPBanned          -- 418
+  | BlockfrostMempoolFullOrPinQueueFull -- 425
   | BlockfrostUsageLimitReached -- 429
   | BlockfrostFatal Text        -- 500
   | ServantClientError ClientError
@@ -107,6 +110,8 @@ fromServantClientError e = case e of
         BlockfrostNotFound
     | s == status418 ->
         BlockfrostIPBanned
+    | s == mkStatus 425 "Mempool Full (TXs) or Pin Queue Full (IPFS)" ->
+        BlockfrostMempoolFullOrPinQueueFull
     | s == status429 ->
         BlockfrostUsageLimitReached
     | s == status500 ->

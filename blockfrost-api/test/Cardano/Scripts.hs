@@ -37,6 +37,11 @@ spec_scripts = do
     `shouldBe`
     Right scriptDatumExpected
 
+  it "parses script datum cbor sample" $ do
+    eitherDecode scriptDatumCBORSample
+    `shouldBe`
+    Right scriptDatumCBORExpected
+
   it "parses script JSON sample" $ do
     eitherDecode scriptJSONSample
     `shouldBe`
@@ -71,7 +76,7 @@ scriptListExpected =
 scriptSample = [r|
 {
   "script_hash": "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656",
-  "type": "plutus",
+  "type": "plutusV1",
   "serialised_size": 3119
 }
 |]
@@ -79,7 +84,7 @@ scriptSample = [r|
 scriptSampleExpected =
   Script
     { _scriptScriptHash = "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
-    , _scriptType = Plutus
+    , _scriptType = PlutusV1
     , _scriptSerialisedSize = Just 3119
     }
 
@@ -88,6 +93,7 @@ scriptRedeemerSample = [r|
   "tx_hash": "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0",
   "tx_index": 0,
   "purpose": "spend",
+  "redeemer_data_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
   "datum_hash": "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec",
   "unit_mem": "1700",
   "unit_steps": "476468",
@@ -100,6 +106,8 @@ scriptRedeemerExpected =
     { _scriptRedeemerTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
     , _scriptRedeemerTxIndex = 0
     , _scriptRedeemerPurpose = Spend
+    , _scriptRedeemerRedeemerDataHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
+    -- deprecated
     , _scriptRedeemerDatumHash = "923918e403bf43c34b4ef6b48eb2ee04babed17320d8d1b9ff9ad086e86f44ec"
     , _scriptRedeemerUnitMem = 1700
     , _scriptRedeemerUnitSteps = 476468
@@ -115,6 +123,14 @@ scriptDatumSample = [r|
 |]
 
 scriptDatumExpected = ScriptDatum $ object ["int" .= (42 :: Int)]
+
+scriptDatumCBORSample = [r|
+{
+  "cbor": "19a6aa"
+}
+|]
+
+scriptDatumCBORExpected = ScriptDatumCBOR "19a6aa"
 
 scriptJSONSample = [r|
 {
