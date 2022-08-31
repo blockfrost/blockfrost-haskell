@@ -31,6 +31,18 @@
       * Cost per UTxO **word** for Alonzo.
       * Cost per UTxO **byte** for Babbage and later.
     * `extraEntropy` field changes type from `Maybe Value` to `Maybe Text`
+  * `ProtocolParams`
+    * types of following fields changed from `Double` to `Rational`
+      * `a0`
+      * `rho`
+      * `tau`
+      * `decentralisationParam`
+      * `priceMem`
+      * `priceStep`
+  * `PoolInfo`
+    * type of `marginCost` field changes from `Double` to `Rational`
+  * `Genesis`
+    * type of `activeSlotsCoefficient` field changes from `Double` to `Rational`
 
 # Version [0.5.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.4.0.1...v0.5.0.0) (2022-06-06)
 

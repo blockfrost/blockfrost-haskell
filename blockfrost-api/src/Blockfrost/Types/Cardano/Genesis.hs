@@ -13,7 +13,7 @@ import Blockfrost.Types.Shared
 
 -- | Information about blockchain genesis
 data Genesis = Genesis
-  { _genesisActiveSlotsCoefficient :: Double -- ^ The proportion of slots in which blocks should be issued
+  { _genesisActiveSlotsCoefficient :: Rational -- ^ The proportion of slots in which blocks should be issued
   , _genesisUpdateQuorum           :: Integer -- ^ Determines the quorum needed for votes on the protocol parameter updates
   , _genesisMaxLovelaceSupply      :: Lovelaces -- ^ The total number of lovelace in the system
   , _genesisNetworkMagic           :: Integer -- ^ Network identifier

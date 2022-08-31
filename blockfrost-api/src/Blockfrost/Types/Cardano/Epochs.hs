@@ -66,10 +66,10 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsPoolDeposit           :: Lovelaces -- ^ The amount of a pool registration deposit in Lovelaces
   , _protocolParamsEMax                  :: Integer -- ^ Epoch bound on pool retirement
   , _protocolParamsNOpt                  :: Integer -- ^ Desired number of pools
-  , _protocolParamsA0                    :: Double -- ^ Pool pledge influence
-  , _protocolParamsRho                   :: Double -- ^ Monetary expansion
-  , _protocolParamsTau                   :: Double -- ^ Treasury expansion
-  , _protocolParamsDecentralisationParam :: Double -- ^ Percentage of blocks produced by federated nodes
+  , _protocolParamsA0                    :: Rational -- ^ Pool pledge influence
+  , _protocolParamsRho                   :: Rational -- ^ Monetary expansion
+  , _protocolParamsTau                   :: Rational -- ^ Treasury expansion
+  , _protocolParamsDecentralisationParam :: Rational -- ^ Percentage of blocks produced by federated nodes
   , _protocolParamsExtraEntropy          :: Maybe Text -- ^ Seed for extra entropy
   , _protocolParamsProtocolMajorVer      :: Integer -- ^ Accepted protocol major version
   , _protocolParamsProtocolMinorVer      :: Integer -- ^ Accepted protocol minor version
@@ -77,8 +77,8 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMinPoolCost           :: Lovelaces  -- ^ Minimum stake cost forced on the pool
   , _protocolParamsNonce                 :: Text -- ^ Epoch number only used once
   , _protocolParamsCostModels            :: CostModels -- ^ Cost models parameters for Plutus Core scripts
-  , _protocolParamsPriceMem               :: Double -- ^ The per word cost of script memory usage
-  , _protocolParamsPriceStep              :: Double -- ^ The cost of script execution step usage
+  , _protocolParamsPriceMem               :: Rational -- ^ The per word cost of script memory usage
+  , _protocolParamsPriceStep              :: Rational -- ^ The cost of script execution step usage
   , _protocolParamsMaxTxExMem             :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single transaction
   , _protocolParamsMaxTxExSteps           :: Quantity -- ^ The maximum number of execution steps allowed to be used in a single transaction
   , _protocolParamsMaxBlockExMem          :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single block

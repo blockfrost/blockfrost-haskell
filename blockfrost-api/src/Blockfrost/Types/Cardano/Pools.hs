@@ -50,7 +50,7 @@ data PoolInfo = PoolInfo
   , _poolInfoActiveSize     :: Double
   , _poolInfoDeclaredPledge :: Lovelaces -- ^ Stake pool certificate pledge
   , _poolInfoLivePledge     :: Lovelaces -- ^ Stake pool current pledge
-  , _poolInfoMarginCost     :: Double -- ^ Margin tax cost of the stake pool
+  , _poolInfoMarginCost     :: Rational -- ^ Margin tax cost of the stake pool
   , _poolInfoFixedCost      :: Lovelaces -- ^ Fixed tax cost of the stake pool
   , _poolInfoRewardAccount  :: Address -- ^ Bech32 reward account of the stake pool
   , _poolInfoOwners         :: [Address]
