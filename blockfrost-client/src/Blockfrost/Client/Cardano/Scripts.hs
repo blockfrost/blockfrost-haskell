@@ -23,11 +23,15 @@ listScripts_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [ScriptH
 listScripts_ = _listScripts . scriptsClient
 
 -- | List scripts
--- Allows custom paging and ordering using @Paged@ and @SortOrder@.
+-- Allows custom paging and ordering using 'Paged' and 'SortOrder'.
 listScripts' :: MonadBlockfrost m => Paged -> SortOrder -> m [ScriptHash]
 listScripts' pg s = go (\p -> listScripts_ p pg s)
 
 -- | List scripts
+--
+-- Queries 100 entries. To query all entries use 'Blockfrost.Client.Core.allPages'
+-- with principled variant of this function (suffixed with @'@)
+-- that accepts 'Paged' argument.
 listScripts :: MonadBlockfrost m => m [ScriptHash]
 listScripts = listScripts' def def
 
@@ -42,11 +46,15 @@ getScriptRedeemers_ :: MonadBlockfrost m => Project -> ScriptHash -> Paged -> So
 getScriptRedeemers_ = _getScriptRedeemers . scriptsClient
 
 -- | Get redeemers of a specific script
--- Allows custom paging and ordering using @Paged@ and @SortOrder@.
+-- Allows custom paging and ordering using 'Paged' and 'SortOrder'.
 getScriptRedeemers' :: MonadBlockfrost m => ScriptHash -> Paged -> SortOrder -> m [ScriptRedeemer]
 getScriptRedeemers' sh pg s = go (\p -> getScriptRedeemers_ p sh pg s)
 
 -- | Get redeemers of a specific script
+--
+-- Queries 100 entries. To query all entries use 'Blockfrost.Client.Core.allPages'
+-- with principled variant of this function (suffixed with @'@)
+-- that accepts 'Paged' argument.
 getScriptRedeemers :: MonadBlockfrost m => ScriptHash -> m [ScriptRedeemer]
 getScriptRedeemers sh = getScriptRedeemers' sh def def
 
