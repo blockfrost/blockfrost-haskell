@@ -128,7 +128,7 @@ library
                       , time
                       , aeson                    >= 2.0 && < 3.0
                       , deriving-aeson
-                      , lens                     >= 5.0 && < 5.1
+                      , lens                     >= 5.0 && < 5.3
                       , template-haskell
                       , servant                  >= 0.18 && < 0.20
                       , servant-docs
