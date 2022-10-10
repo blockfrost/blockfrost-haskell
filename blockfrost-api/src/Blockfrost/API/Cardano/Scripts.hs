@@ -22,7 +22,7 @@ data ScriptsAPI route =
         :> Description "List of scripts."
         :> Pagination
         :> Sorting
-        :> Get '[JSON] [ScriptHash]
+        :> Get '[JSON] ScriptHashList
     , _getScript
         :: route
         :- Summary "Specific scripts"

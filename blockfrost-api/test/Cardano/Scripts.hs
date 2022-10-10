@@ -66,8 +66,8 @@ scriptListSample = [r|
 ]
 |]
 
-scriptListExpected :: [ScriptHash]
-scriptListExpected =
+scriptListExpected :: ScriptHashList
+scriptListExpected = ScriptHashList
   [ "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
   , "e1457a0c47dfb7a2f6b8fbb059bdceab163c05d34f195b87b9f2b30e"
   , "a6e63c0ff05c96943d1cc30bf53112ffff0f34b45986021ca058ec54"
