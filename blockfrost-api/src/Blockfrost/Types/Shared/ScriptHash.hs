@@ -2,6 +2,7 @@
 
 module Blockfrost.Types.Shared.ScriptHash
   ( ScriptHash (..)
+  , ScriptHashList (..)
   ) where
 
 import Data.Aeson (FromJSON (..), ToJSON (..), Value(..), (.=), (.:))
@@ -27,11 +28,18 @@ instance ToJSON ScriptHash where
 instance FromJSON ScriptHash where
   parseJSON = fmap ScriptHash <$> parseJSON
 
--- Custom instance for list used by script list endpoint
-instance {-# OVERLAPS #-} ToJSON [ScriptHash] where
-  toJSON = Array . Data.Vector.fromList . map (\sh -> Object ("script_hash" .= (toJSON . unScriptHash $ sh)))
-instance {-# OVERLAPS #-} FromJSON [ScriptHash] where
-  parseJSON (Array a) = mapM parseJSON' (Data.Vector.toList a)
+-- | Wrapper for list of ScriptHash-es, used by script list endpoint
+newtype ScriptHashList = ScriptHashList { unScriptHashList :: [ScriptHash] }
+  deriving stock (Show, Eq, Generic)
+
+instance ToJSON ScriptHashList where
+  toJSON =
+      Array
+    . Data.Vector.fromList
+    . map (\sh -> Object ("script_hash" .= (toJSON . unScriptHash $ sh)))
+    . unScriptHashList
+instance FromJSON ScriptHashList where
+  parseJSON (Array a) = ScriptHashList <$> mapM parseJSON' (Data.Vector.toList a)
     where
       parseJSON' (Object b) = b .: "script_hash"
       parseJSON' _          = fail "Unexpected type for ScriptHash"

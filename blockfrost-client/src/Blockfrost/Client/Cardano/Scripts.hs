@@ -19,12 +19,12 @@ import Blockfrost.Types
 scriptsClient :: MonadBlockfrost m => Project -> ScriptsAPI (AsClientT m)
 scriptsClient = fromServant . _scripts . cardanoClient
 
-listScripts_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [ScriptHash]
+listScripts_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m ScriptHashList
 listScripts_ = _listScripts . scriptsClient
 
 -- | List scripts
 -- Allows custom paging and ordering using 'Paged' and 'SortOrder'.
-listScripts' :: MonadBlockfrost m => Paged -> SortOrder -> m [ScriptHash]
+listScripts' :: MonadBlockfrost m => Paged -> SortOrder -> m ScriptHashList
 listScripts' pg s = go (\p -> listScripts_ p pg s)
 
 -- | List scripts
@@ -32,7 +32,7 @@ listScripts' pg s = go (\p -> listScripts_ p pg s)
 -- Queries 100 entries. To query all entries use 'Blockfrost.Client.Core.allPages'
 -- with principled variant of this function (suffixed with @'@)
 -- that accepts 'Paged' argument.
-listScripts :: MonadBlockfrost m => m [ScriptHash]
+listScripts :: MonadBlockfrost m => m ScriptHashList
 listScripts = listScripts' def def
 
 getScript_ :: MonadBlockfrost m => Project -> ScriptHash -> m Script
