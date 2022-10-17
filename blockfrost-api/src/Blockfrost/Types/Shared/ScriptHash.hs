@@ -12,7 +12,7 @@ import qualified Data.Text
 import qualified Data.Vector
 import GHC.Generics
 import Servant.API (Capture, FromHttpApiData (..), ToHttpApiData (..))
-import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples)
+import Servant.Docs (DocCapture (..), ToCapture (..), ToSample (..), samples, singleSample)
 
 -- | Script Hash newtype
 newtype ScriptHash = ScriptHash { unScriptHash :: Text }
@@ -45,11 +45,17 @@ instance FromJSON ScriptHashList where
       parseJSON' _          = fail "Unexpected type for ScriptHash"
   parseJSON _         = fail "Expected array for [ScriptHash]"
 
+instance ToSample ScriptHashList where
+  toSamples = pure $ singleSample $ ScriptHashList $ map ScriptHash
+    [ "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
+    , "e1457a0c47dfb7a2f6b8fbb059bdceab163c05d34f195b87b9f2b30e"
+    ]
+
 instance ToSample ScriptHash where
-    toSamples _ = samples $ map ScriptHash
-      [ "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
-      , "e1457a0c47dfb7a2f6b8fbb059bdceab163c05d34f195b87b9f2b30e"
-      ]
+  toSamples _ = samples $ map ScriptHash
+    [ "67f33146617a5e61936081db3b2117cbf59bd2123748f58ac9678656"
+    , "e1457a0c47dfb7a2f6b8fbb059bdceab163c05d34f195b87b9f2b30e"
+    ]
 
 instance ToCapture (Capture "script_hash" ScriptHash) where
   toCapture _ = DocCapture "script_hash" "Hash of the script."
