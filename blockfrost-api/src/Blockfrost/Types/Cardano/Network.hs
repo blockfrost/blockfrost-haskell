@@ -6,10 +6,15 @@ module Blockfrost.Types.Cardano.Network
   ( Network (..)
   , NetworkStake (..)
   , NetworkSupply (..)
+  , NetworkEraSummary (..)
+  , NetworkEraBound (..)
+  , NetworkEraParameters (..)
   ) where
 
+import Data.Time (NominalDiffTime)
+import Data.Word (Word64)
 import Deriving.Aeson
-import Servant.Docs (ToSample (..), singleSample)
+import Servant.Docs (ToSample (..), samples, singleSample)
 
 import Blockfrost.Types.Shared
 
@@ -71,3 +76,71 @@ data Network = Network
 instance ToSample Network where
   toSamples = pure $ singleSample $
     Network netSupplySample netStakeSample
+
+-- | Time bounds of an era.
+data NetworkEraBound = NetworkEraBound
+  { _boundEpoch :: Epoch, -- ^ The epoch number bounding a specific era.
+    _boundSlot  :: Slot, -- ^ The slot number bounding a specific era.
+    _boundTime  :: NominalDiffTime -- ^ The time, relative to network system start, bounding a specific era.
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_bound", CamelToSnake]] NetworkEraBound
+
+netEraBoundSample0 :: NetworkEraBound
+netEraBoundSample0 =
+  NetworkEraBound
+    { _boundEpoch = 4
+    , _boundSlot = 86_400
+    , _boundTime = 1_728_000
+    }
+
+netEraBoundSample1 :: NetworkEraBound
+netEraBoundSample1 =
+  NetworkEraBound
+    { _boundEpoch = 5
+    , _boundSlot = 518_400
+    , _boundTime = 2_160_00
+    }
+
+instance ToSample NetworkEraBound where
+  toSamples = pure $ samples [netEraBoundSample0, netEraBoundSample1]
+
+-- | Parameters for a network era which can vary between hardforks.
+data NetworkEraParameters = NetworkEraParameters
+  { _parametersEpochLength :: EpochLength, -- ^ Number of slots in an epoch.
+    _parametersSlotLength  :: NominalDiffTime, -- ^ How long a slot lasts.
+    _parametersSafeZone    :: Word64 -- ^ Number of slots from the tip of the ledger in which a hardfork will not happen.
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_parameters", CamelToSnake]] NetworkEraParameters
+
+netEraParamSample :: NetworkEraParameters
+netEraParamSample =
+  NetworkEraParameters
+    { _parametersEpochLength = 432_000
+    , _parametersSlotLength = 1
+    , _parametersSafeZone = 129_600
+    }
+
+instance ToSample NetworkEraParameters where
+  toSamples = pure $ singleSample netEraParamSample
+
+-- | Summary of information about network eras.
+data NetworkEraSummary = NetworkEraSummary
+  { _networkEraStart      :: NetworkEraBound, -- ^ Start of a specific era.
+    _networkEraEnd        :: NetworkEraBound, -- ^ End of a specific era.
+    _networkEraParameters :: NetworkEraParameters -- ^ Active parameters for a specific era.
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_networkEra", CamelToSnake]] NetworkEraSummary
+
+instance ToSample NetworkEraSummary where
+  toSamples = pure . singleSample $
+    NetworkEraSummary
+      { _networkEraStart = netEraBoundSample0
+      , _networkEraEnd = netEraBoundSample1
+      , _networkEraParameters = netEraParamSample
+      }

@@ -97,6 +97,7 @@ module Blockfrost.Client
   , getTxMetadataByLabelCBOR'
     -- Cardano - Network
   , getNetworkInfo
+  , getNetworkEras
     -- Cardano - Pools
   , listPools
   , listPools'
