@@ -1,4 +1,4 @@
-# Version [0.7.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.0.0...v0.7.010) (2023-01-03)
+# Version [0.7.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.0.0...v0.7.1.0) (2023-01-03)
 
 * Additions
   * `NetworkEraSummary`, `NetworkEraBound`, `NetworkEraParameters` types and `_networkEras` endpoint [#33](https://github.com/blockfrost/blockfrost-haskell/pull/33/)
