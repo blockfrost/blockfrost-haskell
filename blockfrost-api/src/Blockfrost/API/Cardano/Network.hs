@@ -18,4 +18,10 @@ data NetworkAPI route =
         :- Summary "Network information"
         :> Description "Return detailed network information."
         :> Get '[JSON] Network
+    , _networkEras
+        :: route
+        :- Summary "Query summary of blockchain eras"
+        :> Description "Returns start and end of each era along with parameters that can vary between hard forks."
+        :> "eras"
+        :> Get '[JSON] [NetworkEraSummary]
     } deriving (Generic)
