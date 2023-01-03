@@ -157,7 +157,10 @@ instance FromJSON CostModels where
                (\(kLang, vParams) -> do
                  l <- parseJSON
                     $ toJSON
-                    $ (\(x:xs) -> Data.Char.toLower x:xs)
+                    $ (\lang -> case lang of
+                        [] -> fail "Absurd empty language in CostModels"
+                        (x:xs) -> Data.Char.toLower x:xs
+                      )
                     $ Data.Aeson.Key.toString kLang
                  ps <- parseParams vParams
                  pure (l, Data.Map.fromList ps)
