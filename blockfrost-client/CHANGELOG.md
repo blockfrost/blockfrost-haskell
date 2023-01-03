@@ -1,3 +1,8 @@
+# Version [0.7.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.0.0...v0.7.010) (2023-01-03)
+
+* Additions
+  * `getNetworkEras` query for `/network/eras` endpoint [#33](https://github.com/blockfrost/blockfrost-haskell/pull/33/)
+
 # Version [0.7.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.6.0.0...v0.7.0.0) (2022-10-11)
 
 * Changes

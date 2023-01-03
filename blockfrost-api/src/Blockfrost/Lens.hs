@@ -47,8 +47,11 @@ makeFields ''TxMetaJSON
 makeFields ''TxMetaCBOR
 
 makeFields ''Network
-makeFields ''NetworkSupply
-makeFields ''NetworkStake
+makeFieldsNoPrefix ''NetworkSupply
+makeFieldsNoPrefix ''NetworkStake
+makeFieldsNoPrefix ''NetworkEraSummary
+makeFieldsNoPrefix ''NetworkEraBound
+makeFieldsNoPrefix ''NetworkEraParameters
 
 makeFields ''PoolEpoch
 makeFields ''PoolInfo
