@@ -12,9 +12,6 @@ import Data.Aeson (FromJSON (..), ToJSON (..))
 import Data.Time.Clock.POSIX
 import GHC.Generics
 import Servant.Docs (ToSample (..), singleSample)
-import Test.QuickCheck.Arbitrary
-import Test.QuickCheck.Instances ()
-import Test.QuickCheck.Modifiers
 
 -- | Convert `Integer` milliseconds to `POSIXTime`
 millisecondsToPosix :: Integer -> POSIXTime
@@ -42,7 +39,3 @@ instance ToJSON POSIXMillis where
 instance ToSample POSIXMillis where
     toSamples _ = singleSample $ POSIXMillis $ millisecondsToPosix 1603400958947
 
-instance Arbitrary POSIXMillis where
-  arbitrary = do
-    Positive (n :: Integer) <- arbitrary
-    pure $ POSIXMillis (fromInteger n / 1000)
