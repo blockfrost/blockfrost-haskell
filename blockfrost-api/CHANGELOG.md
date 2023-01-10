@@ -1,3 +1,9 @@
+# Version [0.8.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.1.0...api-0.8.0.0) (2023-01-10)
+
+* Removed
+  * `Arbitrary` instances for `POSIXMillis`, `ServerTime`
+  * `quickcheck-instances` dependency and its propagated instances [#35](https://github.com/blockfrost/blockfrost-haskell/issues/35)
+
 # Version [0.7.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.0.0...v0.7.1.0) (2023-01-03)
 
 * Additions

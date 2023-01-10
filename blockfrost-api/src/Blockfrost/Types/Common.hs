@@ -12,9 +12,6 @@ import Data.Aeson
 import Data.Text (Text)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
-import Test.QuickCheck.Arbitrary (Arbitrary (..))
-import Test.QuickCheck.Instances ()
-import Test.QuickCheck.Modifiers
 
 -- | Root endpoint reply
 data URLVersion = URLVersion
@@ -59,11 +56,6 @@ instance ToJSON ServerTime where
 
 instance ToSample ServerTime where
     toSamples _ = singleSample $ ServerTime $ millisecondsToPosix 1603400958947
-
-instance Arbitrary ServerTime where
-  arbitrary = do
-    Positive (n :: Integer) <- arbitrary
-    pure $ ServerTime (fromInteger n / 1000)
 
 -- | Metrics response
 data Metric = Metric {
