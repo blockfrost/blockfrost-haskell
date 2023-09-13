@@ -124,6 +124,7 @@ addressDetailsExpected =
 addressUtxosSample = [r|
 [
     {
+        "address": "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz",
         "tx_hash": "39a7a284c2a0948189dc45dec670211cd4d72f7b66c5726c08d9b3df11e44d58",
         "output_index": 0,
         "amount":
@@ -139,6 +140,7 @@ addressUtxosSample = [r|
         "reference_script_hash": null
     },
     {
+        "address": "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz",
         "tx_hash": "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49",
         "output_index": 0,
         "amount":
@@ -154,6 +156,7 @@ addressUtxosSample = [r|
         "reference_script_hash": null
     },
     {
+        "address": "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz",
         "tx_hash": "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2",
         "output_index": 1,
         "amount":
@@ -177,7 +180,8 @@ addressUtxosSample = [r|
 
 addressUtxosExpected =
   [ AddressUtxo
-    { _addressUtxoTxHash = "39a7a284c2a0948189dc45dec670211cd4d72f7b66c5726c08d9b3df11e44d58"
+    { _addressUtxoAddress = "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz"
+    , _addressUtxoTxHash = "39a7a284c2a0948189dc45dec670211cd4d72f7b66c5726c08d9b3df11e44d58"
     , _addressUtxoOutputIndex = 0
     , _addressUtxoAmount = [ AdaAmount 42000000 ]
     , _addressUtxoBlock = "7eb8e27d18686c7db9a18f8bbcfe34e3fed6e047afaa2d969904d15e934847e6"
@@ -186,7 +190,8 @@ addressUtxosExpected =
     , _addressUtxoReferenceScriptHash = Nothing
     }
   , AddressUtxo
-    { _addressUtxoTxHash = "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49"
+    { _addressUtxoAddress = "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz"
+    , _addressUtxoTxHash = "4c4e67bafa15e742c13c592b65c8f74c769cd7d9af04c848099672d1ba391b49"
     , _addressUtxoOutputIndex = 0
     , _addressUtxoAmount = [ AdaAmount 729235000 ]
     , _addressUtxoBlock = "953f1b80eb7c11a7ffcd67cbd4fde66e824a451aca5a4065725e5174b81685b7"
@@ -195,7 +200,8 @@ addressUtxosExpected =
     , _addressUtxoReferenceScriptHash = Nothing
     }
   , AddressUtxo
-    { _addressUtxoTxHash = "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2"
+    { _addressUtxoAddress = "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz"
+    , _addressUtxoTxHash = "768c63e27a1c816a83dc7b07e78af673b2400de8849ea7e7b734ae1333d100d2"
     , _addressUtxoOutputIndex = 1
     , _addressUtxoAmount =
         [ AdaAmount 42000000
