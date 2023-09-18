@@ -1,3 +1,7 @@
+# Version [0.8.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.0.0...api-0.8.1.0) (2023-09-18)
+
+* Added `address` field to `AddressUtxo` [#38](https://github.com/blockfrost/blockfrost-haskell/pull/38)
+
 # Version [0.8.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.1.0...api-0.8.0.0) (2023-01-10)
 
 * Removed
