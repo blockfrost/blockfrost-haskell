@@ -6,7 +6,9 @@
 module Cardano.Assets
   where
 
-import Data.Aeson (decode, eitherDecode, encode)
+import Data.Aeson (Value (..), decode, eitherDecode, encode)
+import Data.Aeson.KeyMap (fromList)
+import qualified Data.Vector as V (singleton)
 import Data.Text (Text)
 import qualified Money
 import Test.Hspec
@@ -23,7 +25,7 @@ spec_assets = do
     Right assetInfoExpected
 
   it "parses assets details sample" $ do
-    eitherDecode assetDetailsSample
+    (parseStandardMetadataInDetails <$> eitherDecode assetDetailsSample)
     `shouldBe`
     Right assetDetailsExpected
 
@@ -85,8 +87,19 @@ assetDetailsSample = [r|
   "initial_mint_tx_hash": "6804edf9712d2b619edb6ac86861fe93a730693183a262b165fcc1ba1bc99cad",
   "mint_or_burn_count": 1,
   "onchain_metadata": {
+    "id": 630.0,
     "name": "My NFT token",
-    "image": "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+    "description": "A cool token for joy and fun.",
+    "image": "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226",
+    "media_type": "image/png",
+    "files" :
+      [
+        {
+          "media_type": "image/png",
+          "name": "Detailed image",
+          "src": "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+        }
+      ]
   },
   "metadata": {
     "name": "nutcoin",
@@ -109,11 +122,45 @@ assetDetailsExpected =
     , _assetDetailsQuantity = 12000
     , _assetDetailsInitialMintTxHash = "6804edf9712d2b619edb6ac86861fe93a730693183a262b165fcc1ba1bc99cad"
     , _assetDetailsMintOrBurnCount = 1
-    , _assetDetailsOnchainMetadata = pure $
+    , _assetDetailsOnchainMetadataValue = Just $
+        (
+          Object
+            (fromList
+              [ ("id",Number 630.0)
+              , ("image",String "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226")
+              , ("media_type",String "image/png")
+              , ("name",String "My NFT token")
+              , ("description",String "A cool token for joy and fun.")
+              , ("files", Array
+                  ( V.singleton
+                    (Object
+                      (fromList
+                        [ ("name", String "Detailed image")
+                        , ("media_type", String "image/png")
+                        , ("src", String "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226")
+                        ]
+                      )
+                    )
+                  )
+                )
+              ]
+            )
+        )
+    , _assetDetailsOnchainStandardMetadata = pure $
         AssetOnChainMetadata
-          { _assetOnChainMetadataName = "My NFT token"
-          , _assetOnChainMetadataImage = "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
-          }
+              { _assetOnChainMetadataName = Just "My NFT token"
+              , _assetOnChainMetadataDescription = Just "A cool token for joy and fun."
+              , _assetOnChainMetadataImage = Just "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+              , _assetOnChainMetadataMediaType = Just "image/png"
+              , _assetOnChainMetadataFiles = Just
+                [
+                  MetadataMediaFile
+                    { _metadataMediaFileName = Just "Detailed image"
+                    , _metadataMediaFileMediaType = Just "image/png"
+                    , _metadataMediaFileSrc = Just "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+                    }
+                ]
+              }
     , _assetDetailsMetadata = pure $
         AssetMetadata
           { _assetMetadataName = "nutcoin"

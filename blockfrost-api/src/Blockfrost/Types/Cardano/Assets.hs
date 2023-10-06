@@ -4,6 +4,9 @@ module Blockfrost.Types.Cardano.Assets
   ( AssetInfo (..)
   , AssetDetails (..)
   , AssetOnChainMetadata (..)
+  , MetadataMediaFile (..)
+  , parseStandardMetadata
+  , parseStandardMetadataInDetails
   , AssetMetadata (..)
   , AssetHistory (..)
   , AssetAction (..)
@@ -12,9 +15,14 @@ module Blockfrost.Types.Cardano.Assets
   ) where
 
 import Blockfrost.Types.Shared
+import Data.Aeson (Value (..), FromJSON(parseJSON))
+import Data.Aeson.Types (parseMaybe)
+import Data.Aeson.KeyMap (fromList)
 import Data.Text (Text)
+import qualified Data.Vector as V (singleton)
 import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
+import Prelude hiding (String)
 
 -- | Asset information, result of listing assets
 data AssetInfo = AssetInfo
@@ -41,23 +49,50 @@ instance ToSample AssetInfo where
         }
     ]
 
+-- | Additional media files (accordingly to CIP25 and CIP68)
+data MetadataMediaFile = MetadataMediaFile
+  { _metadataMediaFileName      :: Maybe Text -- ^ file name
+  , _metadataMediaFileMediaType :: Maybe Text -- ^ file MIME content-type
+  , _metadataMediaFileSrc       :: Maybe Text -- ^ URI of the media file
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_metadataMediaFile", CamelToSnake]] MetadataMediaFile
+
+instance ToSample MetadataMediaFile where
+  toSamples = pure $ singleSample sampleAssetOnChainMetadataFile
+
+sampleAssetOnChainMetadataFile :: MetadataMediaFile
+sampleAssetOnChainMetadataFile =
+    MetadataMediaFile
+      { _metadataMediaFileName = Just "Detailed image"
+      , _metadataMediaFileMediaType = Just "image/png"
+      , _metadataMediaFileSrc = Just "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+      }
+
 -- | On-chain metadata stored in the minting transaction under label 721,
 -- community discussion around the standard ongoing at https://github.com/cardano-foundation/CIPs/pull/85
 data AssetOnChainMetadata = AssetOnChainMetadata
-  { _assetOnChainMetadataName  :: Text -- ^ Name of the asset
-  , _assetOnChainMetadataImage :: Text -- ^ URI of the associated asset
-  -- TODO: in schema has `additionalProperties: true`
-  -- so it can carry more arbitrary properties, keep as Value?
+  { _assetOnChainMetadataName        :: Maybe Text                -- ^ Name of the asset
+  , _assetOnChainMetadataDescription :: Maybe Text                -- ^ Description of the asset
+  , _assetOnChainMetadataImage       :: Maybe Text                -- ^ URI of the image, usually IPFS-based
+  , _assetOnChainMetadataMediaType   :: Maybe Text                -- ^ image MIME content-type
+  , _assetOnChainMetadataFiles       :: Maybe [MetadataMediaFile] -- ^ Additional media files
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_assetOnChainMetadata", CamelToSnake]] AssetOnChainMetadata
 
 instance ToSample AssetOnChainMetadata where
-  toSamples = pure $ singleSample
-    AssetOnChainMetadata
-      { _assetOnChainMetadataName = "My NFT token"
-      , _assetOnChainMetadataImage = "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+  toSamples = pure $ singleSample $ sampleAssetOnChainMetadata
+
+sampleAssetOnChainMetadata :: AssetOnChainMetadata
+sampleAssetOnChainMetadata = AssetOnChainMetadata
+      { _assetOnChainMetadataName = Just "My NFT token"
+      , _assetOnChainMetadataDescription = Just "A cool token for joy and fun."
+      , _assetOnChainMetadataImage = Just "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
+      , _assetOnChainMetadataMediaType = Just "image/png"
+      , _assetOnChainMetadataFiles = Just [ sampleAssetOnChainMetadataFile ]
       }
 
 -- | Asset metadata obtained from Cardano token registry
@@ -87,23 +122,42 @@ instance ToSample AssetMetadata where
 
 -- | Details of an asset
 data AssetDetails = AssetDetails
-  { _assetDetailsAsset             :: Text -- ^ Hex-encoded asset full name
-  , _assetDetailsPolicyId          :: PolicyId -- ^ Policy ID of the asset
-  , _assetDetailsAssetName         :: Maybe Text -- ^ Hex-encoded asset name of the asset
-  , _assetDetailsFingerprint       :: Text -- ^ CIP14 based user-facing fingerprint
-  , _assetDetailsQuantity          :: Quantity -- ^ Current asset quantity
-  , _assetDetailsInitialMintTxHash :: TxHash -- ^ ID of the initial minting transaction
-  , _assetDetailsMintOrBurnCount   :: Integer -- ^ Count of mint and burn transactions
-  , _assetDetailsOnchainMetadata   :: Maybe AssetOnChainMetadata
-  -- ^ On-chain metadata stored in the minting transaction under label 721,
-  -- community discussion around the standard ongoing at https://github.com/cardano-foundation/CIPs/pull/85
-  , _assetDetailsMetadata          :: Maybe AssetMetadata
+  { _assetDetailsAsset                :: Text -- ^ Hex-encoded asset full name
+  , _assetDetailsPolicyId             :: PolicyId -- ^ Policy ID of the asset
+  , _assetDetailsAssetName            :: Maybe Text -- ^ Hex-encoded asset name of the asset
+  , _assetDetailsFingerprint          :: Text -- ^ CIP14 based user-facing fingerprint
+  , _assetDetailsQuantity             :: Quantity -- ^ Current asset quantity
+  , _assetDetailsInitialMintTxHash    :: TxHash -- ^ ID of the initial minting transaction
+  , _assetDetailsMintOrBurnCount      :: Integer -- ^ Count of mint and burn transactions
+  , _assetDetailsOnchainMetadataValue :: Maybe Value
+  -- ^ On-chain metadata stored in the minting transaction under label 721 for CIP25
+  -- standard or in the first element in the specific constructor in a reference token's
+  -- datum for CIP68 standard. In both cases this part is represenatable as JSON
+  -- and might be arbitrary, so we keep it as @Value@
+  , _assetDetailsOnchainStandardMetadata :: Maybe AssetOnChainMetadata
+  -- ^ Some bits of on-chain metadata are considered being "standard" (like name, image and so on).
+  -- If they are found in the metadata JSON bundle, this field will contain them.
+  , _assetDetailsMetadata             :: Maybe AssetMetadata
   , _assetDetailsOnchainMetadataExtra :: Maybe Text
   -- ^ CIP68 extra metadata plutus data (CBOR-encoded)
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_assetDetails", CamelToSnake]] AssetDetails
+  via CustomJSON '[ FieldLabelModifier
+                    '[ StripPrefix "_assetDetails"
+                     , CamelToSnake
+                     , Rename "onchain_metadata_value" "onchain_metadata"
+                     ]
+                  ] AssetDetails
+
+parseStandardMetadata :: Maybe Value -> Maybe AssetOnChainMetadata
+parseStandardMetadata mbValue = mbValue >>= parseMaybe parseJSON
+
+parseStandardMetadataInDetails :: AssetDetails -> AssetDetails
+parseStandardMetadataInDetails
+  details@AssetDetails{_assetDetailsOnchainMetadataValue = mbValue} =
+  details { _assetDetailsOnchainStandardMetadata = parseStandardMetadata mbValue}
+
 
 instance ToSample AssetDetails where
   toSamples = pure $ singleSample
@@ -115,11 +169,30 @@ instance ToSample AssetDetails where
       , _assetDetailsQuantity = 12000
       , _assetDetailsInitialMintTxHash = "6804edf9712d2b619edb6ac86861fe93a730693183a262b165fcc1ba1bc99cad"
       , _assetDetailsMintOrBurnCount = 1
-      , _assetDetailsOnchainMetadata = pure $
-          AssetOnChainMetadata
-            { _assetOnChainMetadataName = "My NFT token"
-            , _assetOnChainMetadataImage = "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
-            }
+      , _assetDetailsOnchainMetadataValue = Just $
+          (
+            Object
+             (fromList
+               [ ("id",Number 630.0)
+               , ("image",String "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226")
+               , ("mediaType",String "image/png")
+               , ("name",String "My NFT token")
+               , ("files", Array
+                   ( V.singleton
+                     (Object
+                       (fromList
+                         [ ("name", String "Detailed image")
+                         , ("mediaType", String "image/png")
+                         , ("src", String "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226")
+                         ]
+                       )
+                     )
+                   )
+                 )
+               ]
+             )
+          )
+      , _assetDetailsOnchainStandardMetadata = pure sampleAssetOnChainMetadata
       , _assetDetailsMetadata = pure $
           AssetMetadata
             { _assetMetadataName = "nutcoin"
