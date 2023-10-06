@@ -18,6 +18,7 @@ import Blockfrost.Types.Shared
 import Data.Aeson (Value (..), FromJSON(parseJSON))
 import Data.Aeson.Types (parseMaybe)
 import Data.Aeson.KeyMap (fromList)
+import Data.Char (toLower)
 import Data.Text (Text)
 import qualified Data.Vector as V (singleton)
 import Deriving.Aeson
@@ -49,6 +50,13 @@ instance ToSample AssetInfo where
         }
     ]
 
+-- CIP25 uses camelCase, so we need this to derive appropriate instances
+data LowerHead
+
+instance StringModifier LowerHead where
+  getStringModifier (f:rest) = toLower f : rest
+  getStringModifier [] = error "Empty field name"
+
 -- | Additional media files (accordingly to CIP25 and CIP68)
 data MetadataMediaFile = MetadataMediaFile
   { _metadataMediaFileName      :: Maybe Text -- ^ file name
@@ -57,7 +65,7 @@ data MetadataMediaFile = MetadataMediaFile
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_metadataMediaFile", CamelToSnake]] MetadataMediaFile
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_metadataMediaFile", LowerHead]] MetadataMediaFile
 
 instance ToSample MetadataMediaFile where
   toSamples = pure $ singleSample sampleAssetOnChainMetadataFile
@@ -81,7 +89,7 @@ data AssetOnChainMetadata = AssetOnChainMetadata
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_assetOnChainMetadata", CamelToSnake]] AssetOnChainMetadata
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_assetOnChainMetadata", LowerHead]] AssetOnChainMetadata
 
 instance ToSample AssetOnChainMetadata where
   toSamples = pure $ singleSample $ sampleAssetOnChainMetadata

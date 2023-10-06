@@ -91,11 +91,11 @@ assetDetailsSample = [r|
     "name": "My NFT token",
     "description": "A cool token for joy and fun.",
     "image": "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226",
-    "media_type": "image/png",
+    "mediaType": "image/png",
     "files" :
       [
         {
-          "media_type": "image/png",
+          "mediaType": "image/png",
           "name": "Detailed image",
           "src": "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226"
         }
@@ -128,7 +128,7 @@ assetDetailsExpected =
             (fromList
               [ ("id",Number 630.0)
               , ("image",String "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226")
-              , ("media_type",String "image/png")
+              , ("mediaType",String "image/png")
               , ("name",String "My NFT token")
               , ("description",String "A cool token for joy and fun.")
               , ("files", Array
@@ -136,7 +136,7 @@ assetDetailsExpected =
                     (Object
                       (fromList
                         [ ("name", String "Detailed image")
-                        , ("media_type", String "image/png")
+                        , ("mediaType", String "image/png")
                         , ("src", String "ipfs://ipfs/QmfKyJ4tuvHowwKQCbCHj4L5T3fSj8cjs7Aau8V7BWv226")
                         ]
                       )
