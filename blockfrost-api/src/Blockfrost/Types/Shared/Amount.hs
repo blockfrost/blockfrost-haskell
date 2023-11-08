@@ -31,7 +31,9 @@ data Amount =
 
 -- | SomeDiscrete values always use scale of 1
 unitScale :: Money.Scale
-unitScale = let (Just s) = Money.scaleFromRational 1 in s
+unitScale = case Money.scaleFromRational 1 of
+  Just s -> s
+  Nothing -> error "Money.scaleFromRational impossible"
 
 instance ToJSON Money.SomeDiscrete where
   toJSON sd =
