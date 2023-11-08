@@ -72,7 +72,7 @@ library
                       , filepath
                       , text
                       , mtl
-                      , servant                  >= 0.18 && < 0.20
+                      , servant                  >= 0.18 && < 0.21
                       , servant-client
                       , servant-client-core
 

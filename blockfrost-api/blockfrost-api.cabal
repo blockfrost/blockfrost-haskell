@@ -130,7 +130,7 @@ library
                       , deriving-aeson
                       , lens                     >= 5.0 && < 5.3
                       , template-haskell
-                      , servant                  >= 0.18 && < 0.20
+                      , servant                  >= 0.18 && < 0.21
                       , servant-docs
                       , servant-multipart-api
                       , safe-money               >= 0.9 && < 0.10
