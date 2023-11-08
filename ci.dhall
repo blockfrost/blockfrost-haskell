@@ -5,10 +5,11 @@ in    haskellCi.generalCi
         haskellCi.matrixSteps
         ( Some
             { ghc =
-              [ haskellCi.GHC.GHC8105
-              , haskellCi.GHC.GHC901
+              [ haskellCi.GHC.GHC947
+              , haskellCi.GHC.GHC902
+              , haskellCi.GHC.GHC8107
               ]
-            , cabal = [ haskellCi.Cabal.Cabal34 ]
+            , cabal = [ haskellCi.Cabal.Cabal310 ]
             }
         )
     : haskellCi.CI.Type
