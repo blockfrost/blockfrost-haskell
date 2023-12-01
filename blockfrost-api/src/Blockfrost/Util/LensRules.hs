@@ -17,7 +17,7 @@ blockfrostFieldRules = defaultFieldRules
     modNamer namer dname fnames fname =
       map fixDefName (namer (fixTypeName dname) fnames fname)
 
-    fixDefName (MethodName cname mname)=MethodName cname (fixName mname)
+    fixDefName (MethodName cname mname) = MethodName cname (fixName mname)
     fixDefName (TopName name)           = TopName (fixName name)
 
     fixTypeName = mkName . fixTypeName' . nameBase
