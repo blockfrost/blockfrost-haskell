@@ -20,6 +20,7 @@ data Env =
   | Testnet
   | Preprod
   | Preview
+  | Sanchonet
   | Localhost
   deriving (Eq, Read, Show, Ord, Generic)
 
@@ -30,4 +31,4 @@ parseEnv tEnv = case Text.Read.readMaybe (Data.Text.unpack $ Data.Text.toTitle t
   Nothing ->
     Left
       $ "Unknown environment: `" <> tEnv <> "`"
-      <> " expecting one of `ipfs`, `mainnet`, `testnet`, `preprod`, `preview`, `localhost`"
+      <> " expecting one of `ipfs`, `mainnet`, `testnet`, `preprod`, `preview`, `sanchonet`, `localhost`"
