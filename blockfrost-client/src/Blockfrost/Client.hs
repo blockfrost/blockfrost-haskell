@@ -142,6 +142,8 @@ module Blockfrost.Client
   , getTxMetadataCBOR
   , getTxRedeemers
   , submitTx
+    -- Cardano - Utils
+  , deriveShelleyAddress
     -- IPFS
   , ipfsAdd
   , ipfsGateway
@@ -177,6 +179,7 @@ import Blockfrost.Client.Cardano.Network
 import Blockfrost.Client.Cardano.Pools
 import Blockfrost.Client.Cardano.Scripts
 import Blockfrost.Client.Cardano.Transactions
+import Blockfrost.Client.Cardano.Utils
 import Blockfrost.Client.IPFS
 import Blockfrost.Client.NutLink
 import Blockfrost.Client.Types
