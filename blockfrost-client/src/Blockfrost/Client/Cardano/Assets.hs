@@ -12,6 +12,7 @@ module Blockfrost.Client.Cardano.Assets
   , getAssetAddresses'
   , getAssetsByPolicy
   , getAssetsByPolicy'
+  , parseStandardMetadata
   ) where
 
 import Blockfrost.API
@@ -42,7 +43,7 @@ getAssetDetails_ = _assetDetails . assetsClient
 
 -- | Information about a specific asset
 getAssetDetails :: MonadBlockfrost m => AssetId -> m AssetDetails
-getAssetDetails a = go (`getAssetDetails_` a)
+getAssetDetails a =  parseStandardMetadataInDetails <$> go (`getAssetDetails_` a)
 
 getAssetHistory_ :: MonadBlockfrost m => Project -> AssetId -> Paged -> SortOrder -> m [AssetHistory]
 getAssetHistory_ = _assetHistory . assetsClient
