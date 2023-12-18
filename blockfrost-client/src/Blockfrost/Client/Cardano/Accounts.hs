@@ -16,6 +16,7 @@ module Blockfrost.Client.Cardano.Accounts
   , getAccountMirs'
   , getAccountAssociatedAddresses
   , getAccountAssociatedAddresses'
+  , getAccountAssociatedAddressesTotal
   , getAccountAssociatedAssets
   , getAccountAssociatedAssets'
   ) where
@@ -145,6 +146,12 @@ getAccountAssociatedAddresses' a pg s = go (\p -> getAccountAssociatedAddresses_
 -- that accepts 'Paged' argument.
 getAccountAssociatedAddresses :: MonadBlockfrost m => Address -> m [AddressAssociated]
 getAccountAssociatedAddresses a = getAccountAssociatedAddresses' a def def
+
+getAccountAssociatedAddressesTotal_ :: MonadBlockfrost m => Project -> Address -> m AddressAssociatedTotal
+getAccountAssociatedAddressesTotal_ = _accountAssociatedTotal . accountsClient
+
+getAccountAssociatedAddressesTotal :: MonadBlockfrost m => Address -> m AddressAssociatedTotal
+getAccountAssociatedAddressesTotal a = go (`getAccountAssociatedAddressesTotal_` a)
 
 getAccountAssociatedAssets_ :: MonadBlockfrost m => Project -> Address -> Paged -> SortOrder -> m [Amount]
 getAccountAssociatedAssets_ = _accountAssociatedAssets . accountsClient

@@ -1,6 +1,8 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.7.1.1...master) (2023-mm-dd)
 
 * Allow servant `0.20`
+* Additions
+  * `getAccountAssociatedAddressesTotal` for `/accounts/:stake_address/addresses/total`
 
 # Version [0.7.1.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.1.0...client-0.7.1.1) (2023-01-10)
 
