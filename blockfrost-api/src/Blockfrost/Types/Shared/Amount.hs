@@ -1,6 +1,7 @@
 -- | Amount sum type
 
 {-# LANGUAGE NumericUnderscores #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Blockfrost.Types.Shared.Amount
   where
@@ -79,3 +80,59 @@ instance ToSample Amount where
                           "6804edf9712d2b619edb6ac86861fe93a730693183a262b165fcc1ba1bc99cad"
                           '(1,1))
     ]
+
+-- | Like @Amount@, extended with @decimals` and `has_nft_onchain_metadata`
+data AmountExtended =
+    AdaAmountExtended Lovelaces
+  | AssetAmountExtended
+    { assetAmountExtendedDecimals              :: Maybe Int
+    , assetAmountExtendedHasNftOnchainMetadata :: Bool
+    , assetAmountExtendedValue                 :: Money.SomeDiscrete
+    }
+  deriving (Eq, Show, Ord, Generic)
+
+instance ToJSON AmountExtended where
+  toJSON (AdaAmountExtended lovelaces) =
+    object [ "unit" .= ("lovelace" :: String)
+           , "quantity" .= toJSON lovelaces
+           , "decimals" .= (6 :: Int)
+           , "has_nft_onchain_metadata" .= False
+           ]
+  toJSON (AssetAmountExtended {..}) =
+    object [ "unit" .= Money.someDiscreteCurrency assetAmountExtendedValue
+           , "quantity" .= show (Money.someDiscreteAmount assetAmountExtendedValue)
+           , "decimals" .= assetAmountExtendedDecimals
+           , "has_nft_onchain_metadata" .= assetAmountExtendedHasNftOnchainMetadata
+           ]
+
+instance FromJSON AmountExtended where
+  parseJSON x@(Object o) = do
+    (u :: String) <- o .: "unit"
+    v <- o .: "quantity"
+    assetAmountExtendedDecimals
+      <- o .: "decimals"
+    assetAmountExtendedHasNftOnchainMetadata
+      <- o .: "has_nft_onchain_metadata"
+    case u of
+      "lovelace" -> AdaAmountExtended <$> parseJSON v
+      _          -> do
+        assetAmountExtendedValue <- parseJSON x
+        pure AssetAmountExtended{..}
+
+  parseJSON other = fail $ "Amount expecting object, got" ++ show other
+
+instance ToSample AmountExtended where
+  toSamples = pure $ samples
+    [ AdaAmountExtended 42000000
+    , AssetAmountExtended
+        { assetAmountExtendedDecimals              = Nothing
+        , assetAmountExtendedHasNftOnchainMetadata = True
+        , assetAmountExtendedValue =
+            Money.toSomeDiscrete
+            (12 :: Money.Discrete'
+                      "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                      '(1,1))
+        }
+    ]
+
+

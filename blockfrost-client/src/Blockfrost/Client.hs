@@ -31,10 +31,12 @@ module Blockfrost.Client
   , getAccountMirs'
   , getAccountAssociatedAddresses
   , getAccountAssociatedAddresses'
+  , getAccountAssociatedAddressesTotal
   , getAccountAssociatedAssets
   , getAccountAssociatedAssets'
     -- Cardano - Addresses
   , getAddressInfo
+  , getAddressInfoExtended
   , getAddressDetails
   , getAddressUtxos
   , getAddressUtxos'
@@ -101,6 +103,8 @@ module Blockfrost.Client
     -- Cardano - Pools
   , listPools
   , listPools'
+  , listPoolsExtended
+  , listPoolsExtended'
   , listRetiredPools
   , listRetiredPools'
   , listRetiringPools
@@ -139,6 +143,10 @@ module Blockfrost.Client
   , getTxMetadataCBOR
   , getTxRedeemers
   , submitTx
+    -- Cardano - Utils
+  , deriveShelleyAddress
+  , txEvaluate
+  , txEvaluateUTXOs
     -- IPFS
   , ipfsAdd
   , ipfsGateway
@@ -174,6 +182,7 @@ import Blockfrost.Client.Cardano.Network
 import Blockfrost.Client.Cardano.Pools
 import Blockfrost.Client.Cardano.Scripts
 import Blockfrost.Client.Cardano.Transactions
+import Blockfrost.Client.Cardano.Utils
 import Blockfrost.Client.IPFS
 import Blockfrost.Client.NutLink
 import Blockfrost.Client.Types

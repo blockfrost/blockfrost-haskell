@@ -14,6 +14,7 @@ module Blockfrost.API.Cardano
   , module Blockfrost.API.Cardano.Pools
   , module Blockfrost.API.Cardano.Scripts
   , module Blockfrost.API.Cardano.Transactions
+  , module Blockfrost.API.Cardano.Utils
   ) where
 
 import Blockfrost.API.Cardano.Accounts
@@ -27,3 +28,4 @@ import Blockfrost.API.Cardano.Network
 import Blockfrost.API.Cardano.Pools
 import Blockfrost.API.Cardano.Scripts
 import Blockfrost.API.Cardano.Transactions
+import Blockfrost.API.Cardano.Utils

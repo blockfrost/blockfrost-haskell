@@ -2,6 +2,7 @@
 
 module Blockfrost.Client.Cardano.Addresses
   ( getAddressInfo
+  , getAddressInfoExtended
   , getAddressDetails
   , getAddressUtxos
   , getAddressUtxos'
@@ -24,6 +25,13 @@ getAddressInfo_ = _addressInfo . addressesClient
 -- | Obtain information about a specific address.
 getAddressInfo :: MonadBlockfrost m => Address -> m AddressInfo
 getAddressInfo a = go (`getAddressInfo_` a)
+
+getAddressInfoExtended_ :: MonadBlockfrost m => Project -> Address -> m AddressInfoExtended
+getAddressInfoExtended_ = _addressInfoExtended . addressesClient
+
+-- | Obtain extended information about a specific address.
+getAddressInfoExtended :: MonadBlockfrost m => Address -> m AddressInfoExtended
+getAddressInfoExtended a = go (`getAddressInfoExtended_` a)
 
 getAddressDetails_ :: MonadBlockfrost m => Project -> Address -> m AddressDetails
 getAddressDetails_ = _addressDetails . addressesClient

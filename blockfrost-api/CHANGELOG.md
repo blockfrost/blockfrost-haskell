@@ -1,6 +1,16 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.1.0-master) (2023-mm-dd)
 
-* Allow servant `0.20`
+* Allow servant `0.20` [#41](https://github.com/blockfrost/blockfrost-haskell/pull/41)
+* Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
+  * `Env` enum extended with `Sanchonet` for `cardano-sanchonet` network
+  * `/accounts/:stake_address/addresses/total` endpoint and `AddressAssociatedTotal` type
+  * `/addresses/:address/extended` endpoint and `AddressInfoExtended` type (uses `AmountExtended` type)
+  * `/pools/extended` endpoint and `Pool` type
+  * `/utils` API
+    * `/utils/addresses/xpub/:xpub/:role/:index` endpoint and `DerivedAddress` type
+    * `/utils/txs/evaluate` endpoint
+    * `/utils/txs/evaluate/utxos` endpoint
+    * `TxEval`, `TxEvalResult`, `TxEvalBudget`, `TxEvalInput` types for the two above
 
 # Version [0.8.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.0.0...api-0.8.1.0) (2023-09-18)
 

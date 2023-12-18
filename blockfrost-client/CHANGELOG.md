@@ -1,6 +1,14 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.7.1.1...master) (2023-mm-dd)
 
-* Allow servant `0.20`
+* Allow servant `0.20` [#41](https://github.com/blockfrost/blockfrost-haskell/pull/41)
+* Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
+  * `getAccountAssociatedAddressesTotal` for `/accounts/:stake_address/addresses/total`
+  * `getAddressInfoExtended` for `/addresses/:address/extended`
+  * `listPoolsExtended` for `/pools/extended`
+  * `/utils` API
+    * `deriveShelleyAddress` for `/utils/addresses/xpub/:xpub/:role/:index`
+    * `evaluateTx` for `/utils/txs/evaluate` endpoint
+    * `evaluateTxUTXOs` for `/utils/txs/evaluate/utxos` endpoint
 
 # Version [0.7.1.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.1.0...client-0.7.1.1) (2023-01-10)
 

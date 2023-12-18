@@ -69,6 +69,7 @@ subdomainByEnv Mainnet   = pure "cardano-mainnet"
 subdomainByEnv Testnet   = pure "cardano-testnet"
 subdomainByEnv Preprod   = pure "cardano-preprod"
 subdomainByEnv Preview   = pure "cardano-preview"
+subdomainByEnv Sanchonet = pure "cardano-sanchonet"
 subdomainByEnv Localhost = Nothing
 
 -- | Read file according to BLOCKFROST_TOKEN_PATH environment variable name.

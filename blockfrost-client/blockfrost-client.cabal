@@ -61,6 +61,7 @@ library
                       , Blockfrost.Client.Cardano.Pools
                       , Blockfrost.Client.Cardano.Scripts
                       , Blockfrost.Client.Cardano.Transactions
+                      , Blockfrost.Client.Cardano.Utils
                       , Blockfrost.Client.IPFS
                       , Blockfrost.Client.NutLink
    build-depends:       base                     >= 4.7 && < 5

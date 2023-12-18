@@ -132,6 +132,11 @@ data CardanoAPI route =
       :> "submit"
       :> ReqBody '[CBOR] CBORString
       :> Post '[JSON] TxHash
+    , _utils
+      :: route
+      :- "utils"
+      :> Tag "Cardano » Utilities"
+      :> ToServantApi UtilsAPI
     } deriving (Generic)
 
 type ServantBlockfrostAPI = ToServantApi BlockfrostAPI

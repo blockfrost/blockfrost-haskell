@@ -64,7 +64,9 @@ instance MonadIO m => MonadBlockfrost (BlockfrostClientT m) where
   liftBlockfrostClient act = BlockfrostClientT $ do
     (env, _proj) <- ask
     liftIO (runClientM act env)
-      >>= either (throwError . fromServantClientError) pure
+      >>= either
+            (throwError . fromServantClientError)
+            pure
   getConf = BlockfrostClientT ask
 
 instance MonadBlockfrost ClientM where
@@ -72,13 +74,24 @@ instance MonadBlockfrost ClientM where
   getConf = newClientConfig
 
 instance MonadBlockfrost IO where
-  liftBlockfrostClient act = getConf >>= \(env, _prj) -> runClientM act env >>= either (error . show) pure
+  liftBlockfrostClient act =
+    getConf
+      >>= \(env, _prj) ->
+        runClientM act env
+          >>= either
+                (error . show)
+                pure
   getConf = newClientConfig
 
-apiClient :: MonadBlockfrost m => BlockfrostAPI (AsClientT m)
+apiClient
+  :: MonadBlockfrost m
+  => BlockfrostAPI (AsClientT m)
 apiClient = genericClientHoist liftBlockfrostClient
 
-api0Client :: MonadBlockfrost m => Project -> BlockfrostV0API (AsClientT m)
+api0Client
+  :: MonadBlockfrost m
+  => Project
+  -> BlockfrostV0API (AsClientT m)
 api0Client = fromServant . _apiV0 apiClient
 
 -- ** Client runner
@@ -92,7 +105,8 @@ runBlockfrost = runBlockfrostClientT
 
 -- | Run @BlockfrostClientT@, using provided @Project@
 runBlockfrostClientT
-  :: MonadIO m => Project
+  :: MonadIO m
+  => Project
   -> BlockfrostClientT m a
   -> m (Either BlockfrostError a)
 runBlockfrostClientT proj act = do
@@ -125,14 +139,26 @@ tryError action = (Right <$> action) `catchError` (pure . Left)
 
 -- ** Service clients
 
-commonClient :: MonadBlockfrost m => Project -> CommonAPI (AsClientT m)
+commonClient
+  :: MonadBlockfrost m
+  => Project
+  -> CommonAPI (AsClientT m)
 commonClient = fromServant . _common . api0Client
 
-cardanoClient :: MonadBlockfrost m => Project -> CardanoAPI (AsClientT m)
+cardanoClient
+  :: MonadBlockfrost m
+  => Project
+  -> CardanoAPI (AsClientT m)
 cardanoClient = fromServant . _cardano . api0Client
 
-ipfsClient :: MonadBlockfrost m => Project -> IPFSAPI (AsClientT m)
+ipfsClient
+  :: MonadBlockfrost m
+  => Project
+  -> IPFSAPI (AsClientT m)
 ipfsClient = fromServant . _ipfs . api0Client
 
-nutLinkClient :: MonadBlockfrost m => Project -> NutLinkAPI (AsClientT m)
+nutLinkClient
+  :: MonadBlockfrost m
+  => Project
+  -> NutLinkAPI (AsClientT m)
 nutLinkClient = fromServant . _nutLink . api0Client

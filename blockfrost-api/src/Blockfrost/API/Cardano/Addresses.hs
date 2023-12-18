@@ -22,6 +22,13 @@ data AddressesAPI route =
         :> Description "Obtain information about a specific address."
         :> Capture "address" Address
         :> Get '[JSON] AddressInfo
+    , _addressInfoExtended
+        :: route
+        :- Summary "Specific address - extended"
+        :> Description "Obtain extended information about a specific address."
+        :> Capture "address" Address
+        :> "extended"
+        :> Get '[JSON] AddressInfoExtended
     , _addressDetails
         :: route
         :- Summary "Address details"
