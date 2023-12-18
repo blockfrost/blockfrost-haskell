@@ -144,6 +144,8 @@ module Blockfrost.Client
   , submitTx
     -- Cardano - Utils
   , deriveShelleyAddress
+  , txEvaluate
+  , txEvaluateUTXOs
     -- IPFS
   , ipfsAdd
   , ipfsGateway

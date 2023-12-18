@@ -2,6 +2,8 @@
 
 module Blockfrost.Client.Cardano.Utils
   ( deriveShelleyAddress
+  , txEvaluate
+  , txEvaluateUTXOs
   ) where
 
 import Data.Text (Text)
@@ -31,3 +33,30 @@ deriveShelleyAddress
   -> m DerivedAddress
 deriveShelleyAddress xpub role index = go (\p -> deriveShelleyAddress_ p xpub role index)
 
+txEvaluate_
+  :: MonadBlockfrost m
+  => Project
+  -> CBORString
+  -> m TxEval
+txEvaluate_ = _txEvaluate . utilsClient
+
+-- | Submit a transaction for execution units evaluation
+txEvaluate
+  :: MonadBlockfrost m
+  => CBORString
+  -> m TxEval
+txEvaluate txCbor = go (`txEvaluate_` txCbor)
+
+txEvaluateUTXOs_
+  :: MonadBlockfrost m
+  => Project
+  -> TxEvalInput
+  -> m TxEval
+txEvaluateUTXOs_ = _txEvaluateUTXOs . utilsClient
+
+-- | Submit a transaction for execution units evaluation (additional UTXO set)
+txEvaluateUTXOs
+  :: MonadBlockfrost m
+  => TxEvalInput
+  -> m TxEval
+txEvaluateUTXOs txei = go (`txEvaluateUTXOs_` txei)

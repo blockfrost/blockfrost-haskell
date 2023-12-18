@@ -6,6 +6,8 @@
   * `listPoolsExtended` for `/pools/extended`
   * `/utils` API
     * `deriveShelleyAddress` for `/utils/addresses/xpub/:xpub/:role/:index`
+    * `evaluateTx` for `/utils/txs/evaluate` endpoint
+    * `evaluateTxUTXOs` for `/utils/txs/evaluate/utxos` endpoint
 
 # Version [0.7.1.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.1.0...client-0.7.1.1) (2023-01-10)
 
