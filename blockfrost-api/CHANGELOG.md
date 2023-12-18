@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.1.0-master) (2023-mm-dd)
+# Version [0.9.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.1.0...api-0.9.0.0) (2023-12-18)
 
 * Allow servant `0.20` [#41](https://github.com/blockfrost/blockfrost-haskell/pull/41)
 * Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
@@ -11,6 +11,8 @@
     * `/utils/txs/evaluate` endpoint
     * `/utils/txs/evaluate/utxos` endpoint
     * `TxEval`, `TxEvalResult`, `TxEvalBudget`, `TxEvalInput` types for the two above
+* Better metadata handling [#40](https://github.com/blockfrost/blockfrost-haskell/pull/40)
+  * Adds `onchainMetadataExtra` and `onchainMetadataValue` fields for `AssetDetails`
 
 # Version [0.8.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.0.0...api-0.8.1.0) (2023-09-18)
 
