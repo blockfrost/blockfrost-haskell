@@ -2,6 +2,7 @@
 
 module Blockfrost.Types.Cardano.Addresses
   ( AddressInfo (..)
+  , AddressInfoExtended (..)
   , AddressType (..)
   , AddressDetails (..)
   , AddressUtxo (..)
@@ -41,6 +42,38 @@ instance ToSample AddressInfo where
       , _addressInfoStakeAddress = pure "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
       , _addressInfoType = Shelley
       , _addressInfoScript = False
+      }
+
+-- | Information about Cardano address
+data AddressInfoExtended = AddressInfoExtended
+  { _addressInfoExtendedAddress      :: Address -- ^ Bech32 encoded addresses
+  , _addressInfoExtendedAmount       :: [AmountExtended] -- ^ Lovelaces or tokens stored on this address
+  , _addressInfoExtendedStakeAddress :: Maybe Address -- ^ Stake address that controls the key
+  , _addressInfoExtendedType         :: AddressType -- ^ Address era
+  , _addressInfoExtendedScript       :: Bool -- ^ True if this is a script address
+  } deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressInfoExtended", CamelToSnake]] AddressInfoExtended
+
+instance ToSample AddressInfoExtended where
+  toSamples = pure $ singleSample
+    AddressInfoExtended
+      { _addressInfoExtendedAddress = "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz"
+      , _addressInfoExtendedAmount =
+        [ AdaAmountExtended 42000000
+        , AssetAmountExtended
+            { assetAmountExtendedDecimals              = Nothing
+            , assetAmountExtendedHasNftOnchainMetadata = True
+            , assetAmountExtendedValue =
+                Money.toSomeDiscrete
+                (12 :: Money.Discrete'
+                          "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                          '(1,1))
+            }
+        ]
+      , _addressInfoExtendedStakeAddress = pure "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
+      , _addressInfoExtendedType = Shelley
+      , _addressInfoExtendedScript = False
       }
 
 -- | Type (era) of an address

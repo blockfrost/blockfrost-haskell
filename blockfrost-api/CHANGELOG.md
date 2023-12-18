@@ -4,6 +4,7 @@
 * Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
   * `Env` enum extended with `Sanchonet` for `cardano-sanchonet` network
   * `/accounts/:stake_address/addresses/total` endpoint and `AddressAssociatedTotal` type
+  * `/addresses/:address/extended` endpoint and `AddressInfoExtended` type (uses `AmountExtended` type)
   * `/pools/extended` endpoint and `Pool` type
   * `/utils` API
     * `/utils/addresses/xpub/:xpub/:role/:index` endpoint and `DerivedAddress` type

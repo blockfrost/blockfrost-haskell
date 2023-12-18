@@ -22,6 +22,11 @@ spec_sample = do
     `shouldBe`
     Right addressInfoExpected
 
+  it "parses address info extended sample" $ do
+    eitherDecode addressInfoExtendedSample
+    `shouldBe`
+    Right addressInfoExtendedExpected
+
   it "parses address info sample" $ do
     eitherDecode addressInfoSample
     `shouldBe`
@@ -76,6 +81,49 @@ addressInfoExpected =
     , _addressInfoType = Shelley
     , _addressInfoScript = False
     }
+
+addressInfoExtendedSample = [r|
+{
+  "address": "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz",
+  "amount": [
+    {
+      "unit": "lovelace",
+      "quantity": "42000000",
+      "decimals": 6,
+      "has_nft_onchain_metadata": false
+    },
+    {
+      "unit": "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e",
+      "quantity": "12",
+      "decimals": null,
+      "has_nft_onchain_metadata": true
+    }
+  ],
+  "stake_address": "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7",
+  "type": "shelley",
+  "script": false
+}
+|]
+
+addressInfoExtendedExpected =
+   AddressInfoExtended
+      { _addressInfoExtendedAddress = "addr1qxqs59lphg8g6qndelq8xwqn60ag3aeyfcp33c2kdp46a09re5df3pzwwmyq946axfcejy5n4x0y99wqpgtp2gd0k09qsgy6pz"
+      , _addressInfoExtendedAmount =
+        [ AdaAmountExtended 42000000
+        , AssetAmountExtended
+            { assetAmountExtendedDecimals              = Nothing
+            , assetAmountExtendedHasNftOnchainMetadata = True
+            , assetAmountExtendedValue =
+                Money.mkSomeDiscrete
+                  "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                  unitScale
+                  12
+            }
+        ]
+      , _addressInfoExtendedStakeAddress = pure "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7"
+      , _addressInfoExtendedType = Shelley
+      , _addressInfoExtendedScript = False
+      }
 
 addressDetailsSample = [r|
 {
