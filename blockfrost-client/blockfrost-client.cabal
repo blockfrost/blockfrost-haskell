@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-client
-version:             0.7.1.1
+version:             0.8.0.0
 synopsis:            blockfrost.io basic client
 description:         Simple Blockfrost clients for use with transformers or mtl
 homepage:            https://github.com/blockfrost/blockfrost-haskell
@@ -65,7 +65,7 @@ library
                       , Blockfrost.Client.IPFS
                       , Blockfrost.Client.NutLink
    build-depends:       base                     >= 4.7 && < 5
-                      , blockfrost-api           >= 0.7.1
+                      , blockfrost-api           >= 0.9
                       , blockfrost-client-core   ^>= 0.6
                       , bytestring
                       , directory
