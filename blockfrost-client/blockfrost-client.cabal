@@ -14,9 +14,10 @@ build-type:          Simple
 
 
 extra-source-files:
-    CHANGELOG.md
     LICENSE
     README.md
+extra-doc-files:
+    CHANGELOG.md
 
 flag BuildFast
      Default: True
