@@ -72,6 +72,7 @@ library
                       , Blockfrost.API.Cardano.Pools
                       , Blockfrost.API.Cardano.Scripts
                       , Blockfrost.API.Cardano.Transactions
+                      , Blockfrost.API.Cardano.Utils
                       , Blockfrost.API.IPFS
                       , Blockfrost.API.NutLink
                       , Blockfrost.Auth
@@ -92,6 +93,7 @@ library
                       , Blockfrost.Types.Cardano.Pools
                       , Blockfrost.Types.Cardano.Scripts
                       , Blockfrost.Types.Cardano.Transactions
+                      , Blockfrost.Types.Cardano.Utils
                       , Blockfrost.Types.IPFS
                       , Blockfrost.Types.NutLink
                       , Blockfrost.Types.Shared
@@ -153,6 +155,7 @@ test-suite blockfrost-api-tests
                      , Cardano.Pools
                      , Cardano.Scripts
                      , Cardano.Transactions
+                     , Cardano.Utils
                      , IPFS
                      , NutLink
   build-depends:       base >= 4.7 && < 5
