@@ -1,7 +1,8 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.1.0-master) (2023-mm-dd)
 
-* Allow servant `0.20`
-* Additions
+* Allow servant `0.20` [#41](https://github.com/blockfrost/blockfrost-haskell/pull/41)
+* Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
+  * `Env` enum extended with `Sanchonet` for `cardano-sanchonet` network
   * `/accounts/:stake_address/addresses/total` endpoint and `AddressAssociatedTotal` type
   * `/pools/extended` endpoint and `Pool` type
   * `/utils` API
