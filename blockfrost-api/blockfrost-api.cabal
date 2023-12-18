@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-api
-version:             0.8.1.0
+version:             0.9.0.0
 synopsis:            API definitions for blockfrost.io
 description:         Core types and Servant API description
 homepage:            https://github.com/blockfrost/blockfrost-haskell
