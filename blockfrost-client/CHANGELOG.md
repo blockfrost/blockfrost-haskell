@@ -3,6 +3,7 @@
 * Allow servant `0.20` [#41](https://github.com/blockfrost/blockfrost-haskell/pull/41)
 * Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
   * `getAccountAssociatedAddressesTotal` for `/accounts/:stake_address/addresses/total`
+  * `getAddressInfoExtended` for `/addresses/:address/extended`
   * `listPoolsExtended` for `/pools/extended`
   * `/utils` API
     * `deriveShelleyAddress` for `/utils/addresses/xpub/:xpub/:role/:index`
