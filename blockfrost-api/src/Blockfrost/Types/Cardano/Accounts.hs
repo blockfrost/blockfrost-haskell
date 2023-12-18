@@ -11,10 +11,12 @@ module Blockfrost.Types.Cardano.Accounts
   , AccountWithdrawal (..)
   , AccountMir (..)
   , AddressAssociated (..)
+  , AddressAssociatedTotal (..)
   ) where
 
 import Blockfrost.Types.Shared
 import Deriving.Aeson
+import qualified Money
 import Servant.Docs (ToSample (..), samples, singleSample)
 
 -- | Information about an account, identified by its stake address
@@ -230,3 +232,36 @@ instance ToSample AddressAssociated where
     [ AddressAssociated "addr1qx2kd28nq8ac5prwg32hhvudlwggpgfp8utlyqxu6wqgz62f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sy0f4qd"
     , AddressAssociated "addr1q8j55h253zcvl326sk5qdt2n8z7eghzspe0ekxgncr796s2f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sjmd35m"
     ]
+
+-- | Detailed information about account associated addresses
+data AddressAssociatedTotal = AddressAssociatedTotal {
+    _addressAssociatedTotalStakeAddress :: Address -- ^ Bech32 encoded address
+  , _addressAssociatedTotalReceivedSum  :: [Amount]
+  , _addressAssociatedTotalSentSum      :: [Amount]
+  , _addressAssociatedTotalTxCount      :: Integer -- ^ Count of all transactions for all addresses associated with the account
+  } deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_addressAssociatedTotal", CamelToSnake]] AddressAssociatedTotal
+
+instance ToSample AddressAssociatedTotal where
+  toSamples = pure $ singleSample
+    AddressAssociatedTotal
+      { _addressAssociatedTotalStakeAddress = "stake1u9l5q5jwgelgagzyt6nuaasefgmn8pd25c8e9qpeprq0tdcp0e3uk"
+      , _addressAssociatedTotalReceivedSum =
+          [ AdaAmount 42000000
+          , AssetAmount
+              $ Money.mkSomeDiscrete
+                  "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                   unitScale
+                   12
+          ]
+      , _addressAssociatedTotalSentSum =
+          [ AdaAmount 123
+          , AssetAmount
+              $ Money.mkSomeDiscrete
+                  "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                   unitScale
+                   1
+          ]
+      , _addressAssociatedTotalTxCount = 2
+      }

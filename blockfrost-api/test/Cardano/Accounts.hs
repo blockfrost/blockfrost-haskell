@@ -57,6 +57,11 @@ spec_sample = do
     `shouldBe`
     Right accountAssociatedAddressesExpected
 
+  it "parses account associated addresses total sample" $ do
+    eitherDecode accountAssociatedAddressesTotalSample
+    `shouldBe`
+    Right accountAssociatedAddressesTotalExpected
+
 accountSample = [r|
 {
     "stake_address": "stake1ux3g2c9dx2nhhehyrezyxpkstartcqmu9hk63qgfkccw5rqttygt7",
@@ -300,3 +305,52 @@ accountAssociatedAddressesExpected =
     [ AddressAssociated "addr1qx2kd28nq8ac5prwg32hhvudlwggpgfp8utlyqxu6wqgz62f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sy0f4qd"
     , AddressAssociated "addr1q8j55h253zcvl326sk5qdt2n8z7eghzspe0ekxgncr796s2f79qsdmm5dsknt9ecr5w468r9ey0fxwkdrwh08ly3tu9sjmd35m"
     ]
+
+accountAssociatedAddressesTotalSample = [r|
+{
+  "stake_address": "stake1u9l5q5jwgelgagzyt6nuaasefgmn8pd25c8e9qpeprq0tdcp0e3uk",
+  "received_sum": [
+    {
+      "unit": "lovelace",
+      "quantity": "42000000"
+    },
+    {
+      "unit": "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e",
+      "quantity": "12"
+    }
+  ],
+  "sent_sum": [
+    {
+      "unit": "lovelace",
+      "quantity": "42000000"
+    },
+    {
+      "unit": "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e",
+      "quantity": "12"
+    }
+  ],
+  "tx_count": 12
+}
+|]
+
+accountAssociatedAddressesTotalExpected =
+  AddressAssociatedTotal
+    { _addressAssociatedTotalStakeAddress = "stake1u9l5q5jwgelgagzyt6nuaasefgmn8pd25c8e9qpeprq0tdcp0e3uk"
+    , _addressAssociatedTotalReceivedSum =
+        [ AdaAmount 42000000
+        , AssetAmount
+            $ Money.mkSomeDiscrete
+                "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                 unitScale
+                 12
+        ]
+    , _addressAssociatedTotalSentSum =
+        [ AdaAmount 42000000
+        , AssetAmount
+            $ Money.mkSomeDiscrete
+                "b0d07d45fe9514f80213f4020e5a61241458be626841cde717cb38a76e7574636f696e"
+                 unitScale
+                 12
+        ]
+    , _addressAssociatedTotalTxCount = 12
+    }

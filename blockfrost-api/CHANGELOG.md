@@ -1,6 +1,8 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.1.0-master) (2023-mm-dd)
 
 * Allow servant `0.20`
+* Additions
+  * `/accounts/:stake_address/addresses/total` endpoint and `AddressAssociatedTotal` type
 
 # Version [0.8.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.0.0...api-0.8.1.0) (2023-09-18)
 

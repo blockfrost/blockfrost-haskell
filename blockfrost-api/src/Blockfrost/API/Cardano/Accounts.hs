@@ -95,4 +95,15 @@ data AccountsAPI route =
         :> Pagination
         :> Sorting
         :> Get '[JSON] [Amount]
+     , _accountAssociatedTotal
+        :: route
+        :- Summary "Detailed information about account associated addresses"
+        :> Description "Obtain summed details about all addresses associated with a given account. \
+                        \Be careful, as an account could be part of a mangled address and does not \
+                        \necessarily mean the addresses are owned by user as the account."
+        :> Capture "stake_address" Address
+        :> "addresses"
+        :> "total"
+        :> Get '[JSON] AddressAssociatedTotal
+
     } deriving (Generic)
