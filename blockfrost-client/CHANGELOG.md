@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.7.1.1...master) (2023-mm-dd)
+# Version [0.8.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.7.1.1...client-0.8.0.0) (2023-12-18)
 
 * Allow servant `0.20` [#41](https://github.com/blockfrost/blockfrost-haskell/pull/41)
 * Additions [#43](https://github.com/blockfrost/blockfrost-haskell/pull/43)
