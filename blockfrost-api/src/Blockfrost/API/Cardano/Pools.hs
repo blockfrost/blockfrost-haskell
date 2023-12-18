@@ -23,6 +23,14 @@ data PoolsAPI route =
         :> Pagination
         :> Sorting
         :> Get '[JSON] [PoolId]
+    , _listPoolsExtended
+        :: route
+        :- Summary "List of stake pools with additional information"
+        :> Description "List of registered stake pools with additional information."
+        :> "extended"
+        :> Pagination
+        :> Sorting
+        :> Get '[JSON] [Pool]
     , _listRetiredPools
         :: route
         :- Summary "List of retired stake pools"

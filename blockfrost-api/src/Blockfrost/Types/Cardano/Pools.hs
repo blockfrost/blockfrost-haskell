@@ -1,7 +1,8 @@
 -- | Cardano Pools reponses
 
 module Blockfrost.Types.Cardano.Pools
-  ( PoolEpoch (..)
+  ( Pool (..)
+  , PoolEpoch (..)
   , PoolInfo (..)
   , PoolHistory (..)
   , PoolMetadata (..)
@@ -18,6 +19,39 @@ import Deriving.Aeson
 import Servant.Docs (ToSample (..), samples, singleSample)
 
 import Blockfrost.Types.Shared
+
+-- | Extended pool info
+data Pool = Pool
+  { _poolPoolId      :: PoolId -- ^ Bech32 encoded pool ID
+  , _poolHex         :: Text -- ^ Hexadecimal pool ID.
+  , _poolActiveStake :: Lovelaces -- ^ Active delegated amount
+  , _poolLiveStake   :: Lovelaces -- ^ Currently delegated amount
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_pool", CamelToSnake]] Pool
+
+instance ToSample Pool where
+  toSamples = pure $ samples
+    [ Pool
+        { _poolPoolId = "pool19u64770wqp6s95gkajc8udheske5e6ljmpq33awxk326zjaza0q"
+        , _poolHex = "2f355f79ee007502d116ecb07e36f985b34cebf2d84118f5c6b455a1"
+        , _poolActiveStake = 1541200000
+        , _poolLiveStake = 1541400000
+        }
+    , Pool
+        { _poolPoolId = "pool1dvla4zq98hpvacv20snndupjrqhuc79zl6gjap565nku6et5zdx"
+        , _poolHex = "6b3fda88053dc2cee18a7c2736f032182fcc78a2fe912e869aa4edcd"
+        , _poolActiveStake = 22200000
+        , _poolLiveStake = 48955550
+        }
+    , Pool
+        { _poolPoolId = "pool1wvccajt4eugjtf3k0ja3exjqdj7t8egsujwhcw4tzj4rzsxzw5w"
+        , _poolHex = "73318ec975cf1125a6367cbb1c9a406cbcb3e510e49d7c3aab14aa31"
+        , _poolActiveStake = 9989541215
+        , _poolLiveStake = 168445464878
+        }
+    ]
 
 -- | Retirement epoch for pool
 data PoolEpoch = PoolEpoch

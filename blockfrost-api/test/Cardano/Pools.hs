@@ -17,6 +17,11 @@ import Blockfrost.Types
 
 spec_pools :: Spec
 spec_pools = do
+  it "parses pools sample" $ do
+    eitherDecode poolsSample
+    `shouldBe`
+    Right poolsExpected
+
   it "parses pool epoch sample" $ do
     eitherDecode poolEpochSample
     `shouldBe`
@@ -56,6 +61,51 @@ spec_pools = do
     eitherDecode poolUpdatesSample
     `shouldBe`
     Right poolUpdatesExpected
+
+poolsSample = [r|
+[
+  {
+    "pool_id": "pool19u64770wqp6s95gkajc8udheske5e6ljmpq33awxk326zjaza0q",
+    "hex": "2f355f79ee007502d116ecb07e36f985b34cebf2d84118f5c6b455a1",
+    "active_stake": "1541200000",
+    "live_stake": "1541400000"
+  },
+  {
+    "pool_id": "pool1dvla4zq98hpvacv20snndupjrqhuc79zl6gjap565nku6et5zdx",
+    "hex": "6b3fda88053dc2cee18a7c2736f032182fcc78a2fe912e869aa4edcd",
+    "active_stake": "22200000",
+    "live_stake": "48955550"
+  },
+  {
+    "pool_id": "pool1wvccajt4eugjtf3k0ja3exjqdj7t8egsujwhcw4tzj4rzsxzw5w",
+    "hex": "73318ec975cf1125a6367cbb1c9a406cbcb3e510e49d7c3aab14aa31",
+    "active_stake": "9989541215",
+    "live_stake": "168445464878"
+  }
+]
+|]
+
+poolsExpected =
+  [ Pool
+      { _poolPoolId = "pool19u64770wqp6s95gkajc8udheske5e6ljmpq33awxk326zjaza0q"
+      , _poolHex = "2f355f79ee007502d116ecb07e36f985b34cebf2d84118f5c6b455a1"
+      , _poolActiveStake = 1541200000
+      , _poolLiveStake = 1541400000
+      }
+  , Pool
+      { _poolPoolId = "pool1dvla4zq98hpvacv20snndupjrqhuc79zl6gjap565nku6et5zdx"
+      , _poolHex = "6b3fda88053dc2cee18a7c2736f032182fcc78a2fe912e869aa4edcd"
+      , _poolActiveStake = 22200000
+      , _poolLiveStake = 48955550
+      }
+  , Pool
+      { _poolPoolId = "pool1wvccajt4eugjtf3k0ja3exjqdj7t8egsujwhcw4tzj4rzsxzw5w"
+      , _poolHex = "73318ec975cf1125a6367cbb1c9a406cbcb3e510e49d7c3aab14aa31"
+      , _poolActiveStake = 9989541215
+      , _poolLiveStake = 168445464878
+      }
+  ]
+
 
 poolEpochSample = [r|
 [
