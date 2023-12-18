@@ -3,6 +3,8 @@
 module Blockfrost.Client.Cardano.Pools
   ( listPools
   , listPools'
+  , listPoolsExtended
+  , listPoolsExtended'
   , listRetiredPools
   , listRetiredPools'
   , listRetiringPools
@@ -42,6 +44,22 @@ listPools' pg s = go (\p -> listPools_ p pg s)
 -- that accepts 'Paged' argument.
 listPools :: MonadBlockfrost m => m [PoolId]
 listPools = listPools' def def
+
+listPoolsExtended_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [Pool]
+listPoolsExtended_ = _listPoolsExtended . poolsClient
+
+-- | List registered stake pools with additional info
+-- Allows custom paging and ordering using 'Paged' and 'SortOrder'.
+listPoolsExtended' :: MonadBlockfrost m => Paged -> SortOrder -> m [Pool]
+listPoolsExtended' pg s = go (\p -> listPoolsExtended_ p pg s)
+
+-- | List registered stake pools with additional info.
+--
+-- Queries 100 entries. To query all entries use 'Blockfrost.Client.Core.allPages'
+-- with principled variant of this function (suffixed with @'@)
+-- that accepts 'Paged' argument.
+listPoolsExtended :: MonadBlockfrost m => m [Pool]
+listPoolsExtended = listPoolsExtended' def def
 
 listRetiredPools_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m [PoolEpoch]
 listRetiredPools_ = _listRetiredPools . poolsClient

@@ -3,6 +3,7 @@
 * Allow servant `0.20`
 * Additions
   * `getAccountAssociatedAddressesTotal` for `/accounts/:stake_address/addresses/total`
+  * `listPoolsExtended` for `/pools/extended`
 
 # Version [0.7.1.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.7.1.0...client-0.7.1.1) (2023-01-10)
 

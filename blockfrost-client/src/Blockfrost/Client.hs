@@ -102,6 +102,8 @@ module Blockfrost.Client
     -- Cardano - Pools
   , listPools
   , listPools'
+  , listPoolsExtended
+  , listPoolsExtended'
   , listRetiredPools
   , listRetiredPools'
   , listRetiringPools
