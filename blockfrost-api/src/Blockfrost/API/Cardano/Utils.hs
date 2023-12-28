@@ -8,6 +8,7 @@ module Blockfrost.API.Cardano.Utils
 import Data.Text
 import Servant.API
 import Servant.API.Generic
+import Servant.Docs (DocCapture (..), ToCapture (..))
 
 import Blockfrost.Types.Cardano.Utils
 import Blockfrost.Types.Shared.CBOR
@@ -48,3 +49,12 @@ data UtilsAPI route =
         :> Post '[JSON] TxEval
 
     } deriving (Generic)
+
+instance ToCapture (Capture "role" Integer) where
+  toCapture _ = DocCapture "role" "Account role"
+
+instance ToCapture (Capture "index" Integer) where
+  toCapture _ = DocCapture "index" "Address index"
+
+instance ToCapture (Capture "xpub" Text) where
+  toCapture _ = DocCapture "xpub" "Hexadecimal xpub"
