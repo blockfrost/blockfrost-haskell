@@ -23,7 +23,7 @@ data UtilsAPI route =
         :> "xpub"
         :> Capture "xpub" Text
         :> Capture "role" Integer
-        :> Capture "Index" Integer
+        :> Capture "index" Integer
         :> Get '[JSON] DerivedAddress
 
     , _txEvaluate
