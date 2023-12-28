@@ -19,8 +19,10 @@ makeFields ''AccountDelegation
 makeFields ''AccountRegistration
 makeFields ''AccountWithdrawal
 makeFields ''AccountMir
+makeFields ''AddressAssociatedTotal
 
 makeLensesWith blockfrostFieldRules ''AddressInfo
+makeLensesWith blockfrostFieldRules ''AddressInfoExtended
 makeFields ''AddressDetails
 makeFields ''AddressUtxo
 makeFields ''AddressTransaction
@@ -32,6 +34,7 @@ makeFields ''AssetMetadata
 makeFields ''AssetHistory
 makeFields ''AssetTransaction
 makeFields ''AssetAddress
+makeFields ''MetadataMediaFile
 
 makeFields ''Block
 
@@ -53,6 +56,7 @@ makeFieldsNoPrefix ''NetworkEraSummary
 makeFieldsNoPrefix ''NetworkEraBound
 makeFieldsNoPrefix ''NetworkEraParameters
 
+makeFields ''Pool
 makeFields ''PoolEpoch
 makeFields ''PoolInfo
 makeFields ''PoolHistory
@@ -77,6 +81,12 @@ makeFields ''TransactionMetaJSON
 makeFields ''TransactionMetaCBOR
 makeFields ''TransactionRedeemer
 
+makeFields ''DerivedAddress
+makeFields ''TxEval
+makeFields ''TxEvalBudget
+makeFields ''TxEvalResult
+makeFields ''TxEvalInput
+
 makeLensesWith blockfrostFieldRules ''IPFSAdd
 makeLensesWith blockfrostFieldRules ''IPFSPinChange
 makeLensesWith blockfrostFieldRules ''IPFSPin
@@ -88,3 +98,4 @@ makeFields ''NutlinkTicker
 -- * Shared
 makeFields ''BlockIndex
 makePrisms ''Amount
+makePrisms ''AmountExtended
