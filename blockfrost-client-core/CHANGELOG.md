@@ -1,3 +1,5 @@
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.6.0.1...master) (2024-MM-DD)
+
 # Version [0.6.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.6.0.0...client-core-0.6.0.1) (2024-01-16)
 
 * Allow servant `0.20`
