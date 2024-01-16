@@ -1,4 +1,6 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.0...master) (2024-mm-dd)
+# Version [0.8.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.0...client-0.8.0.1) (2024-01-16)
+
+* GHC 9.6.3 compatibility
 
 # Version [0.8.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.7.1.1...client-0.8.0.0) (2023-12-18)
 

@@ -15,7 +15,8 @@ module Blockfrost.Client.IPFS
 import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
-import Control.Monad.Except
+import Control.Monad.Except (MonadError, throwError)
+import Control.Monad.IO.Class (liftIO)
 import Data.ByteString.Lazy (ByteString)
 import Data.Text (Text)
 import qualified Data.Text
