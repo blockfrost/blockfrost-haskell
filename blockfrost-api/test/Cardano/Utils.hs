@@ -31,7 +31,7 @@ spec_scripts = do
   it "fails to parse tx eval error" $ do
     eitherDecode txEvalErrorSample
     `shouldSatisfy`
-    (Data.Either.isLeft :: Either String TxEval -> Bool)
+    (Data.Either.isLeft . _txEvalResult . Data.Either.fromRight undefined)
 
   it "parses tx eval input sample" $ do
     eitherDecode txEvalInputSample
@@ -57,111 +57,54 @@ derivedAddressExpected =
 
 txEvalSample = [r|
 {
-  "jsonrpc": "2.0",
-  "method": "evaluateTransaction",
-  "result": [{
-    "validator": "spend:0",
-    "budget": {
-      "memory": 1700,
-      "cpu": 476468
+  "type": "jsonwsp/response",
+  "version": "1.0",
+  "servicename": "ogmios",
+  "methodname": "EvaluateTx",
+  "result": {
+    "EvaluationResult": {
+      "spend:0": {
+        "memory": 1765011,
+        "steps": 503871230
+      }
     }
-  }]
+  },
+  "reflection": {
+    "id": "3e7eace0-a3d2-4020-aecb-c5b6e7910568"
+  }
 }
 |]
 
 txEvalExpected = evalSample
 
 -- Stolen from
--- https://github.com/CardanoSolutions/ogmios/blob/master/server/test/vectors/EvaluateTransactionResponse/000.json
+-- https://github.com/CardanoSolutions/ogmios/blob/v5.6.0/server/test/vectors/TxSubmission/Response/EvaluateTx/099.json
 -- Mozilla Public License 2.0
 txEvalErrorSample = [r|
 {
-  "jsonrpc": "2.0",
-  "method": "evaluateTransaction",
-  "error": {
-    "code": 3010,
-    "message": "Some scripts of the transactions terminated with error(s).",
-    "data": [
-      {
-        "validator": "spend:4",
-        "error": {
-          "code": 3011,
-          "message": "An associated script witness is missing. Indeed, any script used in a transaction (when spending, minting, withdrawing or publishing certificates) must be provided in full with the transaction. Scripts must therefore be added either to the witness set or provided as a reference inputs should you use Plutus V2+ and a format from Babbage and beyond.",
-          "data": {
-            "missingScripts": [
-              "certificate:3"
-            ]
-          }
+  "type": "jsonwsp/response",
+  "version": "1.0",
+  "servicename": "ogmios",
+  "methodname": "EvaluateTx",
+  "result": {
+    "EvaluationFailure": {
+      "AdditionalUtxoOverlap": [
+        {
+          "txId": "ae85d245a3d00bfde01f59f3c4fe0b4bfae1cb37e9cf91929eadcea4985711de",
+          "index": 2
+        },
+        {
+          "txId": "e88bd757ad5b9bedf372d8d3f0cf6c962a469db61a265f6418e1ffed86da29ec",
+          "index": 0
+        },
+        {
+          "txId": "e88bd757ad5b9bedf372d8d3f0cf6c962a469db61a265f6418e1ffed86da29ec",
+          "index": 2
         }
-      },
-      {
-        "validator": "mint:0",
-        "error": {
-          "code": 3011,
-          "message": "An associated script witness is missing. Indeed, any script used in a transaction (when spending, minting, withdrawing or publishing certificates) must be provided in full with the transaction. Scripts must therefore be added either to the witness set or provided as a reference inputs should you use Plutus V2+ and a format from Babbage and beyond.",
-          "data": {
-            "missingScripts": [
-              "certificate:11"
-            ]
-          }
-        }
-      },
-      {
-        "validator": "mint:3",
-        "error": {
-          "code": 3011,
-          "message": "An associated script witness is missing. Indeed, any script used in a transaction (when spending, minting, withdrawing or publishing certificates) must be provided in full with the transaction. Scripts must therefore be added either to the witness set or provided as a reference inputs should you use Plutus V2+ and a format from Babbage and beyond.",
-          "data": {
-            "missingScripts": [
-              "withdrawal:7"
-            ]
-          }
-        }
-      },
-      {
-        "validator": "mint:7",
-        "error": {
-          "code": 3011,
-          "message": "An associated script witness is missing. Indeed, any script used in a transaction (when spending, minting, withdrawing or publishing certificates) must be provided in full with the transaction. Scripts must therefore be added either to the witness set or provided as a reference inputs should you use Plutus V2+ and a format from Babbage and beyond.",
-          "data": {
-            "missingScripts": [
-              "mint:4"
-            ]
-          }
-        }
-      },
-      {
-        "validator": "mint:11",
-        "error": {
-          "code": 3117,
-          "message": "The transaction contains unknown UTxO references as inputs. This can happen if the inputs you're trying to spend have already been spent, or if you've simply referred to non-existing UTxO altogether. The field 'data.unknownOutputReferences' indicates all unknown inputs.",
-          "data": {
-            "unknownOutputReferences": [
-              {
-                "transaction": {
-                  "id": "a10897006ca78f6ce87fc6e2b139d92a896de01d62fe01f4fd0eccc6a10075c1"
-                },
-                "index": 14
-              }
-            ]
-          }
-        }
-      },
-      {
-        "validator": "certificate:2",
-        "error": {
-          "code": 3011,
-          "message": "An associated script witness is missing. Indeed, any script used in a transaction (when spending, minting, withdrawing or publishing certificates) must be provided in full with the transaction. Scripts must therefore be added either to the witness set or provided as a reference inputs should you use Plutus V2+ and a format from Babbage and beyond.",
-          "data": {
-            "missingScripts": [
-              "withdrawal:2"
-            ]
-          }
-        }
-      }
-    ]
+      ]
+    }
   },
-  "id": null
+  "reflection": "st"
 }
 |]
 

@@ -83,8 +83,8 @@ makeFields ''TransactionRedeemer
 
 makeFields ''DerivedAddress
 makeFields ''TxEval
+makeFields ''TxEvalValidator
 makeFields ''TxEvalBudget
-makeFields ''TxEvalResult
 makeFields ''TxEvalInput
 
 makeLensesWith blockfrostFieldRules ''IPFSAdd
