@@ -1,3 +1,5 @@
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.10.0.0...master) (2024-MM-DD)
+
 # Version [0.10.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.9.0.0...api-0.10.0.0) (2024-02-16)
 
 * Fixed
