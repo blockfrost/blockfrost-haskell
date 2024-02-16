@@ -10,7 +10,7 @@ import Blockfrost.Types.Shared.Opts
 
 -- | Validation purpose
 data ValidationPurpose = Spend | Mint | Cert | Reward
-  deriving stock (Show, Eq, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[ConstructorTagModifier '[ToLower]] ValidationPurpose
 

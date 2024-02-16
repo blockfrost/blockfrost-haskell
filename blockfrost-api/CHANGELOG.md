@@ -1,4 +1,10 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.9.0.0...master) (2024-mm-dd)
+# Version [0.10.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.9.0.0...api-0.10.0.0) (2024-02-16)
+
+* Fixed
+  * Handling of Ogmios v5 `txEvaluate` response [#52](https://github.com/blockfrost/blockfrost-haskell/pull/52)
+    `TxEvalResult` is no more and instead we add `TxEvalValidator`
+    and `TxEvalFailure`. `TxEval` newtype now has a single `result` field
+    of type `Either TxEvalFailure (Map TxEvalValidator TxEvalBudget)`
 
 # Version [0.9.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.8.1.0...api-0.9.0.0) (2023-12-18)
 
