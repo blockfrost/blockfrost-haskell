@@ -19,7 +19,7 @@ import Servant.Docs (ToSample (..), samples, singleSample)
 import Blockfrost.Types.Shared
 
 -- | Script type
-data ScriptType = PlutusV1 | PlutusV2 | Timelock
+data ScriptType = PlutusV1 | PlutusV2 | PlutusV3 | Timelock
   deriving stock (Show, Eq, Ord, Generic)
   deriving (FromJSON, ToJSON)
   via CustomJSON '[ConstructorTagModifier '[ToLower]] ScriptType
