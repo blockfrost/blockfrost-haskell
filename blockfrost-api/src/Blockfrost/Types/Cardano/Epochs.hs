@@ -88,10 +88,32 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMaxCollateralInputs    :: Integer -- ^ The maximum number of collateral inputs allowed in a transaction
   , _protocolParamsCoinsPerUtxoSize       :: Lovelaces -- ^ The cost per UTxO size. Cost per UTxO *word* for Alozno. Cost per UTxO *byte* for Babbage and later
   , _protocolParamsCoinsPerUtxoWord       :: Lovelaces -- ^ The cost per UTxO word (DEPRECATED)
+  , _protocolParamsPvtMotionNoConfidence :: Maybe Rational
+  , _protocolParamsPvtCommitteeNormal :: Maybe Rational
+  , _protocolParamsPvtCommitteeNoConfidence :: Maybe Rational
+  , _protocolParamsPvtHardForkInitiation :: Maybe Rational
+  , _protocolParamsPvtppSecurityGroup :: Maybe Rational
+  , _protocolParamsDvtMotionNoConfidence :: Maybe Rational
+  , _protocolParamsDvtCommitteeNormal :: Maybe Rational
+  , _protocolParamsDvtCommitteeNoConfidence :: Maybe Rational
+  , _protocolParamsDvtUpdateToConstitution :: Maybe Rational
+  , _protocolParamsDvtHardForkInitiation :: Maybe Rational
+  , _protocolParamsDvtPPNetworkGroup :: Maybe Rational
+  , _protocolParamsDvtPPEconomicGroup :: Maybe Rational
+  , _protocolParamsDvtPPTechnicalGroup :: Maybe Rational
+  , _protocolParamsDvtPPGovGroup :: Maybe Rational
+  , _protocolParamsDvtTreasuryWithdrawal :: Maybe Rational
+  , _protocolParamsCommitteeMinSize :: Maybe Quantity
+  , _protocolParamsCommitteeMaxTermLength :: Maybe Quantity
+  , _protocolParamsGovActionLifetime :: Maybe Quantity
+  , _protocolParamsGovActionDeposit :: Maybe Lovelaces
+  , _protocolParamsDrepDeposit :: Maybe Lovelaces
+  , _protocolParamsDrepActivity :: Maybe Quantity
+  , _protocolParamsMinFeeRefScriptCostPerByte :: Maybe Integer
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_protocolParams", CamelToSnake]] ProtocolParams
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_protocolParams", CamelToSnake, Rename "dvt_pp_network_group" "dvt_p_p_network_group", Rename "dvt_pp_economic_group" "dvt_p_p_economic_group", Rename "dvt_pp_technical_group" "dvt_p_p_technical_group", Rename "dvt_pp_gov_group" "dvt_p_p_gov_group"]] ProtocolParams
 
 instance ToSample ProtocolParams where
   toSamples = pure $ singleSample
@@ -128,6 +150,28 @@ instance ToSample ProtocolParams where
       , _protocolParamsMaxCollateralInputs = 3
       , _protocolParamsCoinsPerUtxoSize = 34482
       , _protocolParamsCoinsPerUtxoWord = 34482
+      , _protocolParamsPvtMotionNoConfidence = Just 0.51
+      , _protocolParamsPvtCommitteeNormal = Just 0.51
+      , _protocolParamsPvtCommitteeNoConfidence = Just 0.51
+      , _protocolParamsPvtHardForkInitiation = Just 0.51
+      , _protocolParamsPvtppSecurityGroup = Just 0.51
+      , _protocolParamsDvtMotionNoConfidence = Just 0.67
+      , _protocolParamsDvtCommitteeNormal = Just 0.67
+      , _protocolParamsDvtCommitteeNoConfidence = Just 0.6
+      , _protocolParamsDvtUpdateToConstitution = Just 0.75
+      , _protocolParamsDvtHardForkInitiation = Just 0.6
+      , _protocolParamsDvtPPNetworkGroup = Just 0.67
+      , _protocolParamsDvtPPEconomicGroup = Just 0.67
+      , _protocolParamsDvtPPTechnicalGroup = Just 0.67
+      , _protocolParamsDvtPPGovGroup = Just 0.75
+      , _protocolParamsDvtTreasuryWithdrawal = Just 0.67
+      , _protocolParamsCommitteeMinSize = Just 7
+      , _protocolParamsCommitteeMaxTermLength = Just 146
+      , _protocolParamsGovActionLifetime = Just 6
+      , _protocolParamsGovActionDeposit = Just 100000000000
+      , _protocolParamsDrepDeposit = Just 500000000
+      , _protocolParamsDrepActivity = Just 20
+      , _protocolParamsMinFeeRefScriptCostPerByte = Just 15
       }
 
 newtype CostModels = CostModels { unCostModels :: Map ScriptType (Map Text Integer) }

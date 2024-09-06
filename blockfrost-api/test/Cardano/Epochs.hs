@@ -110,7 +110,29 @@ protocolParamsSample = [r|
     "collateral_percent": 150,
     "max_collateral_inputs": 3,
     "coins_per_utxo_size": "34482",
-    "coins_per_utxo_word": "34482"
+    "coins_per_utxo_word": "34482",
+    "pvt_motion_no_confidence": 0.51,
+    "pvt_committee_normal": 0.51,
+    "pvt_committee_no_confidence": 0.51,
+    "pvt_hard_fork_initiation": 0.51,
+    "dvt_motion_no_confidence": 0.67,
+    "dvt_committee_normal": 0.67,
+    "dvt_committee_no_confidence": 0.6,
+    "dvt_update_to_constitution": 0.75,
+    "dvt_hard_fork_initiation": 0.6,
+    "dvt_p_p_network_group": 0.67,
+    "dvt_p_p_economic_group": 0.67,
+    "dvt_p_p_technical_group": 0.67,
+    "dvt_p_p_gov_group": 0.75,
+    "dvt_treasury_withdrawal": 0.67,
+    "committee_min_size": "7",
+    "committee_max_term_length": "146",
+    "gov_action_lifetime": "6",
+    "gov_action_deposit": "100000000000",
+    "drep_deposit": "500000000",
+    "drep_activity": "20",
+    "pvtpp_security_group": 0.51,
+    "min_fee_ref_script_cost_per_byte": 15
 }
 |]
 
@@ -164,6 +186,28 @@ protocolParamsExpected =
     , _protocolParamsCoinsPerUtxoSize = 34482
     -- deprecated
     , _protocolParamsCoinsPerUtxoWord = 34482
+    , _protocolParamsPvtMotionNoConfidence = Just 0.51
+    , _protocolParamsPvtCommitteeNormal = Just 0.51
+    , _protocolParamsPvtCommitteeNoConfidence = Just 0.51
+    , _protocolParamsPvtHardForkInitiation = Just 0.51
+    , _protocolParamsPvtppSecurityGroup = Just 0.51
+    , _protocolParamsDvtMotionNoConfidence = Just 0.67
+    , _protocolParamsDvtCommitteeNormal = Just 0.67
+    , _protocolParamsDvtCommitteeNoConfidence = Just 0.6
+    , _protocolParamsDvtUpdateToConstitution = Just 0.75
+    , _protocolParamsDvtHardForkInitiation = Just 0.6
+    , _protocolParamsDvtPPNetworkGroup = Just 0.67
+    , _protocolParamsDvtPPEconomicGroup = Just 0.67
+    , _protocolParamsDvtPPTechnicalGroup = Just 0.67
+    , _protocolParamsDvtPPGovGroup = Just 0.75
+    , _protocolParamsDvtTreasuryWithdrawal = Just 0.67
+    , _protocolParamsCommitteeMinSize = Just 7
+    , _protocolParamsCommitteeMaxTermLength = Just 146
+    , _protocolParamsGovActionLifetime = Just 6
+    , _protocolParamsGovActionDeposit = Just 100000000000
+    , _protocolParamsDrepDeposit = Just 500000000
+    , _protocolParamsDrepActivity = Just 20
+    , _protocolParamsMinFeeRefScriptCostPerByte = Just 15
     }
 
 stakeDistributionSample = [r|
