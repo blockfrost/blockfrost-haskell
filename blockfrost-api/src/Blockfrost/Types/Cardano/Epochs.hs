@@ -109,7 +109,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsGovActionDeposit :: Maybe Lovelaces
   , _protocolParamsDrepDeposit :: Maybe Lovelaces
   , _protocolParamsDrepActivity :: Maybe Quantity
-  , _protocolParamsMinFeeRefScriptCostPerByte :: Maybe Integer
+  , _protocolParamsMinFeeRefScriptCostPerByte :: Maybe Rational
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
