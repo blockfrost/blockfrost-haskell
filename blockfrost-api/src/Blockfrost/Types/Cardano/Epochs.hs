@@ -174,7 +174,7 @@ instance ToSample ProtocolParams where
       , _protocolParamsMinFeeRefScriptCostPerByte = Just 15
       }
 
-newtype CostModels = CostModels { unCostModels :: Map ScriptType (Map Text Integer) }
+newtype CostModels = CostModels { unCostModels :: Map ScriptType [(Text, Integer)] }
   deriving (Eq, Show, Generic)
 
 instance ToJSON CostModels where
@@ -186,8 +186,7 @@ instance ToJSON CostModels where
           $ map (\(key, param) ->
               ( Data.Aeson.Key.fromText key
               , toJSON param)
-            )
-            $ Data.Map.toList params
+            ) params
         ))
     . Data.Map.toList
     . unCostModels
@@ -207,7 +206,7 @@ instance FromJSON CostModels where
                       )
                     $ Data.Aeson.Key.toString kLang
                  ps <- parseParams vParams
-                 pure (l, Data.Map.fromList ps)
+                 pure (l, ps)
                )
                $ Data.Aeson.KeyMap.toList o
 
@@ -217,14 +216,12 @@ costModelsSample :: CostModels
 costModelsSample = CostModels
       $ Data.Map.fromList
       [ ( PlutusV1
-        , Data.Map.fromList
-          [ ("addInteger-cpu-arguments-intercept", 197209)
+        , [ ("addInteger-cpu-arguments-intercept", 197209)
           , ("addInteger-cpu-arguments-slope", 0)
           ]
         )
       , (PlutusV2
-        , Data.Map.fromList
-          [ ("addInteger-cpu-arguments-intercept", 197209)
+        , [ ("addInteger-cpu-arguments-intercept", 197209)
           , ("addInteger-cpu-arguments-slope", 0)
           ]
         )

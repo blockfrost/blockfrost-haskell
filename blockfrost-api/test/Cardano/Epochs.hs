@@ -162,14 +162,12 @@ protocolParamsExpected =
         CostModels
       $ Data.Map.fromList
       [ ( PlutusV1
-        , Data.Map.fromList
-          [ ("addInteger-cpu-arguments-intercept", 197209)
+        , [ ("addInteger-cpu-arguments-intercept", 197209)
           , ("addInteger-cpu-arguments-slope", 0)
           ]
         )
       , (PlutusV2
-        , Data.Map.fromList
-          [ ("addInteger-cpu-arguments-intercept", 197209)
+        , [ ("addInteger-cpu-arguments-intercept", 197209)
           , ("addInteger-cpu-arguments-slope", 0)
           ]
         )
