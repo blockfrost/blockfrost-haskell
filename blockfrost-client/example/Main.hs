@@ -3,7 +3,8 @@
 module Main
   where
 
-import Blockfrost.Client
+import Blockfrost.Client hiding (NutLinkAPI(..))
+import Control.Monad.IO.Class
 
 main = do
   -- reads token from BLOCKFROST_TOKEN_PATH
@@ -15,8 +16,45 @@ main = do
     latestBlocks <- getLatestBlock
     (ers :: Either BlockfrostError [AccountReward]) <-
       tryError $ getAccountRewards "gonnaFail"
+    
+    allMempoolTxs <- 
+      getMempoolTransactions prj def def
+    
+    if null allMempoolTxs 
+    then return $ (latestBlocks, ers, allMempoolTxs, Nothing)
+    else do let lastTxInMempool = TxHash . unTxHashObject $ last allMempoolTxs
+            lastMempoolTx <- getMempoolTransaction prj lastTxInMempool
+                
+            return (latestBlocks, ers, allMempoolTxs, Just lastMempoolTx) 
+    
+  -- variant accepting @Paged@ and @SortOrder@ arguments
+  -- getAccountRewards' "gonnaFail" (page 10) desc
+  case res of 
+    Left e -> print e
+    Right ((latestBlocks, ers, allMempoolTxs, lastMempoolTx)) -> do 
+      print "Latest blocks:"
+      print latestBlocks
+      putStrLn ""
+      print "Account rewards (expected to error):"
+      print ers
+      putStrLn ""
+      print "All mempool transactions (mempool potentially empty):"
+      print allMempoolTxs
+      putStrLn ""
+      print "Last mempool transaction (if any):"
+      print lastMempoolTx
+      putStrLn ""
 
-    -- variant accepting @Paged@ and @SortOrder@ arguments
-    -- getAccountRewards' "gonnaFail" (page 10) desc
-    pure (latestBlocks, ers)
-  print res
+      case lastMempoolTx of 
+        Nothing -> print "No mempool transactions found."
+        Just mempoolTx -> do
+          let inputs = _inputs mempoolTx
+          if null inputs 
+          then print "No mempool transactions found" -- Should be impossible
+          else 
+            do let address = Address . _address $ head inputs
+               mempoolTxByAddress <- runBlockfrost prj $ getMempoolTransactionsByAddress prj address def def
+               print "Mempool transactions by address:"
+               print mempoolTxByAddress
+               
+  

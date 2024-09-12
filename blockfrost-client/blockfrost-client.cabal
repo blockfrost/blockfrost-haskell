@@ -35,6 +35,7 @@ flag Production
 
 common libstuff
   default-language:    Haskell2010
+  default-extensions:  DuplicateRecordFields
   ghc-options:         -Wall -Wunused-packages
                        -fno-specialize
                        -- ^ this helps quite a lot
