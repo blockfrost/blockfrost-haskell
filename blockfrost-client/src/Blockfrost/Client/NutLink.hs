@@ -10,9 +10,9 @@ module Blockfrost.Client.NutLink
   , nutlinkTickers'
   ) where
 
-import Blockfrost.API
-import Blockfrost.Client.Types
-import Blockfrost.Types
+import Blockfrost.API 
+import Blockfrost.Client.Types 
+import Blockfrost.Types hiding (MempoolUTxOInput(..))
 import Data.Text (Text)
 
 nutlinkListAddress_ :: MonadBlockfrost m => Project -> Address-> m NutlinkAddress
