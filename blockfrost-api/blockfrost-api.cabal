@@ -90,6 +90,7 @@ library
                       , Blockfrost.Types.Cardano.Blocks
                       , Blockfrost.Types.Cardano.Epochs
                       , Blockfrost.Types.Cardano.Genesis
+                      , Blockfrost.Types.Cardano.Mempool
                       , Blockfrost.Types.Cardano.Metadata
                       , Blockfrost.Types.Cardano.Network
                       , Blockfrost.Types.Cardano.Pools
