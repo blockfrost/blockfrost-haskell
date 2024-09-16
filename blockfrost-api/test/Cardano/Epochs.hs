@@ -100,6 +100,20 @@ protocolParamsSample = [r|
         "addInteger-cpu-arguments-slope": 0
       }
     },
+    "cost_models_raw": {
+      "PlutusV1": [
+        197209,
+        0
+      ],
+      "PlutusV2": [
+        197209,
+        0
+      ],
+      "PlutusV3": [
+        197209,
+        0
+      ]
+    },
     "price_mem": 0.0577,
     "price_step": 0.0000721,
     "max_tx_ex_mem": "10000000",
@@ -171,6 +185,25 @@ protocolParamsExpected =
         , Data.Map.fromList
           [ ("addInteger-cpu-arguments-intercept", 197209)
           , ("addInteger-cpu-arguments-slope", 0)
+          ]
+        )
+      ]
+    , _protocolParamsCostModelsRaw =
+        CostModelsRaw
+      $ Data.Map.fromList
+      [ ( PlutusV1
+        , [ 197209
+          , 0
+          ]
+        )
+      , (PlutusV2
+        , [ 197209
+          , 0
+          ]
+        )
+      , (PlutusV3
+        , [ 197209
+          , 0
           ]
         )
       ]

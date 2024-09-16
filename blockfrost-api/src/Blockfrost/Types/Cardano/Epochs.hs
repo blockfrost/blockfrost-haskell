@@ -5,6 +5,7 @@ module Blockfrost.Types.Cardano.Epochs
   , PoolStakeDistribution (..)
   , ProtocolParams (..)
   , CostModels (..)
+  , CostModelsRaw (..)
   , StakeDistribution (..)
   ) where
 
@@ -77,6 +78,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMinPoolCost           :: Lovelaces  -- ^ Minimum stake cost forced on the pool
   , _protocolParamsNonce                 :: Text -- ^ Epoch number only used once
   , _protocolParamsCostModels            :: CostModels -- ^ Cost models parameters for Plutus Core scripts
+  , _protocolParamsCostModelsRaw         :: CostModelsRaw
   , _protocolParamsPriceMem               :: Rational -- ^ The per word cost of script memory usage
   , _protocolParamsPriceStep              :: Rational -- ^ The cost of script execution step usage
   , _protocolParamsMaxTxExMem             :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single transaction
@@ -139,6 +141,7 @@ instance ToSample ProtocolParams where
       , _protocolParamsMinPoolCost = 340000000
       , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
       , _protocolParamsCostModels = costModelsSample
+      , _protocolParamsCostModelsRaw = costModelsRawSample
       , _protocolParamsPriceMem = 0.0577
       , _protocolParamsPriceStep = 0.0000721
       , _protocolParamsMaxTxExMem = 10000000
@@ -213,6 +216,37 @@ instance FromJSON CostModels where
 
     pure $ CostModels $ Data.Map.fromList langs
 
+newtype CostModelsRaw = CostModelsRaw { unCostModelsRaw :: Map ScriptType [Integer] }
+  deriving (Eq, Show, Generic)
+
+instance ToJSON CostModelsRaw where
+  toJSON =
+      object
+    . map (\(lang, params) ->
+        ( Data.Aeson.Key.fromString $ show lang
+        , toJSON params)
+        )
+    . Data.Map.toList
+    . unCostModelsRaw
+
+instance FromJSON CostModelsRaw where
+  parseJSON = withObject "CostModelsRaw" $ \o -> do
+    langs <- mapM
+               (\(kLang, vParams) -> do
+                 l <- parseJSON
+                    $ toJSON
+                    $ (\lang -> case lang of
+                        [] -> fail "Absurd empty language in CostModelsRaw"
+                        (x:xs) -> Data.Char.toLower x:xs
+                      )
+                    $ Data.Aeson.Key.toString kLang
+                 ps <- parseJSON vParams
+                 pure (l, ps)
+               )
+               $ Data.Aeson.KeyMap.toList o
+
+    pure $ CostModelsRaw $ Data.Map.fromList langs
+
 costModelsSample :: CostModels
 costModelsSample = CostModels
       $ Data.Map.fromList
@@ -232,6 +266,24 @@ costModelsSample = CostModels
 
 instance ToSample CostModels where
   toSamples = pure $ singleSample costModelsSample
+
+costModelsRawSample :: CostModelsRaw
+costModelsRawSample = CostModelsRaw
+      $ Data.Map.fromList
+      [ ( PlutusV1
+        , [ 197209
+          , 0
+          ]
+        )
+      , (PlutusV2
+        , [ 197209
+          , 0
+          ]
+        )
+      ]
+
+instance ToSample CostModelsRaw where
+  toSamples = pure $ singleSample costModelsRawSample
 
 -- | Active stake distribution for an epoch
 data StakeDistribution = StakeDistribution
