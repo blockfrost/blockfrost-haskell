@@ -78,6 +78,7 @@ makeFields ''TransactionPoolUpdate
 makeFields ''PoolUpdateMetadata
 makeFields ''TransactionPoolRetiring
 makeFields ''TransactionMetaJSON
+makeFields ''TransactionCBOR
 makeFields ''TransactionMetaCBOR
 makeFields ''TransactionRedeemer
 

@@ -15,6 +15,7 @@ module Blockfrost.Types.Cardano.Transactions
   , PoolUpdateMetadata (..)
   , TransactionPoolRetiring (..)
   , TransactionMetaJSON (..)
+  , TransactionCBOR (..)
   , TransactionMetaCBOR (..)
   ) where
 
@@ -366,6 +367,17 @@ instance ToSample TransactionMetaJSON where
         "1968"
         (Just $ oracleMeta "0.15409850555139935")
     ]
+
+-- | Transaction in CBOR
+newtype TransactionCBOR = TransactionCBOR { _transactionCBORCbor :: Text }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_transactionCBOR", CamelToSnake]] TransactionCBOR
+
+instance ToSample TransactionCBOR where
+  toSamples = pure $ singleSample $
+    TransactionCBOR
+      "a100a16b436f6d62696e6174696f6e8601010101010c"
 
 -- | Transaction metadata in CBOR
 data TransactionMetaCBOR = TransactionMetaCBOR

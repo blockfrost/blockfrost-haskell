@@ -67,6 +67,11 @@ spec_txs = do
     `shouldBe`
     Right transactionMetaJSONExpected
 
+  it "parses transaction (CBOR) sample" $ do
+    eitherDecode transactionCBORSample
+    `shouldBe`
+    Right transactionCBORExpected
+  
   it "parses transaction meta (CBOR) sample" $ do
     eitherDecode transactionMetaCBORSample
     `shouldBe`
@@ -428,6 +433,16 @@ transactionMetaJSONExpected =
         "1968"
         (Just $ oracleMeta "0.15409850555139935")
     ]
+
+transactionCBORSample = [r|
+{
+  "cbor": "a100a16b436f6d62696e6174696f6e8601010101010c"
+}
+|]
+
+transactionCBORExpected =
+    TransactionCBOR
+      "a100a16b436f6d62696e6174696f6e8601010101010c"
 
 transactionMetaCBORSample = [r|
 {

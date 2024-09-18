@@ -83,6 +83,13 @@ data TransactionsAPI route =
         :> Capture "hash" TxHash
         :> "metadata"
         :> Get '[JSON] [TransactionMetaJSON]
+    , _txCBOR
+        :: route
+        :- Summary "Transaction in CBOR"
+        :> Description "Obtain the CBOR serialized transaction."
+        :> Capture "hash" TxHash
+        :> "cbor"
+        :> Get '[JSON] [TransactionCBOR]
     , _txMetadataCBOR
         :: route
         :- Summary "Transaction metadata in CBOR"
