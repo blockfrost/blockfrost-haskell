@@ -18,7 +18,7 @@ module Blockfrost.Client.Cardano.Transactions
 
 import Blockfrost.API
 import Blockfrost.Client.Types
-import Blockfrost.Types
+import Blockfrost.Types hiding (MempoolTransaction(..))
 
 transactionsClient :: MonadBlockfrost m => Project -> TransactionsAPI (AsClientT m)
 transactionsClient = fromServant . _transactions . cardanoClient

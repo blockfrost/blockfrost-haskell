@@ -45,6 +45,12 @@ makeFields ''PoolStakeDistribution
 
 makeFields ''Genesis
 
+makeFields  ''MempoolTransaction
+makeFields  ''TransactionInMempool
+makeFields  ''Amount
+makeFields  ''MempoolUTxOInput
+makeFields  ''MempoolRedeemer
+
 makeFields ''TxMeta
 makeFields ''TxMetaJSON
 makeFields ''TxMetaCBOR

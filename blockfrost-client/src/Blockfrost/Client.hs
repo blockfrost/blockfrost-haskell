@@ -97,6 +97,10 @@ module Blockfrost.Client
   , getTxMetadataByLabelJSON'
   , getTxMetadataByLabelCBOR
   , getTxMetadataByLabelCBOR'
+    -- Cardano - Mempool
+  , getMempoolTransactions
+  , getMempoolTransaction
+  , getMempoolTransactionsByAddress
     -- Cardano - Network
   , getNetworkInfo
   , getNetworkEras
@@ -178,6 +182,7 @@ import Blockfrost.Client.Cardano.Assets
 import Blockfrost.Client.Cardano.Blocks
 import Blockfrost.Client.Cardano.Epochs
 import Blockfrost.Client.Cardano.Ledger
+import Blockfrost.Client.Cardano.Mempool
 import Blockfrost.Client.Cardano.Metadata
 import Blockfrost.Client.Cardano.Network
 import Blockfrost.Client.Cardano.Pools

@@ -12,7 +12,7 @@ module Blockfrost.Client.NutLink
 
 import Blockfrost.API
 import Blockfrost.Client.Types
-import Blockfrost.Types
+import Blockfrost.Types hiding (MempoolUTxOInput(..))
 import Data.Text (Text)
 
 nutlinkListAddress_ :: MonadBlockfrost m => Project -> Address-> m NutlinkAddress

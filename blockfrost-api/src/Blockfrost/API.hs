@@ -98,6 +98,11 @@ data CardanoAPI route =
       :- "genesis"
       :> Tag "Cardano » Ledger"
       :> ToServantApi LedgerAPI
+    , _mempool
+      :: route
+      :- "mempool"
+      :> Tag "Cardano » Mempool"
+      :> ToServantApi MempoolAPI
     , _metadata
       :: route
       :- "metadata"

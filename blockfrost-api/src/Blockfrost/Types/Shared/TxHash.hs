@@ -2,9 +2,10 @@
 
 module Blockfrost.Types.Shared.TxHash
   ( TxHash (..)
+  , TxHashObject (..)
   ) where
 
-import Data.Aeson (FromJSON (..), ToJSON (..))
+import Data.Aeson (FromJSON (..), ToJSON (..), object, (.=), withObject, (.:))
 import Data.String (IsString (..))
 import Data.Text (Text)
 import qualified Data.Text
@@ -35,3 +36,19 @@ instance ToSample TxHash where
 
 instance ToCapture (Capture "hash" TxHash) where
   toCapture _ = DocCapture "hash" "Hash of the requested transaction."
+
+
+-- Temporary until blockfrost server returns proper TxHash
+
+newtype TxHashObject = TxHashObject { unTxHashObject :: Text }
+  deriving stock (Show, Eq, Ord, Generic)
+  deriving newtype (FromHttpApiData, ToHttpApiData)
+
+instance IsString TxHashObject where
+  fromString = TxHashObject . Data.Text.pack
+
+instance ToJSON TxHashObject where
+  toJSON hash = object ["tx_hash" .= unTxHashObject hash]
+
+instance FromJSON TxHashObject where
+  parseJSON = withObject "TxHashObject" $ \o -> TxHashObject <$> o .: "tx_hash"
