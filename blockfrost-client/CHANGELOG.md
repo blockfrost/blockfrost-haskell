@@ -1,5 +1,8 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.1...master) (2024-MM-DD)
 
+* Additions [#63](https://github.com/blockfrost/blockfrost-haskell/pull/63)
+  * `getTxCBOR` for `/txs/:hash/cbor`
+
 # Version [0.8.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.0...client-0.8.0.1) (2024-01-16)
 
 * GHC 9.6.3 compatibility

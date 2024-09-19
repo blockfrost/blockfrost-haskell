@@ -11,6 +11,7 @@ module Blockfrost.Client.Cardano.Transactions
   , getTxPoolUpdates
   , getTxPoolRetiring
   , getTxMetadataJSON
+  , getTxCBOR
   , getTxMetadataCBOR
   , submitTx
   ) where
@@ -91,6 +92,13 @@ getTxMetadataJSON_ = _txMetadataJSON . transactionsClient
 -- | Get transaction metadata in JSON
 getTxMetadataJSON :: MonadBlockfrost m => TxHash -> m [TransactionMetaJSON]
 getTxMetadataJSON t = go (`getTxMetadataJSON_` t)
+
+getTxCBOR_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionCBOR]
+getTxCBOR_ = _txCBOR . transactionsClient
+
+-- | Get transaction in CBOR
+getTxCBOR :: MonadBlockfrost m => TxHash -> m [TransactionCBOR]
+getTxCBOR t = go (`getTxCBOR_` t)
 
 getTxMetadataCBOR_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionMetaCBOR]
 getTxMetadataCBOR_ = _txMetadataCBOR . transactionsClient

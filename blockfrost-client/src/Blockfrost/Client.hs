@@ -140,6 +140,7 @@ module Blockfrost.Client
   , getTxPoolUpdates
   , getTxPoolRetiring
   , getTxMetadataJSON
+  , getTxCBOR
   , getTxMetadataCBOR
   , getTxRedeemers
   , submitTx
