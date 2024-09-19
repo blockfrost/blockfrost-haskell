@@ -10,8 +10,8 @@ module Blockfrost.Client.NutLink
   , nutlinkTickers'
   ) where
 
-import Blockfrost.API 
-import Blockfrost.Client.Types 
+import Blockfrost.API
+import Blockfrost.Client.Types
 import Blockfrost.Types hiding (MempoolUTxOInput(..))
 import Data.Text (Text)
 

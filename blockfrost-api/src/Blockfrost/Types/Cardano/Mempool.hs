@@ -1,19 +1,19 @@
 -- | Transaction metadata
 
 module Blockfrost.Types.Cardano.Mempool
-  ( MempoolTransaction(..),
-    TransactionInMempool (..), 
-    MempoolTxAmount(..),
-    MempoolUTxOInput(..),
-    MempoolRedeemer(..),
+  ( MempoolTransaction(..)
+  , TransactionInMempool (..)
+  , MempoolUTxOInput(..)
+  , MempoolRedeemer(..)
   ) where
 
-import Data.Text 
+import Data.Text
 import Deriving.Aeson
 import Blockfrost.Types.Cardano.Transactions
 import Blockfrost.Types.Shared.Ada
+import Blockfrost.Types.Shared.Amount
 
-data MempoolTransaction = MempoolTransaction 
+data MempoolTransaction = MempoolTransaction
   { _tx :: TransactionInMempool
   , _inputs :: [MempoolUTxOInput]
   , _outputs :: [UtxoOutput]
@@ -25,8 +25,8 @@ data MempoolTransaction = MempoolTransaction
 
 data TransactionInMempool = TransactionInMempool
   { _transactionHash                 :: Text -- ^ Transaction hash
-  , _transactionOutputAmount         :: [MempoolTxAmount] -- ^ Transaction outputs
-  , _transactionFees                 :: Lovelaces -- ^ Transacction fee 
+  , _transactionOutputAmount         :: [Amount] -- ^ Transaction outputs
+  , _transactionFees                 :: Lovelaces -- ^ Transaction fee
   , _transactionDeposit              :: Lovelaces -- ^ Deposit within the transaction in Lovelaces
   , _transactionSize                 :: Integer -- ^ Size of the transaction in Bytes
   , _transactionInvalidBefore        :: Maybe Text -- ^ Left (included) endpoint of the timelock validity intervals
@@ -46,29 +46,18 @@ data TransactionInMempool = TransactionInMempool
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_transaction", CamelToSnake]] TransactionInMempool
 
-data MempoolTxAmount 
-  = MempoolTxAmount 
-  { _amountUnit :: Text -- ^ Quantity in Lovelaces
-  , _amountQuantity :: Text -- ^ Quantity in the unit
-  }
-  deriving stock (Show, Eq, Generic)
-  deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_amount", CamelToSnake]] MempoolTxAmount
-
-data MempoolUTxOInput
-  = MempoolUTxOInput
+data MempoolUTxOInput = MempoolUTxOInput
    { _address :: Text -- ^ Address
    , _txHash :: Text -- ^ Transaction hash
    , _outputIndex :: Integer -- ^ Output index
    , _collateral :: Bool -- ^ True if the input is a collateral input
    , _reference :: Bool -- ^ Is the input a reference input
-   } 
-    deriving stock (Show, Eq, Generic)
-    deriving (FromJSON, ToJSON)
-    via CustomJSON '[FieldLabelModifier '[StripPrefix "_", CamelToSnake]] MempoolUTxOInput
+   }
+   deriving stock (Show, Eq, Generic)
+   deriving (FromJSON, ToJSON)
+   via CustomJSON '[FieldLabelModifier '[StripPrefix "_", CamelToSnake]] MempoolUTxOInput
 
-data MempoolRedeemer
-  = MempoolRedeemer
+data MempoolRedeemer = MempoolRedeemer
   { _tx_index :: Integer -- ^ Transaction index
   , _purpose :: Text -- ^ Purpose of the redeemer
   , _unit_mem :: Text -- ^ Memory unit
