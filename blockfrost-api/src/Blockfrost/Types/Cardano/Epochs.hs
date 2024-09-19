@@ -5,6 +5,7 @@ module Blockfrost.Types.Cardano.Epochs
   , PoolStakeDistribution (..)
   , ProtocolParams (..)
   , CostModels (..)
+  , CostModelsRaw (..)
   , StakeDistribution (..)
   ) where
 
@@ -77,6 +78,7 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMinPoolCost           :: Lovelaces  -- ^ Minimum stake cost forced on the pool
   , _protocolParamsNonce                 :: Text -- ^ Epoch number only used once
   , _protocolParamsCostModels            :: CostModels -- ^ Cost models parameters for Plutus Core scripts
+  , _protocolParamsCostModelsRaw         :: CostModelsRaw
   , _protocolParamsPriceMem               :: Rational -- ^ The per word cost of script memory usage
   , _protocolParamsPriceStep              :: Rational -- ^ The cost of script execution step usage
   , _protocolParamsMaxTxExMem             :: Quantity -- ^ The maximum number of execution memory allowed to be used in a single transaction
@@ -88,10 +90,32 @@ data ProtocolParams = ProtocolParams
   , _protocolParamsMaxCollateralInputs    :: Integer -- ^ The maximum number of collateral inputs allowed in a transaction
   , _protocolParamsCoinsPerUtxoSize       :: Lovelaces -- ^ The cost per UTxO size. Cost per UTxO *word* for Alozno. Cost per UTxO *byte* for Babbage and later
   , _protocolParamsCoinsPerUtxoWord       :: Lovelaces -- ^ The cost per UTxO word (DEPRECATED)
+  , _protocolParamsPvtMotionNoConfidence :: Maybe Rational
+  , _protocolParamsPvtCommitteeNormal :: Maybe Rational
+  , _protocolParamsPvtCommitteeNoConfidence :: Maybe Rational
+  , _protocolParamsPvtHardForkInitiation :: Maybe Rational
+  , _protocolParamsPvtppSecurityGroup :: Maybe Rational
+  , _protocolParamsDvtMotionNoConfidence :: Maybe Rational
+  , _protocolParamsDvtCommitteeNormal :: Maybe Rational
+  , _protocolParamsDvtCommitteeNoConfidence :: Maybe Rational
+  , _protocolParamsDvtUpdateToConstitution :: Maybe Rational
+  , _protocolParamsDvtHardForkInitiation :: Maybe Rational
+  , _protocolParamsDvtPPNetworkGroup :: Maybe Rational
+  , _protocolParamsDvtPPEconomicGroup :: Maybe Rational
+  , _protocolParamsDvtPPTechnicalGroup :: Maybe Rational
+  , _protocolParamsDvtPPGovGroup :: Maybe Rational
+  , _protocolParamsDvtTreasuryWithdrawal :: Maybe Rational
+  , _protocolParamsCommitteeMinSize :: Maybe Quantity
+  , _protocolParamsCommitteeMaxTermLength :: Maybe Quantity
+  , _protocolParamsGovActionLifetime :: Maybe Quantity
+  , _protocolParamsGovActionDeposit :: Maybe Lovelaces
+  , _protocolParamsDrepDeposit :: Maybe Lovelaces
+  , _protocolParamsDrepActivity :: Maybe Quantity
+  , _protocolParamsMinFeeRefScriptCostPerByte :: Maybe Rational
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
-  via CustomJSON '[FieldLabelModifier '[StripPrefix "_protocolParams", CamelToSnake]] ProtocolParams
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_protocolParams", CamelToSnake, Rename "dvt_pp_network_group" "dvt_p_p_network_group", Rename "dvt_pp_economic_group" "dvt_p_p_economic_group", Rename "dvt_pp_technical_group" "dvt_p_p_technical_group", Rename "dvt_pp_gov_group" "dvt_p_p_gov_group"]] ProtocolParams
 
 instance ToSample ProtocolParams where
   toSamples = pure $ singleSample
@@ -117,6 +141,7 @@ instance ToSample ProtocolParams where
       , _protocolParamsMinPoolCost = 340000000
       , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
       , _protocolParamsCostModels = costModelsSample
+      , _protocolParamsCostModelsRaw = costModelsRawSample
       , _protocolParamsPriceMem = 0.0577
       , _protocolParamsPriceStep = 0.0000721
       , _protocolParamsMaxTxExMem = 10000000
@@ -128,6 +153,28 @@ instance ToSample ProtocolParams where
       , _protocolParamsMaxCollateralInputs = 3
       , _protocolParamsCoinsPerUtxoSize = 34482
       , _protocolParamsCoinsPerUtxoWord = 34482
+      , _protocolParamsPvtMotionNoConfidence = Just 0.51
+      , _protocolParamsPvtCommitteeNormal = Just 0.51
+      , _protocolParamsPvtCommitteeNoConfidence = Just 0.51
+      , _protocolParamsPvtHardForkInitiation = Just 0.51
+      , _protocolParamsPvtppSecurityGroup = Just 0.51
+      , _protocolParamsDvtMotionNoConfidence = Just 0.67
+      , _protocolParamsDvtCommitteeNormal = Just 0.67
+      , _protocolParamsDvtCommitteeNoConfidence = Just 0.6
+      , _protocolParamsDvtUpdateToConstitution = Just 0.75
+      , _protocolParamsDvtHardForkInitiation = Just 0.6
+      , _protocolParamsDvtPPNetworkGroup = Just 0.67
+      , _protocolParamsDvtPPEconomicGroup = Just 0.67
+      , _protocolParamsDvtPPTechnicalGroup = Just 0.67
+      , _protocolParamsDvtPPGovGroup = Just 0.75
+      , _protocolParamsDvtTreasuryWithdrawal = Just 0.67
+      , _protocolParamsCommitteeMinSize = Just 7
+      , _protocolParamsCommitteeMaxTermLength = Just 146
+      , _protocolParamsGovActionLifetime = Just 6
+      , _protocolParamsGovActionDeposit = Just 100000000000
+      , _protocolParamsDrepDeposit = Just 500000000
+      , _protocolParamsDrepActivity = Just 20
+      , _protocolParamsMinFeeRefScriptCostPerByte = Just 15
       }
 
 newtype CostModels = CostModels { unCostModels :: Map ScriptType (Map Text Integer) }
@@ -169,6 +216,37 @@ instance FromJSON CostModels where
 
     pure $ CostModels $ Data.Map.fromList langs
 
+newtype CostModelsRaw = CostModelsRaw { unCostModelsRaw :: Map ScriptType [Integer] }
+  deriving (Eq, Show, Generic)
+
+instance ToJSON CostModelsRaw where
+  toJSON =
+      object
+    . map (\(lang, params) ->
+        ( Data.Aeson.Key.fromString $ show lang
+        , toJSON params)
+        )
+    . Data.Map.toList
+    . unCostModelsRaw
+
+instance FromJSON CostModelsRaw where
+  parseJSON = withObject "CostModelsRaw" $ \o -> do
+    langs <- mapM
+               (\(kLang, vParams) -> do
+                 l <- parseJSON
+                    $ toJSON
+                    $ (\lang -> case lang of
+                        [] -> fail "Absurd empty language in CostModelsRaw"
+                        (x:xs) -> Data.Char.toLower x:xs
+                      )
+                    $ Data.Aeson.Key.toString kLang
+                 ps <- parseJSON vParams
+                 pure (l, ps)
+               )
+               $ Data.Aeson.KeyMap.toList o
+
+    pure $ CostModelsRaw $ Data.Map.fromList langs
+
 costModelsSample :: CostModels
 costModelsSample = CostModels
       $ Data.Map.fromList
@@ -188,6 +266,24 @@ costModelsSample = CostModels
 
 instance ToSample CostModels where
   toSamples = pure $ singleSample costModelsSample
+
+costModelsRawSample :: CostModelsRaw
+costModelsRawSample = CostModelsRaw
+      $ Data.Map.fromList
+      [ ( PlutusV1
+        , [ 197209
+          , 0
+          ]
+        )
+      , (PlutusV2
+        , [ 197209
+          , 0
+          ]
+        )
+      ]
+
+instance ToSample CostModelsRaw where
+  toSamples = pure $ singleSample costModelsRawSample
 
 -- | Active stake distribution for an epoch
 data StakeDistribution = StakeDistribution
