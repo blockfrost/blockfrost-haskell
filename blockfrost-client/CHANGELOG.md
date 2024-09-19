@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.1...master) (2024-MM-DD)
+# Version [0.9.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.1...client-0.9.0.0) (2024-09-19)
 
 * Additions
   * `ProtocolParams` extended with Conway related protocol parameters and raw cost models [#59](https://github.com/blockfrost/blockfrost-haskell/pull/59)
