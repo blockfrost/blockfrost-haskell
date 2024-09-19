@@ -1,7 +1,9 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.11.0.0...master) (2024-MM-DD)
 
-* Additions [#63](https://github.com/blockfrost/blockfrost-haskell/pull/63)
-  * `/txs/:hash/cbor` endpoint with `TransactionCBOR` data type
+* Additions
+  * `ProtocolParams` extended with Conway related protocol parameters and raw cost models [#59](https://github.com/blockfrost/blockfrost-haskell/pull/59)
+  * Mempool endpoints [#62](https://github.com/blockfrost/blockfrost-haskell/pull/62)
+  * `/txs/:hash/cbor` endpoint with `TransactionCBOR` data type [#63](https://github.com/blockfrost/blockfrost-haskell/pull/63)
 
 # Version [0.11.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.10.0.0...api-0.11.0.0) (2024-08-26)
 

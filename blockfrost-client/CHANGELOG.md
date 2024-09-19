@@ -1,7 +1,9 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.1...master) (2024-MM-DD)
 
-* Additions [#63](https://github.com/blockfrost/blockfrost-haskell/pull/63)
-  * `getTxCBOR` for `/txs/:hash/cbor`
+* Additions
+  * `ProtocolParams` extended with Conway related protocol parameters and raw cost models [#59](https://github.com/blockfrost/blockfrost-haskell/pull/59)
+  * Mempool endpoints [#62](https://github.com/blockfrost/blockfrost-haskell/pull/62)
+  * `getTxCBOR` for `/txs/:hash/cbor` [#63](https://github.com/blockfrost/blockfrost-haskell/pull/63)
 
 # Version [0.8.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.8.0.0...client-0.8.0.1) (2024-01-16)
 
