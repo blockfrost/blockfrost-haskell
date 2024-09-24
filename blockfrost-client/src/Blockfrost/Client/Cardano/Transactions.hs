@@ -93,11 +93,11 @@ getTxMetadataJSON_ = _txMetadataJSON . transactionsClient
 getTxMetadataJSON :: MonadBlockfrost m => TxHash -> m [TransactionMetaJSON]
 getTxMetadataJSON t = go (`getTxMetadataJSON_` t)
 
-getTxCBOR_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionCBOR]
+getTxCBOR_ :: MonadBlockfrost m => Project -> TxHash -> m TransactionCBOR
 getTxCBOR_ = _txCBOR . transactionsClient
 
 -- | Get transaction in CBOR
-getTxCBOR :: MonadBlockfrost m => TxHash -> m [TransactionCBOR]
+getTxCBOR :: MonadBlockfrost m => TxHash -> m TransactionCBOR
 getTxCBOR t = go (`getTxCBOR_` t)
 
 getTxMetadataCBOR_ :: MonadBlockfrost m => Project -> TxHash -> m [TransactionMetaCBOR]
