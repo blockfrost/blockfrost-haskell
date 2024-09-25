@@ -1,3 +1,5 @@
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.1.0...master) (2024-MM-DD)
+
 # Version [0.9.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.0.0...client-0.9.1.0) (2024-09-25)
 
 * Fix return type of `getTxCBOR` from `[TransactionCBOR]` to `TransactionCBOR`.
