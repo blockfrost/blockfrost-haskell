@@ -1,5 +1,7 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.0.0...master) (2024-MM-DD)
 
+* Fix return type of `/txs/:hash/cbor` endpoint from `[TransactionCBOR]` to `TransactionCBOR.`
+
 # Version [0.12.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.11.0.0...api-0.12.0.0) (2024-09-19)
 
 * Additions
