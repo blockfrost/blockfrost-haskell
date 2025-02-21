@@ -129,7 +129,7 @@ library
    build-depends:       base                     >= 4.7 && < 5
                       , bytestring
                       , containers
-                      , data-default-class
+                      , data-default             >= 0.8
                       , text
                       , time
                       , aeson                    >= 2.0 && < 3.0

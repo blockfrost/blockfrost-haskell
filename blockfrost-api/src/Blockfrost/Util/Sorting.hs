@@ -10,7 +10,7 @@ module Blockfrost.Util.Sorting
   , desc
   ) where
 
-import Data.Default.Class
+import Data.Default
 import Servant.API (FromHttpApiData (..), QueryParam, ToHttpApiData (..), (:>))
 
 data SortOrder = Ascending | Descending

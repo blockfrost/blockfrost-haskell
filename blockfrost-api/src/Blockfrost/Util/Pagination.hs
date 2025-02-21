@@ -12,7 +12,7 @@ module Blockfrost.Util.Pagination
   , maxPageSize
   ) where
 
-import Data.Default.Class
+import Data.Default
 import Servant.API (QueryParam, (:>))
 
 -- | Pagination parameters
