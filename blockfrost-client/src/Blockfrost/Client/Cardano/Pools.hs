@@ -117,7 +117,7 @@ getPoolHistory :: MonadBlockfrost m => PoolId -> m [PoolHistory]
 getPoolHistory p = getPoolHistory' p def def
 
 getPoolMetadata_ :: MonadBlockfrost m => Project -> PoolId -> m (Maybe PoolMetadata)
-getPoolMetadata_ = _getPoolMetadata . poolsClient
+getPoolMetadata_ p pid = getMetadata <$> _getPoolMetadata (poolsClient p) pid
 
 -- | Get stake pool metadata
 getPoolMetadata :: MonadBlockfrost m => PoolId -> m (Maybe PoolMetadata)

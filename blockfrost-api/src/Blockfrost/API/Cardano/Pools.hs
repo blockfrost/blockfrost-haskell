@@ -68,7 +68,7 @@ data PoolsAPI route =
         :> Description "Stake pool registration metadata."
         :> Capture "pool_id" PoolId
         :> "metadata"
-        :> Get '[JSON] (Maybe PoolMetadata)
+        :> Get '[JSON] PoolMetadataResponse
     , _getPoolRelays
         :: route
         :- Summary "Stake pool relays"

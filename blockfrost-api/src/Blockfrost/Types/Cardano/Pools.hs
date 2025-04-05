@@ -6,6 +6,7 @@ module Blockfrost.Types.Cardano.Pools
   , PoolInfo (..)
   , PoolHistory (..)
   , PoolMetadata (..)
+  , PoolMetadataResponse (..)
   , PoolRelay (..)
   , PoolDelegator (..)
   , PoolUpdate (..)
@@ -164,18 +165,6 @@ data PoolMetadata = PoolMetadata
   deriving (FromJSON, ToJSON)
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_poolMetadata", CamelToSnake]] PoolMetadata
 
--- We need this more specific
--- instance since API returns
--- empty object if there's no metadata
-instance {-# OVERLAPS #-} ToJSON (Maybe PoolMetadata) where
-  toJSON Nothing   = object mempty
-  toJSON (Just pm) = toJSON pm
-  toEncoding Nothing   = pairs mempty
-  toEncoding (Just pm) = toEncoding pm
-instance {-# OVERLAPS #-} FromJSON (Maybe PoolMetadata) where
-  parseJSON x | x == object [] = pure Nothing
-  parseJSON x = Just <$> parseJSON x
-
 instance ToSample PoolMetadata where
   toSamples = pure $ singleSample samplePoolMetadata
 
@@ -191,6 +180,23 @@ samplePoolMetadata =
     , _poolMetadataDescription = Just "The best pool ever"
     , _poolMetadataHomepage = Just "https://stakentus.com/"
     }
+
+-- | Actual response about stake pool metadata.
+newtype PoolMetadataResponse = PoolMetadataResponse { getMetadata :: Maybe PoolMetadata }
+  deriving stock (Show, Eq, Generic)
+
+-- NOTE: Manual instance to produce empty object if there is no metadata
+instance ToJSON PoolMetadataResponse where
+  toJSON (PoolMetadataResponse Nothing) = object mempty
+  toJSON (PoolMetadataResponse (Just pm)) = toJSON pm
+
+  toEncoding (PoolMetadataResponse Nothing) = pairs mempty
+  toEncoding (PoolMetadataResponse (Just pm)) = toEncoding pm
+
+-- NOTE: Manual instance to accept empty objects as no metadata.
+instance FromJSON PoolMetadataResponse where
+  parseJSON x | x == object [] = pure $ PoolMetadataResponse Nothing
+  parseJSON x = PoolMetadataResponse . Just <$> parseJSON x
 
 -- | Relays of a stake pool
 data PoolRelay = PoolRelay

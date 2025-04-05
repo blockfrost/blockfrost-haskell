@@ -45,7 +45,7 @@ spec_pools = do
   it "parses empty object pool metadata sample" $ do
     eitherDecode "{}"
     `shouldBe`
-    Right (Nothing :: Maybe PoolMetadata)
+    Right (PoolMetadataResponse Nothing)
 
   it "parses pool relay sample" $ do
     eitherDecode poolRelaySample
