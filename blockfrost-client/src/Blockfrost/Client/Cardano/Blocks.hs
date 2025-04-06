@@ -4,6 +4,8 @@ module Blockfrost.Client.Cardano.Blocks
   ( getLatestBlock
   , getLatestBlockTxs
   , getLatestBlockTxs'
+  , getLatestBlockTxsCBOR
+  , getLatestBlockTxsCBOR'
   , getBlock
   , getBlockSlot
   , getBlockEpochSlot
@@ -13,6 +15,8 @@ module Blockfrost.Client.Cardano.Blocks
   , getPreviousBlocks'
   , getBlockTxs
   , getBlockTxs'
+  , getBlockTxsCBOR
+  , getBlockTxsCBOR'
   , getBlockAffectedAddresses'
   , getBlockAffectedAddresses
   ) where
@@ -46,6 +50,22 @@ getLatestBlockTxs' pg s = go (\p -> getLatestBlockTxs_ p pg s)
 -- that accepts 'Paged' argument.
 getLatestBlockTxs :: MonadBlockfrost m => m [TxHash]
 getLatestBlockTxs = getLatestBlockTxs' def def
+
+getLatestBlockTxsCBOR_ :: MonadBlockfrost m => Project -> Paged -> SortOrder -> m TxHashesCBOR
+getLatestBlockTxsCBOR_ = _latestTxsCBOR . blocksClient
+
+-- | Return the transactions within the block, including CBOR.
+-- Allows custom paging and ordering using 'Paged' and 'SortOrder'.
+getLatestBlockTxsCBOR' :: MonadBlockfrost m => Paged -> SortOrder -> m TxHashesCBOR
+getLatestBlockTxsCBOR' pg s = go (\p -> getLatestBlockTxsCBOR_ p pg s)
+
+-- | Return the transactions within the block, including CBOR.
+--
+-- Queries 100 entries. To query all entries use 'Blockfrost.Client.Core.allPages'
+-- with principled variant of this function (suffixed with @'@)
+-- that accepts 'Paged' argument.
+getLatestBlockTxsCBOR :: MonadBlockfrost m => m TxHashesCBOR
+getLatestBlockTxsCBOR = getLatestBlockTxsCBOR' def def
 
 getBlock_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> m Block
 getBlock_ = _block . blocksClient
@@ -115,6 +135,22 @@ getBlockTxs' a pg s = go (\p -> getBlockTxs_ p a pg s)
 -- that accepts 'Paged' argument.
 getBlockTxs :: MonadBlockfrost m => Either Integer BlockHash -> m [TxHash]
 getBlockTxs a = getBlockTxs' a def def
+
+getBlockTxsCBOR_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> Paged -> SortOrder -> m TxHashesCBOR
+getBlockTxsCBOR_ = _blockTxsCBOR . blocksClient
+
+-- | Return the transactions within the block, including CBOR.
+-- Allows custom paging and ordering using 'Paged' and 'SortOrder'.
+getBlockTxsCBOR' :: MonadBlockfrost m => Either Integer BlockHash -> Paged -> SortOrder -> m TxHashesCBOR
+getBlockTxsCBOR' a pg s = go (\p -> getBlockTxsCBOR_ p a pg s)
+
+-- | Return the transactions within the block, including CBOR.
+--
+-- Queries 100 entries. To query all entries use 'Blockfrost.Client.Core.allPages'
+-- with principled variant of this function (suffixed with @'@)
+-- that accepts 'Paged' argument.
+getBlockTxsCBOR :: MonadBlockfrost m => Either Integer BlockHash -> m TxHashesCBOR
+getBlockTxsCBOR a = getBlockTxsCBOR' a def def
 
 getBlockAffectedAddresses_ :: MonadBlockfrost m => Project -> Either Integer BlockHash -> Paged -> m [(Address, [TxHash])]
 getBlockAffectedAddresses_ = _blockAffectedAddresses . blocksClient

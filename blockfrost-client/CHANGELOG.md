@@ -1,5 +1,9 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.1.0...master) (2024-MM-DD)
 
+* Additions
+  * `getBlockTxsCBOR` for `/blocks/:hash_or_number/txs/cbor` endpoint [#73](https://github.com/blockfrost/blockfrost-haskell/pull/73)
+  * `getLatestBlockTxsCBOR` for `/blocks/latest/txs/cbor` endpoint [#73](https://github.com/blockfrost/blockfrost-haskell/pull/73)
+
 # Version [0.9.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.0.0...client-0.9.1.0) (2024-09-25)
 
 * Fix return type of `getTxCBOR` from `[TransactionCBOR]` to `TransactionCBOR`.
