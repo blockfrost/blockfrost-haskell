@@ -2,6 +2,7 @@
 
 module Blockfrost.Types.Cardano.Blocks
   ( Block (..)
+  , TxHashesCBOR (..)
   ) where
 
 import Data.Text (Text)
@@ -12,6 +13,7 @@ import Deriving.Aeson
 import Servant.Docs (ToSample (..), singleSample)
 
 import Blockfrost.Types.Shared
+import Blockfrost.Types.Cardano.Transactions (TransactionCBOR(..))
 
 -- | Information about a block
 data Block = Block
@@ -73,3 +75,39 @@ instance {-# OVERLAPS #-} FromJSON (Address, [TxHash]) where
       o
       "transactions"
     pure (addr, txs)
+
+-- | Transaction @TxHash@ to its respective @TransactionCBOR@ wrapper.
+-- Intentionally not a Map to preserve ordering
+newtype TxHashesCBOR = TxHashesCBOR { getTxHashesCBOR :: [(TxHash, TransactionCBOR)] }
+  deriving stock (Show, Eq, Generic)
+
+instance ToSample TxHashesCBOR where
+  toSamples _ =
+      singleSample
+    $ TxHashesCBOR
+        [ ( TxHash "6f044565223657acdde3c569d6555b2edbd71bc2bfb4df0b1cce0ef805f606d4"
+          , TransactionCBOR "84a300d9010281825820787b3a89b1d32806968b867a4a31f1e33054b573821293a1c915559e34810a3602018282583900bd71b1547ab3ec95725100d0c0fb06da5ffae9cf54fb97e0f52fb9cab51adb784c4997143ba56990c0584111137d02898950245f5db5e2631a05f5e10082583900bd71b1547ab3ec95725100d0c0fb06da5ffae9cf54fb97e0f52fb9cab51adb784c4997143ba56990c0584111137d02898950245f5db5e2631b0000001588345487021a0002922da100818258206a7884092084c018eed71f9df5ff61935ab021f578b2d57d8ffb0b0e8ac0ea285840a2045496acf31996336ef187f9f3c2bd24c24995b540541586cbbc73a1550a50c2fdc3d4b99766c2823eb520866b03a38a60a4eb94f24994f441fb2852447c0ef5f6"
+          )
+        , ( TxHash "9b9ddb7ee8101e5a2638b5b79fe4dbafafcda56df12eebe2fd456e9862b848ea"
+          , TransactionCBOR "84a300d90102818258207df720d99d8323830709439492876005ff752b94dafeb7bec529ab1679ec236901018282583900f2b425e12b7d90128fff6368c9c3cee21e29ae0273dda6f4c21c66f8364d4566878a66fab0bbc596dac020e3188cb58e40f7069e3c6652fa1a00e4e1c082583900c8cbbfc1db08891d2c2ec9f8df43c2904a61c0626c7e1a57627eb0753e9649b2a3596889c539a17e4d4cbefd9ed73a73d4d8f6089e02d1df1b00000004a6558a56021a0002922da10081825820844e231d37f9b76a2b02978d634ec7fa9fa7bc74a4ce3bc403e3091321a672405840c3cebb97014af06991be1a15fbc86adf71c2441dcbf3078edb11d9407306a13694f7ca5d8fc366bf28ea30fda713c2368e648ce7c87bd2981b43e4fecdd05403f5f6"
+          )
+        ]
+
+instance ToJSON TxHashesCBOR where
+  toJSON (TxHashesCBOR m) =
+    toJSON
+      $ map
+          (\(k, v) -> object
+            [ "tx_hash" .= toJSON k
+            , "cbor" .= toJSON v
+            ]
+          )
+          m
+
+instance FromJSON TxHashesCBOR where
+  parseJSON = withArray "txHashesCBORArray" $ \a -> do
+    TxHashesCBOR
+      <$> mapM
+            (withObject "txHashesCBOR" $ \to ->
+              (,) <$> to .: "tx_hash" <*> (TransactionCBOR <$> to .: "cbor"))
+            (Data.Vector.toList a)
