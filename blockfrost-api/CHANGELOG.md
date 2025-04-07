@@ -2,7 +2,7 @@
 
 * Additions
   * `/blocks/:hash_or_number/txs/cbor`
-    and `/blocks/latest/txs/cbor` endpoints with `TxHashesCBOR` data type [#73](https://github.com/blockfrost/blockfrost-haskell/pull/73)
+    and `/blocks/latest/txs/cbor` endpoints with `[TxHashCBOR]` data type [#73](https://github.com/blockfrost/blockfrost-haskell/pull/73) [#75](https://github.com/blockfrost/blockfrost-haskell/pull/75)
 
 # Version [0.12.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.0.0...api-0.12.1.0) (2024-09-25)
 
