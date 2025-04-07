@@ -1,8 +1,10 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.1.0...master) (2024-MM-DD)
+# Version [0.12.2.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.1.0...api-0.12.2.0) (2025-04-07)
 
 * Additions
   * `/blocks/:hash_or_number/txs/cbor`
     and `/blocks/latest/txs/cbor` endpoints with `[TxHashCBOR]` data type [#73](https://github.com/blockfrost/blockfrost-haskell/pull/73) [#75](https://github.com/blockfrost/blockfrost-haskell/pull/75)
+* Removal of problematic overlapping `From/ToJSON`
+  instances on `Mabye PoolMetadata` [#72](https://github.com/blockfrost/blockfrost-haskell/pull/72)
 
 # Version [0.12.1.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.0.0...api-0.12.1.0) (2024-09-25)
 
