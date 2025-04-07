@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.1.0...master) (2024-MM-DD)
+# Version [0.9.2.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.1.0...client-0.9.2.0) (2025-04-07)
 
 * Additions
   * `getBlockTxsCBOR` for `/blocks/:hash_or_number/txs/cbor` endpoint [#73](https://github.com/blockfrost/blockfrost-haskell/pull/73) [#75](https://github.com/blockfrost/blockfrost-haskell/pull/75)
