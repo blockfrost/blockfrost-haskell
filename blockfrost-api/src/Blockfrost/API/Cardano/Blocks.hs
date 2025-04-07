@@ -32,6 +32,16 @@ data BlocksAPI route =
         :> Pagination
         :> Sorting
         :> Get '[JSON] [TxHash]
+      , _latestTxsCBOR
+        :: route
+        :- Summary "Latest transactions with CBOR data"
+        :> Description "Return the transactions within the latest block, including CBOR representations."
+        :> "latest"
+        :> "txs"
+        :> "cbor"
+        :> Pagination
+        :> Sorting
+        :> Get '[JSON] TxHashesCBOR
      , _block
         :: route
         :- Summary "Latest block transactions"
@@ -79,6 +89,16 @@ data BlocksAPI route =
         :> Pagination
         :> Sorting
         :> Get '[JSON] [TxHash]
+      , _blockTxsCBOR
+        :: route
+        :- Summary "Block transactions with CBOR data"
+        :> Description "Return the transactions within the block, including CBOR representations."
+        :> Capture "hash_or_number" (Either Integer BlockHash)
+        :> "txs"
+        :> "cbor"
+        :> Pagination
+        :> Sorting
+        :> Get '[JSON] TxHashesCBOR
       , _blockAffectedAddresses
         :: route
         :- Summary "Addresses affected in a specific block"

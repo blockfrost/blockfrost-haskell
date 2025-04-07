@@ -60,6 +60,8 @@ module Blockfrost.Client
   , getLatestBlock
   , getLatestBlockTxs
   , getLatestBlockTxs'
+  , getLatestBlockTxsCBOR
+  , getLatestBlockTxsCBOR'
   , getBlock
   , getBlockSlot
   , getBlockEpochSlot
@@ -69,6 +71,8 @@ module Blockfrost.Client
   , getPreviousBlocks'
   , getBlockTxs
   , getBlockTxs'
+  , getBlockTxsCBOR
+  , getBlockTxsCBOR'
   , getBlockAffectedAddresses'
   , getBlockAffectedAddresses
     -- Cardano - Epochs
