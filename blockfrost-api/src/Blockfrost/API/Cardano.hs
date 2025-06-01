@@ -8,6 +8,7 @@ module Blockfrost.API.Cardano
   , module Blockfrost.API.Cardano.Assets
   , module Blockfrost.API.Cardano.Blocks
   , module Blockfrost.API.Cardano.Epochs
+  , module Blockfrost.API.Cardano.Governance
   , module Blockfrost.API.Cardano.Ledger
   , module Blockfrost.API.Cardano.Mempool
   , module Blockfrost.API.Cardano.Metadata
@@ -23,6 +24,7 @@ import Blockfrost.API.Cardano.Addresses
 import Blockfrost.API.Cardano.Assets
 import Blockfrost.API.Cardano.Blocks
 import Blockfrost.API.Cardano.Epochs
+import Blockfrost.API.Cardano.Governance
 import Blockfrost.API.Cardano.Ledger
 import Blockfrost.API.Cardano.Mempool
 import Blockfrost.API.Cardano.Metadata

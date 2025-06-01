@@ -93,6 +93,11 @@ data CardanoAPI route =
       :- "epochs"
       :> Tag "Cardano » Epochs"
       :> ToServantApi EpochsAPI
+    , _governance
+      :: route
+      :- "governance"
+      :> Tag "Cardano » Governance"
+      :> ToServantApi GovernanceAPI
     , _ledger
       :: route
       :- "genesis"
