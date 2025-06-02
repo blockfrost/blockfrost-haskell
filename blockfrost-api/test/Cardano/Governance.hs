@@ -512,29 +512,30 @@ paramProposalExpected =
     { _paramProposalTxHash     = "2dd15e0ef6e6a17841cb9541c27724072ce4d4b79b91e58432fbaa32d9572531"
     , _paramProposalCertIndex  = 2
     , _paramProposalParameters =
-      ProtocolParams
-        { _protocolParamsEpoch = 225
-        , _protocolParamsMinFeeA = 44
-        , _protocolParamsMinFeeB = 155381
-        , _protocolParamsMaxBlockSize = 65536
-        , _protocolParamsMaxTxSize = 16384
-        , _protocolParamsMaxBlockHeaderSize = 1100
-        , _protocolParamsKeyDeposit = 2000000
-        , _protocolParamsPoolDeposit = 500000000
-        , _protocolParamsEMax = 18
-        , _protocolParamsNOpt = 150
-        , _protocolParamsA0 = 0.3
-        , _protocolParamsRho = 0.003
-        , _protocolParamsTau = 0.2
-        , _protocolParamsDecentralisationParam = 0.5
-        , _protocolParamsExtraEntropy = Nothing
-        , _protocolParamsProtocolMajorVer = 2
-        , _protocolParamsProtocolMinorVer = 0
-        , _protocolParamsMinUtxo = 1000000
-        , _protocolParamsMinPoolCost = 340000000
-        , _protocolParamsNonce = "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
-        , _protocolParamsCostModels =
-            CostModels
+      ProposedProtocolParams
+        { _proposedProtocolParamsEpoch = Just 225
+        , _proposedProtocolParamsMinFeeA = Just 44
+        , _proposedProtocolParamsMinFeeB = Just 155381
+        , _proposedProtocolParamsMaxBlockSize = Just 65536
+        , _proposedProtocolParamsMaxTxSize = Just 16384
+        , _proposedProtocolParamsMaxBlockHeaderSize = Just 1100
+        , _proposedProtocolParamsKeyDeposit = Just 2000000
+        , _proposedProtocolParamsPoolDeposit = Just 500000000
+        , _proposedProtocolParamsEMax = Just 18
+        , _proposedProtocolParamsNOpt = Just 150
+        , _proposedProtocolParamsA0 = Just 0.3
+        , _proposedProtocolParamsRho = Just 0.003
+        , _proposedProtocolParamsTau = Just 0.2
+        , _proposedProtocolParamsDecentralisationParam = Just 0.5
+        , _proposedProtocolParamsExtraEntropy = Nothing
+        , _proposedProtocolParamsProtocolMajorVer = Just 2
+        , _proposedProtocolParamsProtocolMinorVer = Just 0
+        , _proposedProtocolParamsMinUtxo = Just 1000000
+        , _proposedProtocolParamsMinPoolCost = Just 340000000
+        , _proposedProtocolParamsNonce = Just "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+        , _proposedProtocolParamsCostModels =
+            Just
+          $ CostModels
           $ Data.Map.fromList
           [ ( PlutusV1
             , Data.Map.fromList
@@ -549,8 +550,9 @@ paramProposalExpected =
               ]
             )
           ]
-        , _protocolParamsCostModelsRaw =
-            CostModelsRaw
+        , _proposedProtocolParamsCostModelsRaw =
+            Just
+          $ CostModelsRaw
           $ Data.Map.fromList
           [ ( PlutusV1
             , [ 197209
@@ -568,40 +570,40 @@ paramProposalExpected =
               ]
             )
           ]
-        , _protocolParamsPriceMem = 0.0577
-        , _protocolParamsPriceStep = 0.0000721
-        , _protocolParamsMaxTxExMem = 10000000
-        , _protocolParamsMaxTxExSteps = 10000000000
-        , _protocolParamsMaxBlockExMem = 50000000
-        , _protocolParamsMaxBlockExSteps = 40000000000
-        , _protocolParamsMaxValSize = 5000
-        , _protocolParamsCollateralPercent = 150
-        , _protocolParamsMaxCollateralInputs = 3
-        , _protocolParamsCoinsPerUtxoSize = 34482
+        , _proposedProtocolParamsPriceMem = Just 0.0577
+        , _proposedProtocolParamsPriceStep = Just 0.0000721
+        , _proposedProtocolParamsMaxTxExMem = Just 10000000
+        , _proposedProtocolParamsMaxTxExSteps = Just 10000000000
+        , _proposedProtocolParamsMaxBlockExMem = Just 50000000
+        , _proposedProtocolParamsMaxBlockExSteps = Just 40000000000
+        , _proposedProtocolParamsMaxValSize = Just 5000
+        , _proposedProtocolParamsCollateralPercent = Just 150
+        , _proposedProtocolParamsMaxCollateralInputs = Just 3
+        , _proposedProtocolParamsCoinsPerUtxoSize = Just 34482
         -- deprecated
-        , _protocolParamsCoinsPerUtxoWord = 34482
-        , _protocolParamsPvtMotionNoConfidence = Just 0.51
-        , _protocolParamsPvtCommitteeNormal = Just 0.51
-        , _protocolParamsPvtCommitteeNoConfidence = Just 0.51
-        , _protocolParamsPvtHardForkInitiation = Just 0.51
-        , _protocolParamsPvtppSecurityGroup = Just 0.51
-        , _protocolParamsDvtMotionNoConfidence = Just 0.67
-        , _protocolParamsDvtCommitteeNormal = Just 0.67
-        , _protocolParamsDvtCommitteeNoConfidence = Just 0.6
-        , _protocolParamsDvtUpdateToConstitution = Just 0.75
-        , _protocolParamsDvtHardForkInitiation = Just 0.6
-        , _protocolParamsDvtPPNetworkGroup = Just 0.67
-        , _protocolParamsDvtPPEconomicGroup = Just 0.67
-        , _protocolParamsDvtPPTechnicalGroup = Just 0.67
-        , _protocolParamsDvtPPGovGroup = Just 0.75
-        , _protocolParamsDvtTreasuryWithdrawal = Just 0.67
-        , _protocolParamsCommitteeMinSize = Just 7
-        , _protocolParamsCommitteeMaxTermLength = Just 146
-        , _protocolParamsGovActionLifetime = Just 6
-        , _protocolParamsGovActionDeposit = Just 100000000000
-        , _protocolParamsDrepDeposit = Just 500000000
-        , _protocolParamsDrepActivity = Just 20
-        , _protocolParamsMinFeeRefScriptCostPerByte = Just 15
+        , _proposedProtocolParamsCoinsPerUtxoWord = Just 34482
+        , _proposedProtocolParamsPvtMotionNoConfidence = Just 0.51
+        , _proposedProtocolParamsPvtCommitteeNormal = Just 0.51
+        , _proposedProtocolParamsPvtCommitteeNoConfidence = Just 0.51
+        , _proposedProtocolParamsPvtHardForkInitiation = Just 0.51
+        , _proposedProtocolParamsPvtppSecurityGroup = Just 0.51
+        , _proposedProtocolParamsDvtMotionNoConfidence = Just 0.67
+        , _proposedProtocolParamsDvtCommitteeNormal = Just 0.67
+        , _proposedProtocolParamsDvtCommitteeNoConfidence = Just 0.6
+        , _proposedProtocolParamsDvtUpdateToConstitution = Just 0.75
+        , _proposedProtocolParamsDvtHardForkInitiation = Just 0.6
+        , _proposedProtocolParamsDvtPPNetworkGroup = Just 0.67
+        , _proposedProtocolParamsDvtPPEconomicGroup = Just 0.67
+        , _proposedProtocolParamsDvtPPTechnicalGroup = Just 0.67
+        , _proposedProtocolParamsDvtPPGovGroup = Just 0.75
+        , _proposedProtocolParamsDvtTreasuryWithdrawal = Just 0.67
+        , _proposedProtocolParamsCommitteeMinSize = Just 7
+        , _proposedProtocolParamsCommitteeMaxTermLength = Just 146
+        , _proposedProtocolParamsGovActionLifetime = Just 6
+        , _proposedProtocolParamsGovActionDeposit = Just 100000000000
+        , _proposedProtocolParamsDrepDeposit = Just 500000000
+        , _proposedProtocolParamsDrepActivity = Just 20
+        , _proposedProtocolParamsMinFeeRefScriptCostPerByte = Just 15
         }
     }
 

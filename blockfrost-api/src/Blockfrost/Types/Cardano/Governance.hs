@@ -12,6 +12,7 @@ module Blockfrost.Types.Cardano.Governance
   , ProposalAction (..)
   , Proposal (..)
   , ProposalInfo (..)
+  , ProposedProtocolParams (..)
   , ParamProposal (..)
   , WithdrawalProposal (..)
   , VoterRole (..)
@@ -20,7 +21,7 @@ module Blockfrost.Types.Cardano.Governance
   ) where
 
 import Blockfrost.Types.Shared
-import Blockfrost.Types.Cardano.Epochs (ProtocolParams)
+import Blockfrost.Types.Cardano.Epochs (CostModels, CostModelsRaw)
 import Data.Aeson (FromJSON (..), ToJSON (..), Value (..), (.=), object, withText)
 import Data.Proxy (Proxy (..))
 import Data.Text (Text)
@@ -363,11 +364,142 @@ instance ToSample ProposalInfo where
     , _proposalInfoExpiration            = 120
     }
 
+-- | Proposed protocol parameters
+--
+-- This type is sturcturally similar to @ProtocolParams@ but every field
+-- is optional.
+data ProposedProtocolParams = ProposedProtocolParams
+  { _proposedProtocolParamsEpoch                      :: Maybe Epoch -- ^ Epoch number
+  , _proposedProtocolParamsMinFeeA                    :: Maybe Integer -- ^ The linear factor for the minimum fee calculation for given epoch
+  , _proposedProtocolParamsMinFeeB                    :: Maybe Integer -- ^ The constant factor for the minimum fee calculation
+  , _proposedProtocolParamsMaxBlockSize               :: Maybe Integer -- ^ Maximum block body size in Bytes
+  , _proposedProtocolParamsMaxTxSize                  :: Maybe Integer -- ^ Maximum transaction size
+  , _proposedProtocolParamsMaxBlockHeaderSize         :: Maybe Integer -- ^ Maximum block header size
+  , _proposedProtocolParamsKeyDeposit                 :: Maybe Lovelaces -- ^ The amount of a key registration deposit in Lovelaces
+  , _proposedProtocolParamsPoolDeposit                :: Maybe Lovelaces -- ^ The amount of a pool registration deposit in Lovelaces
+  , _proposedProtocolParamsEMax                       :: Maybe Integer -- ^ Epoch bound on pool retirement
+  , _proposedProtocolParamsNOpt                       :: Maybe Integer -- ^ Desired number of pools
+  , _proposedProtocolParamsA0                         :: Maybe Rational -- ^ Pool pledge influence
+  , _proposedProtocolParamsRho                        :: Maybe Rational -- ^ Monetary expansion
+  , _proposedProtocolParamsTau                        :: Maybe Rational -- ^ Treasury expansion
+  , _proposedProtocolParamsDecentralisationParam      :: Maybe Rational -- ^ Percentage of blocks produced by federated nodes
+  , _proposedProtocolParamsExtraEntropy               :: Maybe Text -- ^ Seed for extra entropy
+  , _proposedProtocolParamsProtocolMajorVer           :: Maybe Integer -- ^ Accepted protocol major version
+  , _proposedProtocolParamsProtocolMinorVer           :: Maybe Integer -- ^ Accepted protocol minor version
+  , _proposedProtocolParamsMinUtxo                    :: Maybe Lovelaces -- ^ Minimum UTXO value
+  , _proposedProtocolParamsMinPoolCost                :: Maybe Lovelaces  -- ^ Minimum stake cost forced on the pool
+  , _proposedProtocolParamsNonce                      :: Maybe Text -- ^ Epoch number only used once
+  , _proposedProtocolParamsCostModels                 :: Maybe CostModels -- ^ Cost models parameters for Plutus Core scripts
+  , _proposedProtocolParamsCostModelsRaw              :: Maybe CostModelsRaw
+  , _proposedProtocolParamsPriceMem                   :: Maybe Rational -- ^ The per word cost of script memory usage
+  , _proposedProtocolParamsPriceStep                  :: Maybe Rational -- ^ The cost of script execution step usage
+  , _proposedProtocolParamsMaxTxExMem                 :: Maybe Quantity -- ^ The maximum number of execution memory allowed to be used in a single transaction
+  , _proposedProtocolParamsMaxTxExSteps               :: Maybe Quantity -- ^ The maximum number of execution steps allowed to be used in a single transaction
+  , _proposedProtocolParamsMaxBlockExMem              :: Maybe Quantity -- ^ The maximum number of execution memory allowed to be used in a single block
+  , _proposedProtocolParamsMaxBlockExSteps            :: Maybe Quantity -- ^ The maximum number of execution steps allowed to be used in a single block
+  , _proposedProtocolParamsMaxValSize                 :: Maybe Quantity -- ^ The maximum Val size
+  , _proposedProtocolParamsCollateralPercent          :: Maybe Integer -- ^ The percentage of the transactions fee which must be provided as collateral when including non-native scripts
+  , _proposedProtocolParamsMaxCollateralInputs        :: Maybe Integer -- ^ The maximum number of collateral inputs allowed in a transaction
+  , _proposedProtocolParamsCoinsPerUtxoSize           :: Maybe Lovelaces -- ^ The cost per UTxO size. Cost per UTxO *word* for Alozno. Cost per UTxO *byte* for Babbage and later
+  , _proposedProtocolParamsCoinsPerUtxoWord           :: Maybe Lovelaces -- ^ The cost per UTxO word (DEPRECATED)
+  , _proposedProtocolParamsPvtMotionNoConfidence      :: Maybe Rational
+  , _proposedProtocolParamsPvtCommitteeNormal         :: Maybe Rational
+  , _proposedProtocolParamsPvtCommitteeNoConfidence   :: Maybe Rational
+  , _proposedProtocolParamsPvtHardForkInitiation      :: Maybe Rational
+  , _proposedProtocolParamsPvtppSecurityGroup         :: Maybe Rational
+  , _proposedProtocolParamsDvtMotionNoConfidence      :: Maybe Rational
+  , _proposedProtocolParamsDvtCommitteeNormal         :: Maybe Rational
+  , _proposedProtocolParamsDvtCommitteeNoConfidence   :: Maybe Rational
+  , _proposedProtocolParamsDvtUpdateToConstitution    :: Maybe Rational
+  , _proposedProtocolParamsDvtHardForkInitiation      :: Maybe Rational
+  , _proposedProtocolParamsDvtPPNetworkGroup          :: Maybe Rational
+  , _proposedProtocolParamsDvtPPEconomicGroup         :: Maybe Rational
+  , _proposedProtocolParamsDvtPPTechnicalGroup        :: Maybe Rational
+  , _proposedProtocolParamsDvtPPGovGroup              :: Maybe Rational
+  , _proposedProtocolParamsDvtTreasuryWithdrawal      :: Maybe Rational
+  , _proposedProtocolParamsCommitteeMinSize           :: Maybe Quantity
+  , _proposedProtocolParamsCommitteeMaxTermLength     :: Maybe Quantity
+  , _proposedProtocolParamsGovActionLifetime          :: Maybe Quantity
+  , _proposedProtocolParamsGovActionDeposit           :: Maybe Lovelaces
+  , _proposedProtocolParamsDrepDeposit                :: Maybe Lovelaces
+  , _proposedProtocolParamsDrepActivity               :: Maybe Quantity
+  , _proposedProtocolParamsMinFeeRefScriptCostPerByte :: Maybe Rational
+  }
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON)
+  via CustomJSON '[FieldLabelModifier '[StripPrefix "_proposedProtocolParams", CamelToSnake, Rename "dvt_pp_network_group" "dvt_p_p_network_group", Rename "dvt_pp_economic_group" "dvt_p_p_economic_group", Rename "dvt_pp_technical_group" "dvt_p_p_technical_group", Rename "dvt_pp_gov_group" "dvt_p_p_gov_group"]] ProposedProtocolParams
+
+instance ToSample ProposedProtocolParams where
+  toSamples = pure $ singleSample
+    ProposedProtocolParams
+      { _proposedProtocolParamsEpoch = Just 225
+      , _proposedProtocolParamsMinFeeA = Just 44
+      , _proposedProtocolParamsMinFeeB = Just 155381
+      , _proposedProtocolParamsMaxBlockSize = Just 65536
+      , _proposedProtocolParamsMaxTxSize = Just 16384
+      , _proposedProtocolParamsMaxBlockHeaderSize = Just 1100
+      , _proposedProtocolParamsKeyDeposit = Just 2000000
+      , _proposedProtocolParamsPoolDeposit = Just 500000000
+      , _proposedProtocolParamsEMax = Just 18
+      , _proposedProtocolParamsNOpt = Just 150
+      , _proposedProtocolParamsA0 = Just 0.3
+      , _proposedProtocolParamsRho = Just 0.003
+      , _proposedProtocolParamsTau = Just 0.2
+      , _proposedProtocolParamsDecentralisationParam = Just 0.5
+      , _proposedProtocolParamsExtraEntropy = Nothing
+      , _proposedProtocolParamsProtocolMajorVer = Just 2
+      , _proposedProtocolParamsProtocolMinorVer = Just 0
+      , _proposedProtocolParamsMinUtxo = Just 1000000
+      , _proposedProtocolParamsMinPoolCost = Just 340000000
+      , _proposedProtocolParamsNonce = Just "1a3be38bcbb7911969283716ad7aa550250226b76a61fc51cc9a9a35d9276d81"
+      , _proposedProtocolParamsCostModels =
+          case toSamples (Proxy :: Proxy CostModels) of
+            [(_, pp)] -> Just pp
+            _ -> error "Absurd"
+      , _proposedProtocolParamsCostModelsRaw =
+          case toSamples (Proxy :: Proxy CostModelsRaw) of
+            [(_, pp)] -> Just pp
+            _ -> error "Absurd"
+      , _proposedProtocolParamsPriceMem = Just 0.0577
+      , _proposedProtocolParamsPriceStep = Just 0.0000721
+      , _proposedProtocolParamsMaxTxExMem = Just 10000000
+      , _proposedProtocolParamsMaxTxExSteps = Just 10000000000
+      , _proposedProtocolParamsMaxBlockExMem = Just 50000000
+      , _proposedProtocolParamsMaxBlockExSteps = Just 40000000000
+      , _proposedProtocolParamsMaxValSize = Just 5000
+      , _proposedProtocolParamsCollateralPercent = Just 150
+      , _proposedProtocolParamsMaxCollateralInputs = Just 3
+      , _proposedProtocolParamsCoinsPerUtxoSize = Just 34482
+      , _proposedProtocolParamsCoinsPerUtxoWord = Just 34482
+      , _proposedProtocolParamsPvtMotionNoConfidence = Just 0.51
+      , _proposedProtocolParamsPvtCommitteeNormal = Just 0.51
+      , _proposedProtocolParamsPvtCommitteeNoConfidence = Just 0.51
+      , _proposedProtocolParamsPvtHardForkInitiation = Just 0.51
+      , _proposedProtocolParamsPvtppSecurityGroup = Just 0.51
+      , _proposedProtocolParamsDvtMotionNoConfidence = Just 0.67
+      , _proposedProtocolParamsDvtCommitteeNormal = Just 0.67
+      , _proposedProtocolParamsDvtCommitteeNoConfidence = Just 0.6
+      , _proposedProtocolParamsDvtUpdateToConstitution = Just 0.75
+      , _proposedProtocolParamsDvtHardForkInitiation = Just 0.6
+      , _proposedProtocolParamsDvtPPNetworkGroup = Just 0.67
+      , _proposedProtocolParamsDvtPPEconomicGroup = Just 0.67
+      , _proposedProtocolParamsDvtPPTechnicalGroup = Just 0.67
+      , _proposedProtocolParamsDvtPPGovGroup = Just 0.75
+      , _proposedProtocolParamsDvtTreasuryWithdrawal = Just 0.67
+      , _proposedProtocolParamsCommitteeMinSize = Just 7
+      , _proposedProtocolParamsCommitteeMaxTermLength = Just 146
+      , _proposedProtocolParamsGovActionLifetime = Just 6
+      , _proposedProtocolParamsGovActionDeposit = Just 100000000000
+      , _proposedProtocolParamsDrepDeposit = Just 500000000
+      , _proposedProtocolParamsDrepActivity = Just 20
+      , _proposedProtocolParamsMinFeeRefScriptCostPerByte = Just 15
+      }
+
 -- | Parameter proposal details
 data ParamProposal = ParamProposal
-  { _paramProposalTxHash     :: TxHash         -- ^ Transaction ID
-  , _paramProposalCertIndex  :: Integer        -- ^ Index of the certificate within the proposal transaction
-  , _paramProposalParameters :: ProtocolParams -- ^ Proposed parameters
+  { _paramProposalTxHash     :: TxHash                 -- ^ Transaction ID
+  , _paramProposalCertIndex  :: Integer                -- ^ Index of the certificate within the proposal transaction
+  , _paramProposalParameters :: ProposedProtocolParams -- ^ Proposed parameters
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -378,7 +510,7 @@ instance ToSample ParamProposal where
     { _paramProposalTxHash     = "2dd15e0ef6e6a17841cb9541c27724072ce4d4b79b91e58432fbaa32d9572531"
     , _paramProposalCertIndex  = 2
     , _paramProposalParameters =
-        case toSamples (Proxy :: Proxy ProtocolParams) of
+        case toSamples (Proxy :: Proxy ProposedProtocolParams) of
           [(_, pp)] -> pp
           _ -> error "Absurd"
     }
