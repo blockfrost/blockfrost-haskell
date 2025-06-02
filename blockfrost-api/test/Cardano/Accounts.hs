@@ -73,7 +73,8 @@ accountSample = [r|
     "reserves_sum": "319154618165",
     "treasury_sum": "12000000",
     "withdrawable_amount": "319154618165",
-    "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+    "pool_id": "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy",
+    "drep_id": "drep15cfxz9exyn5rx0807zvxfrvslrjqfchrd4d47kv9e0f46uedqtc"
 }
 |]
 
@@ -88,6 +89,7 @@ accountExpected = AccountInfo
     , _accountInfoTreasurySum = 12000000
     , _accountInfoWithdrawableAmount = 319154618165
     , _accountInfoPoolId = pure "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+    , _accountInfoDrepId = pure "drep15cfxz9exyn5rx0807zvxfrvslrjqfchrd4d47kv9e0f46uedqtc"
     }
 
 accountRewardsSample = [r|
