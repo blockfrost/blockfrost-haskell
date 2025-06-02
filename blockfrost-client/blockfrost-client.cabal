@@ -57,6 +57,7 @@ library
                       , Blockfrost.Client.Cardano.Assets
                       , Blockfrost.Client.Cardano.Blocks
                       , Blockfrost.Client.Cardano.Epochs
+                      , Blockfrost.Client.Cardano.Governance
                       , Blockfrost.Client.Cardano.Ledger
                       , Blockfrost.Client.Cardano.Mempool
                       , Blockfrost.Client.Cardano.Metadata
