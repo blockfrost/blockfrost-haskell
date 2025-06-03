@@ -45,6 +45,20 @@ makeFields ''PoolStakeDistribution
 
 makeFields ''Genesis
 
+makeFields ''DRep
+makeFields ''DRepInfo
+makeFields ''DRepDelegator
+makeFields ''DRepMeta
+makeFields ''DRepUpdate
+makeFields ''DRepVote
+makeFields ''Proposal
+makeFields ''ProposalInfo
+makeFields ''ProposedProtocolParams
+makeFields ''ParamProposal
+makeFields ''WithdrawalProposal
+makeFields ''ProposalVote
+makeFields ''ProposalMeta
+
 makeFields  ''MempoolTransaction
 makeFields  ''TransactionInMempool
 makeFields  ''Amount
