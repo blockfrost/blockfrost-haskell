@@ -1,3 +1,9 @@
+# Version [0.13.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.2.0...api-0.13.0.0) (2025-06-03)
+
+* Additions
+  * Governance support [#77](https://github.com/blockfrost/blockfrost-haskell/pull/77)
+  * `AccountInfo` extended with `drepId` field [#77](https://github.com/blockfrost/blockfrost-haskell/pull/77)
+
 # Version [0.12.2.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.12.1.0...api-0.12.2.0) (2025-04-07)
 
 * Additions
