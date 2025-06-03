@@ -92,6 +92,25 @@ module Blockfrost.Client
   , getEpochBlocksByPool
   , getEpochBlocksByPool'
   , getEpochProtocolParams
+  -- Cardano - Governance
+  , getDReps
+  , getDReps'
+  , getDRep
+  , getDRepDelegators
+  , getDRepDelegators'
+  , getDRepMetadata
+  , getDRepUpdates
+  , getDRepUpdates'
+  , getDRepVotes
+  , getDRepVotes'
+  , getProposals
+  , getProposals'
+  , getProposal
+  , getParamProposal
+  , getWithdrawalProposal
+  , getProposalVotes
+  , getProposalVotes'
+  , getProposalMetadata
     -- Cardano - Ledger
   , getLedgerGenesis
     -- Cardano - Metadata
@@ -185,6 +204,7 @@ import Blockfrost.Client.Cardano.Addresses
 import Blockfrost.Client.Cardano.Assets
 import Blockfrost.Client.Cardano.Blocks
 import Blockfrost.Client.Cardano.Epochs
+import Blockfrost.Client.Cardano.Governance
 import Blockfrost.Client.Cardano.Ledger
 import Blockfrost.Client.Cardano.Mempool
 import Blockfrost.Client.Cardano.Metadata

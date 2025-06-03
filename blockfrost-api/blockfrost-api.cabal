@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                blockfrost-api
-version:             0.12.2.0
+version:             0.13.0.0
 synopsis:            API definitions for blockfrost.io
 description:         Core types and Servant API description
 homepage:            https://github.com/blockfrost/blockfrost-haskell
@@ -68,6 +68,7 @@ library
                       , Blockfrost.API.Cardano.Assets
                       , Blockfrost.API.Cardano.Blocks
                       , Blockfrost.API.Cardano.Epochs
+                      , Blockfrost.API.Cardano.Governance
                       , Blockfrost.API.Cardano.Ledger
                       , Blockfrost.API.Cardano.Mempool
                       , Blockfrost.API.Cardano.Metadata
@@ -91,6 +92,7 @@ library
                       , Blockfrost.Types.Cardano.Blocks
                       , Blockfrost.Types.Cardano.Epochs
                       , Blockfrost.Types.Cardano.Genesis
+                      , Blockfrost.Types.Cardano.Governance
                       , Blockfrost.Types.Cardano.Mempool
                       , Blockfrost.Types.Cardano.Metadata
                       , Blockfrost.Types.Cardano.Network
@@ -108,6 +110,7 @@ library
                       , Blockfrost.Types.Shared.Epoch
                       , Blockfrost.Types.Shared.CBOR
                       , Blockfrost.Types.Shared.DatumHash
+                      , Blockfrost.Types.Shared.DRepId
                       , Blockfrost.Types.Shared.Opts
                       , Blockfrost.Types.Shared.POSIXMillis
                       , Blockfrost.Types.Shared.ScriptHash
@@ -153,6 +156,7 @@ test-suite blockfrost-api-tests
                      , Cardano.Assets
                      , Cardano.Blocks
                      , Cardano.Epochs
+                     , Cardano.Governance
                      , Cardano.Ledger
                      , Cardano.Metadata
                      , Cardano.Network

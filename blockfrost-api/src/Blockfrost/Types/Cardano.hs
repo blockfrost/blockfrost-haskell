@@ -7,6 +7,7 @@ module Blockfrost.Types.Cardano
   , module Blockfrost.Types.Cardano.Blocks
   , module Blockfrost.Types.Cardano.Epochs
   , module Blockfrost.Types.Cardano.Genesis
+  , module Blockfrost.Types.Cardano.Governance
   , module Blockfrost.Types.Cardano.Mempool
   , module Blockfrost.Types.Cardano.Metadata
   , module Blockfrost.Types.Cardano.Network
@@ -22,6 +23,7 @@ import Blockfrost.Types.Cardano.Assets
 import Blockfrost.Types.Cardano.Blocks
 import Blockfrost.Types.Cardano.Epochs
 import Blockfrost.Types.Cardano.Genesis
+import Blockfrost.Types.Cardano.Governance
 import Blockfrost.Types.Cardano.Mempool
 import Blockfrost.Types.Cardano.Metadata
 import Blockfrost.Types.Cardano.Network

@@ -31,6 +31,7 @@ data AccountInfo = AccountInfo
   , _accountInfoTreasurySum        :: Lovelaces -- ^ Sum of all funds from treasury for the account in the Lovelaces
   , _accountInfoWithdrawableAmount :: Lovelaces -- ^ Sum of available rewards that haven't been withdrawn yet for the account in the Lovelaces
   , _accountInfoPoolId             :: Maybe PoolId -- ^ Bech32 pool ID that owns the account
+  , _accountInfoDrepId             :: Maybe DRepIdBech32 -- ^ Bech32 DRep ID to which this account is delegated
   }
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
@@ -48,6 +49,7 @@ instance ToSample AccountInfo where
     , _accountInfoTreasurySum = 12000000
     , _accountInfoWithdrawableAmount = 319154618165
     , _accountInfoPoolId = pure "pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy"
+    , _accountInfoDrepId = pure "drep15cfxz9exyn5rx0807zvxfrvslrjqfchrd4d47kv9e0f46uedqtc"
     }
 
 -- | Reward type
