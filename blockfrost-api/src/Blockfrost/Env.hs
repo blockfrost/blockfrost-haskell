@@ -20,8 +20,8 @@ data Env =
   | Testnet
   | Preprod
   | Preview
-  | Sanchonet
   | Localhost
+  | CustomURL String -- ^ Full URL to custom Blockfrost instance
   deriving (Eq, Read, Show, Ord, Generic)
 
 -- | Try parsing @Env@ from @Text@
@@ -31,4 +31,4 @@ parseEnv tEnv = case Text.Read.readMaybe (Data.Text.unpack $ Data.Text.toTitle t
   Nothing ->
     Left
       $ "Unknown environment: `" <> tEnv <> "`"
-      <> " expecting one of `ipfs`, `mainnet`, `testnet`, `preprod`, `preview`, `sanchonet`, `localhost`"
+      <> " expecting one of `ipfs`, `mainnet`, `testnet`, `preprod`, `preview`, `localhost`"

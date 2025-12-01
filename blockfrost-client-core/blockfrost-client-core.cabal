@@ -50,6 +50,7 @@ library
                       , case-insensitive
                       , containers
                       , data-default
+                      , exceptions
                       , http-client
                       , http-client-tls
                       , http-types

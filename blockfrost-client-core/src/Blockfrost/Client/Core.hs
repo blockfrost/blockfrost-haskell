@@ -42,6 +42,7 @@ import Servant.Client
 import Servant.Multipart.API
 import Servant.Multipart.Client ()
 import qualified System.Environment
+import Control.Monad.Catch.Pure (runCatch)
 
 domain :: String
 domain = "blockfrost.io"
@@ -60,17 +61,20 @@ buildUrl subdomain =
     mempty
 
 baseUrlByEnv :: Env -> BaseUrl
-baseUrlByEnv Localhost = BaseUrl Http "localhost" 8000 ""
-baseUrlByEnv e         = maybe (error "absurd") buildUrl (subdomainByEnv e)
+baseUrlByEnv (CustomURL url) = case runCatch $ parseBaseUrl url of
+  Left e     -> error ("parseBaseUrl exception: " <> show e)
+  Right bUrl -> bUrl
+baseUrlByEnv Localhost       = BaseUrl Http "localhost" 8000 ""
+baseUrlByEnv e               = maybe (error "absurd") buildUrl (subdomainByEnv e)
 
 subdomainByEnv :: Env -> Maybe String
-subdomainByEnv Ipfs      = pure "ipfs"
-subdomainByEnv Mainnet   = pure "cardano-mainnet"
-subdomainByEnv Testnet   = pure "cardano-testnet"
-subdomainByEnv Preprod   = pure "cardano-preprod"
-subdomainByEnv Preview   = pure "cardano-preview"
-subdomainByEnv Sanchonet = pure "cardano-sanchonet"
-subdomainByEnv Localhost = Nothing
+subdomainByEnv Ipfs          = pure "ipfs"
+subdomainByEnv Mainnet       = pure "cardano-mainnet"
+subdomainByEnv Testnet       = pure "cardano-testnet"
+subdomainByEnv Preprod       = pure "cardano-preprod"
+subdomainByEnv Preview       = pure "cardano-preview"
+subdomainByEnv Localhost     = Nothing
+subdomainByEnv (CustomURL _) = Nothing
 
 -- | Read file according to BLOCKFROST_TOKEN_PATH environment variable name.
 projectFromEnv :: IO Project

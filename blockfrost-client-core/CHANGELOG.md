@@ -1,4 +1,8 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.6.0.1...master) (2024-MM-DD)
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.6.0.1...master) (2025-MM-DD)
+
+* Changes
+  * Add `CustomURL` to `Env`, to allow arbitrary Blockfrost instance [#79](https://github.com/blockfrost/blockfrost-haskell/pull/79)
+  * Drop `Sanchonet` `Env` [#79](https://github.com/blockfrost/blockfrost-haskell/pull/79)
 
 # Version [0.6.0.1](https://github.com/blockfrost/blockfrost-haskell/compare/v0.6.0.0...client-core-0.6.0.1) (2024-01-16)
 
