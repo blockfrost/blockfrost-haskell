@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.13.0.0...master) (2025-MM-DD)
+# Version [0.14.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.13.0.0...api-0.14.0.0) (2025-12-02)
 
 * Changes
   * Add `CustomURL` to `Env`, to allow arbitrary Blockfrost instance [#79](https://github.com/blockfrost/blockfrost-haskell/pull/79)
