@@ -1,9 +1,11 @@
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.11.0.0...master) (2025-MM-DD)
+
 # Version [0.11.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.10.0.0...client-0.11.0.0) (2025-12-02)
 
 * Changes
   * Add `CustomURL` to `Env`, to allow arbitrary Blockfrost instance [#79](https://github.com/blockfrost/blockfrost-haskell/pull/79)
   * `BlockfrostNotFound` constructor of `BlockfrostError` is now `BlockfrostNotFound Text`
-    containing path that resulted in 404 error [#80](https://github.com/blockfrost/blockfrost-haskell/pull/80)
+    containing path that resulted in 404 error [#81](https://github.com/blockfrost/blockfrost-haskell/pull/81)
   * Drop `Sanchonet` `Env` [#79](https://github.com/blockfrost/blockfrost-haskell/pull/79)
 
 # Version [0.10.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.9.2.0...client-0.10.0.0) (2025-06-03)
