@@ -1,3 +1,5 @@
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.11.0.0...master) (2025-MM-DD)
+
 # Version [0.11.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.10.0.0...client-0.11.0.0) (2025-12-02)
 
 * Changes
