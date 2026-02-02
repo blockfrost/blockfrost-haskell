@@ -122,8 +122,10 @@ module Blockfrost.Client
   , getTxMetadataByLabelCBOR'
     -- Cardano - Mempool
   , getMempoolTransactions
+  , getMempoolTransactions'
   , getMempoolTransaction
   , getMempoolTransactionsByAddress
+  , getMempoolTransactionsByAddress'
     -- Cardano - Network
   , getNetworkInfo
   , getNetworkEras
