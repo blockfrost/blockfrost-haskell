@@ -17,18 +17,19 @@ main = do
     (ers :: Either BlockfrostError [AccountReward]) <-
       tryError $ getAccountRewards "gonnaFail"
 
+    -- variant accepting @Paged@ and @SortOrder@ arguments
+    -- getAccountRewards' "gonnaFail" (page 10) desc
+
     allMempoolTxs <-
-      getMempoolTransactions prj def def
+      allPages $ \p -> getMempoolTransactions' p def
 
     if null allMempoolTxs
     then return $ (latestBlocks, ers, allMempoolTxs, Nothing)
     else do let lastTxInMempool = TxHash . unTxHashObject $ last allMempoolTxs
-            lastMempoolTx <- getMempoolTransaction prj lastTxInMempool
+            lastMempoolTx <- getMempoolTransaction lastTxInMempool
 
             return (latestBlocks, ers, allMempoolTxs, Just lastMempoolTx) 
 
-  -- variant accepting @Paged@ and @SortOrder@ arguments
-  -- getAccountRewards' "gonnaFail" (page 10) desc
   case res of
     Left e -> print e
     Right ((latestBlocks, ers, allMempoolTxs, lastMempoolTx)) -> do 
@@ -51,7 +52,12 @@ main = do
           case _inputs mempoolTx of
             [] -> print "No mempool transaction inputs found" -- Should be impossible
             (inp:_) -> do
-              let address = Address $ _address inp
-              mempoolTxByAddress <- runBlockfrost prj $ getMempoolTransactionsByAddress prj address def def
-              print "Mempool transactions by address:"
-              print mempoolTxByAddress
+              case _address inp of
+                Nothing -> print "Input has no address"
+                Just addr -> do
+                  mempoolTxByAddress <-
+                    runBlockfrost prj
+                      $ getMempoolTransactionsByAddress
+                          (Address addr)
+                  print "Mempool transactions by address:"
+                  print mempoolTxByAddress
