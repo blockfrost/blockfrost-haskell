@@ -1,5 +1,8 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.14.0.0...master) (2025-MM-DD)
 
+* Changes
+  * Fix `MempoolUTxOInput` `address` field from `Text` to `Maybe Text` [#83](https://github.com/blockfrost/blockfrost-haskell/issues/83) [#84](https://github.com/blockfrost/blockfrost-haskell/issues/84)
+
 # Version [0.14.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.13.0.0...api-0.14.0.0) (2025-12-02)
 
 * Changes

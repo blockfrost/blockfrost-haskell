@@ -47,7 +47,7 @@ data TransactionInMempool = TransactionInMempool
   via CustomJSON '[FieldLabelModifier '[StripPrefix "_transaction", CamelToSnake]] TransactionInMempool
 
 data MempoolUTxOInput = MempoolUTxOInput
-   { _address :: Text -- ^ Address
+   { _address :: Maybe Text -- ^ Address
    , _txHash :: Text -- ^ Transaction hash
    , _outputIndex :: Integer -- ^ Output index
    , _collateral :: Bool -- ^ True if the input is a collateral input
