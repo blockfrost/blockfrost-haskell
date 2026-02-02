@@ -1,3 +1,5 @@
+# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.15.0.0...master) (2026-MM-DD)
+
 # Version [0.15.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.14.0.0...api-0.15.0.0) (2026-02-02)
 
 * Changes
