@@ -1,4 +1,13 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.11.0.0...master) (2025-MM-DD)
+# Version [0.12.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.11.0.0...client-0.12.0.0) (2026-02-02)
+
+* Changes
+  * Fix `MempoolUTxOInput` `address` field from `Text` to `Maybe Text` [#83](https://github.com/blockfrost/blockfrost-haskell/issues/83) [#84](https://github.com/blockfrost/blockfrost-haskell/pull/84)
+  * Mempool API functions adjusted to not require passing in `Project` [#85](https://github.com/blockfrost/blockfrost-haskell/pull/85)
+    * Previous `getMempoolTransactions prj def def` is now simply `getMempoolTransactions` and a principled
+      variant `getMempoolTransactions'` is provided accepting page and sort order parameters
+      (for example `allPages $ \p -> getMempoolTransactions' p def`).
+    * Similar for `getMempoolTransactionsByAddress`.
+    * `getMempoolTransaction` now simply doesn't require passing `Project`
 
 # Version [0.11.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.10.0.0...client-0.11.0.0) (2025-12-02)
 
