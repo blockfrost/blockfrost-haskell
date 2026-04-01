@@ -1,4 +1,5 @@
 -- | Core shared by clients
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes #-}
@@ -7,6 +8,7 @@
 
 module Blockfrost.Client.Core
   ( BlockfrostError (..)
+  , retriableError
   , Paged (..)
   , SortOrder (..)
   , asc
@@ -46,6 +48,7 @@ import Servant.Multipart.API
 import Servant.Multipart.Client ()
 import qualified System.Environment
 import Control.Monad.Catch.Pure (runCatch)
+import Control.Retry (RetryAction(..))
 
 domain :: String
 domain = "blockfrost.io"
@@ -96,15 +99,14 @@ projectFromFile :: FilePath -> IO Project
 projectFromFile f = mkProject <$> Data.Text.IO.readFile f
 
 data BlockfrostError =
-    BlockfrostError Text
-  | BlockfrostBadRequest Text   -- 400
-  | BlockfrostTokenMissing Text -- 403
-  | BlockfrostNotFound Text     -- 404
-  | BlockfrostIPBanned          -- 418
-  | BlockfrostMempoolFullOrPinQueueFull -- 425
-  | BlockfrostUsageLimitReached -- 429
-  | BlockfrostFatal Text        -- 500
-  | ServantClientError ClientError
+    BlockfrostError Status Text         -- ^ Other HTTP error codes
+  | BlockfrostBadRequest Text           -- ^ 400
+  | BlockfrostTokenMissing Text         -- ^ 403
+  | BlockfrostNotFound Text             -- ^ 404
+  | BlockfrostIPBanned                  -- ^ 418
+  | BlockfrostMempoolFullOrPinQueueFull -- ^ 425
+  | BlockfrostUsageLimitReached         -- ^ 429
+  | ServantClientError ClientError      -- ^ Unhandled @ClientError@ (either @ConnectionError@ or @DecodeFailure@)
   deriving (Eq, Show)
 
 fromServantClientError :: ClientError -> BlockfrostError
@@ -126,16 +128,45 @@ fromServantClientError e = case e of
         BlockfrostMempoolFullOrPinQueueFull
     | s == status429 ->
         BlockfrostUsageLimitReached
-    | s == status500 ->
-        BlockfrostFatal (withMessage body)
     | otherwise ->
-        BlockfrostError (withMessage body)
+        BlockfrostError s (withMessage body)
   _ -> ServantClientError e
   where
     withMessage body =
       case eitherDecode body of
         (Right (ae :: ApiError)) -> apiErrorMessage ae
         _                        -> mempty
+
+retriableError :: BlockfrostError -> RetryAction
+retriableError BlockfrostIPBanned
+  = ConsultPolicyOverrideDelay (5 * 60 * 1000 * 1000) -- 5 minutes
+retriableError BlockfrostMempoolFullOrPinQueueFull
+  = ConsultPolicy
+retriableError BlockfrostUsageLimitReached
+  = ConsultPolicyOverrideDelay (5 * 60 * 1000 * 1000) -- 5 minutes
+retriableError (BlockfrostError s _) =
+  (\case
+     True  -> ConsultPolicy
+     False -> DontRetry
+  )
+  . elem
+    s
+    $ [ requestTimeout408
+      , internalServerError500
+      , badGateway502
+      , serviceUnavailable503
+      , gatewayTimeout504
+      ]
+      -- CF reverse proxy
+      ++ map
+          (flip mkStatus mempty)
+          [ 520
+          , 521
+          , 522
+          , 524
+          ]
+retriableError (ServantClientError (ConnectionError _)) = ConsultPolicy
+retriableError _ = DontRetry
 
 instance ToMultipart Tmp Form where
   toMultipart (Form fileName filePath) =

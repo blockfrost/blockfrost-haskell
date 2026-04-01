@@ -54,6 +54,7 @@ library
                       , http-client
                       , http-client-tls
                       , http-types
+                      , retry                    >= 0.9  && < 0.10
                       , servant                  >= 0.18 && < 0.21
                       , servant-client
                       , servant-client-core

@@ -1,5 +1,13 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.7.0.0...master) (2025-MM-DD)
 
+* Changes
+  * `BlockfrostError` constructor of `BlockfrostError` type now contains
+    `Status` from `Network.HTTP.Types.Status` (HTTP status code and an explanation message).
+    Previously `BlockfrostError Text`, now `BlockfrostError Status Text`.
+  * `BlockfrostFatal` constructor (HTTP 500) of `BlockfrostError` merged into `BlockfrostError` constructor.
+  * `Blockfrost.Client.Core` module now exports `retriableError`, for retry logic
+    implemented in `blockfrost-client` package (using `Control.Retry` from `retry` package).
+
 # Version [0.7.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.6.0.1...client-core-0.7.0.0) (2025-12-02)
 
 * Changes
