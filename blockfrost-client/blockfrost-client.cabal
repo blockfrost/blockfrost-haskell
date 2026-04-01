@@ -72,11 +72,11 @@ library
                       , blockfrost-api           >= 0.15
                       , blockfrost-client-core   ^>= 0.7
                       , bytestring
-                      , directory
                       , data-default
                       , filepath
                       , text
                       , mtl
+                      , retry                    >= 0.9  && < 0.10
                       , servant                  >= 0.18 && < 0.21
                       , servant-client
                       , servant-client-core

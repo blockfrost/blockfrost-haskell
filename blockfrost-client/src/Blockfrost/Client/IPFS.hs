@@ -15,28 +15,19 @@ module Blockfrost.Client.IPFS
 import Blockfrost.API
 import Blockfrost.Client.Types
 import Blockfrost.Types
-import Control.Monad.Except (MonadError, throwError)
-import Control.Monad.IO.Class (liftIO)
 import Data.ByteString.Lazy (ByteString)
 import Data.Text (Text)
 import qualified Data.Text
-import qualified System.Directory
 import qualified System.FilePath
 
 ipfsAdd_ :: MonadBlockfrost m => Project -> (ByteString, Form) -> m IPFSAdd
 ipfsAdd_ = _add . ipfsClient
 
 -- | Add a file or directory to IPFS
-ipfsAdd :: (MonadError BlockfrostError m, MonadBlockfrost m) => FilePath -> m IPFSAdd
+ipfsAdd :: MonadBlockfrost m => FilePath -> m IPFSAdd
 ipfsAdd fp = do
-  hasFile <- liftIO $ System.Directory.doesFileExist fp
-  if hasFile
-    then do
-      liftIO $ putStrLn $ "Uploading: " ++ fp
-      let fn = Data.Text.pack $ System.FilePath.takeBaseName fp
-      go (\proj -> ipfsAdd_ proj ("suchBoundary", (Form fn fp)))
-    else
-      throwError (BlockfrostError "No such file")
+  let fn = Data.Text.pack $ System.FilePath.takeBaseName fp
+  go (\proj -> ipfsAdd_ proj ("suchBoundary", (Form fn fp)))
 
 ipfsGateway_ :: MonadBlockfrost m => Project -> Text -> m IPFSData
 ipfsGateway_ = _gateway . ipfsClient

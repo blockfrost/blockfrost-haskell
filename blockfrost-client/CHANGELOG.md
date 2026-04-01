@@ -1,5 +1,31 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.12.0.0...master) (2026-MM-DD)
 
+* Changes
+  * Retry logic added
+
+    Client will retry most transient errors like connection timeouts,
+    up to 5 times with exponential backoff. This can be customized
+    via `clientConfigRetryPolicy` field of `ClientConfig`. See [`Control.Retry`](https://hackage.haskell.org/package/retry/docs/Control-Retry.html#g:5)
+    for available options.
+
+    * `type ClientConfig = (ClientEnv, Project)` is now
+
+      ```
+      data ClientConfig =
+        ClientConfig
+          { clientConfigClientEnv   :: ClientEnv
+          , clientConfigProject     :: Project
+          , clientConfigRetryPolicy :: RetryPolicy
+          , clientConfigRetryJudge  :: RetryStatus -> BlockfrostError -> RetryAction
+          }
+      ```
+      last two fields are populated with `defaultRetryPolicy` and `defaultRetryJudge`.
+
+  * `ipfsAdd`
+    * no longer throws `BlockfrostError "File not found"`
+    * no longer checks if the file exists
+    * no longer prints `"Uploading: <filename>"` message to stdout
+
 # Version [0.12.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.11.0.0...client-0.12.0.0) (2026-02-02)
 
 * Changes
