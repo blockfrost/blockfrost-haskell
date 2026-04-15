@@ -2,11 +2,17 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE Rank2Types #-}
 
 module Blockfrost.Client.Types
   ( BlockfrostClient
   , BlockfrostError (..)
   , ClientConfig
+  , defaultRetryPolicy
+  , endlessRetryPolicy
+  , defaultRetryJudge
   , runBlockfrost
   , apiClient
   , api0Client
@@ -30,6 +36,7 @@ module Blockfrost.Client.Types
 
 import Control.Monad.Except
 import Control.Monad.Reader
+import Control.Retry
 import Data.Default
 
 import Servant.API.Generic
@@ -39,7 +46,25 @@ import Servant.Client.Generic
 import Blockfrost.API
 import Blockfrost.Client.Core
 
-type ClientConfig = (ClientEnv, Project)
+data ClientConfig =
+  ClientConfig
+    { clientConfigClientEnv   :: ClientEnv
+    , clientConfigProject     :: Project
+    , clientConfigRetryPolicy :: RetryPolicy
+    , clientConfigRetryJudge  :: RetryStatus -> BlockfrostError -> RetryAction
+    }
+
+defaultRetryPolicy :: RetryPolicy
+defaultRetryPolicy = exponentialBackoff (1000 * 1000) <> limitRetries 5
+
+endlessRetryPolicy :: RetryPolicy
+endlessRetryPolicy = exponentialBackoff (1000 * 1000)
+
+defaultRetryJudge
+  :: RetryStatus
+  -> BlockfrostError
+  -> RetryAction
+defaultRetryJudge _retryStatus err = retriableError err
 
 newtype BlockfrostClientT m a = BlockfrostClientT {
   unBlockfrostClientT
@@ -62,12 +87,32 @@ class MonadIO m => MonadBlockfrost m where
 
 instance MonadIO m => MonadBlockfrost (BlockfrostClientT m) where
   liftBlockfrostClient act = BlockfrostClientT $ do
-    (env, _proj) <- ask
-    liftIO (runClientM act env)
-      >>= either
-            (throwError . fromServantClientError)
-            pure
+    clientConfig <- ask
+    liftIO
+      $ withRetry
+          clientConfig
+          $ runClientM act (clientConfigClientEnv clientConfig)
+    >>= either
+          (throwError . fromServantClientError)
+          pure
   getConf = BlockfrostClientT ask
+
+withRetry
+  :: ClientConfig
+  -> IO (Either ClientError a)
+  -> IO (Either ClientError a)
+withRetry ClientConfig{..} act =
+  retryingDynamic
+    clientConfigRetryPolicy
+    (\retryStatus -> \case
+        Right{} -> pure DontRetry
+        Left err ->
+          pure
+          $ clientConfigRetryJudge
+              retryStatus
+              (fromServantClientError err)
+    )
+    (const act)
 
 instance MonadBlockfrost ClientM where
   liftBlockfrostClient = id
@@ -76,11 +121,16 @@ instance MonadBlockfrost ClientM where
 instance MonadBlockfrost IO where
   liftBlockfrostClient act =
     getConf
-      >>= \(env, _prj) ->
-        runClientM act env
-          >>= either
-                (error . show)
-                pure
+      >>= \clientConfig ->
+        withRetry
+          clientConfig
+          ( runClientM
+              act
+              (clientConfigClientEnv clientConfig)
+          )
+        >>= either
+              (error . show)
+              pure
   getConf = newClientConfig
 
 apiClient
@@ -110,24 +160,37 @@ runBlockfrostClientT
   -> BlockfrostClientT m a
   -> m (Either BlockfrostError a)
 runBlockfrostClientT proj act = do
-  env <- liftIO $ newEnvByProject proj
-  flip runReaderT (env, proj)
+  cc <- liftIO $ mkClientConfig proj
+  flip runReaderT cc
     $ runExceptT $ unBlockfrostClientT act
 
 -- | Build default `ClientConfig` using BLOCKFROST_TOKEN_PATH environment variable
 newClientConfig
   :: MonadIO m
   => m ClientConfig
-newClientConfig = liftIO $ do
-  prj <- projectFromEnv
-  env <- newEnvByProject prj
-  pure (env, prj)
+newClientConfig =
+  liftIO
+    $ projectFromEnv >>= mkClientConfig
+
+mkClientConfig
+  :: MonadIO m
+  => Project
+  -> m ClientConfig
+mkClientConfig prj = do
+  env <- liftIO $ newEnvByProject prj
+  pure
+    $ ClientConfig
+        { clientConfigClientEnv   = env
+        , clientConfigProject     = prj
+        , clientConfigRetryPolicy = defaultRetryPolicy
+        , clientConfigRetryJudge  = defaultRetryJudge
+        }
 
 -- | Helper
 go :: MonadBlockfrost m
    => (Project -> m a)
    -> m a
-go act = getConf >>= act . snd
+go act = getConf >>= act . clientConfigProject
 
 -- Until mtl > 2.2.2
 -- https://github.com/haskell/mtl/pull/66
