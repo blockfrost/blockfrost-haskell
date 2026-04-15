@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.7.0.0...master) (2025-MM-DD)
+# Version [0.8.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-core-0.7.0.0...client-core-0.8.0.0) (2026-04-15)
 
 * Changes
   * `BlockfrostError` constructor of `BlockfrostError` type now contains

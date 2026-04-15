@@ -1,4 +1,4 @@
-# Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.12.0.0...master) (2026-MM-DD)
+# Version [0.13.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/client-0.12.0.0...client-0.13.0.0) (2026-04-15)
 
 * Changes
   * Retry logic added
