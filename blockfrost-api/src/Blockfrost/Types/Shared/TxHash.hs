@@ -52,3 +52,10 @@ instance ToJSON TxHashObject where
 
 instance FromJSON TxHashObject where
   parseJSON = withObject "TxHashObject" $ \o -> TxHashObject <$> o .: "tx_hash"
+
+instance ToSample TxHashObject where
+    toSamples _ = samples $ map TxHashObject
+      [ "8788591983aa73981fc92d6cddbbe643959f5a784e84b8bee0db15823f575a5b"
+      , "52e748c4dec58b687b90b0b40d383b9fe1f24c1a833b7395cdf07dd67859f46f"
+      , "e8073fd5318ff43eca18a852527166aa8008bee9ee9e891f585612b7e4ba700b"
+      ]
