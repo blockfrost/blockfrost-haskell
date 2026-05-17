@@ -198,6 +198,12 @@ instance FromJSON PoolMetadataResponse where
   parseJSON x | x == object [] = pure $ PoolMetadataResponse Nothing
   parseJSON x = PoolMetadataResponse . Just <$> parseJSON x
 
+instance ToSample PoolMetadataResponse where
+  toSamples = pure $ samples
+    [ PoolMetadataResponse $ Just samplePoolMetadata
+    , PoolMetadataResponse Nothing
+    ]
+
 -- | Relays of a stake pool
 data PoolRelay = PoolRelay
   { _poolRelayIpv4   :: Maybe Text -- ^ IPv4 address of the relay
