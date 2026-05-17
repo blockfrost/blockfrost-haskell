@@ -1,5 +1,17 @@
 # Version [next](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.15.0.0...master) (2026-MM-DD)
 
+* Changes
+  * Mempool [#91](https://github.com/blockfrost/blockfrost-haskell/pull/91)
+    * `MempoolTransaction` fields prefixed with `_mempoolTransaction` instead of just `_`
+    * `MempoolUTxOInput`
+      * fields prefixed with `_mempoolUTxOInput` instead of just `_`
+      * `address` field type changed from `Maybe Text` to `Maybe Address`
+    * `MempoolRedeemer`
+      * fields prefixed with `_mempoolRedeemer` instead of just `_`
+      * `purpose` field changes type from `Text` to `ValidationPurpose`
+      * `unit_mem` field renamed to `unitMem` (`_mempoolRedeemerUnitMem`), type changed from `Text` to `Quantity`
+      * `unit_steps` field renamed to `unitSteps` (`_mempoolRedeemerUnitSteps`), type changed from `Text` to `Quantity`
+
 # Version [0.15.0.0](https://github.com/blockfrost/blockfrost-haskell/compare/api-0.14.0.0...api-0.15.0.0) (2026-02-02)
 
 * Changes

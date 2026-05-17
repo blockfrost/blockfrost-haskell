@@ -16,8 +16,8 @@ import Text.RawString.QQ
 
 import Blockfrost.Types
 
-spec_scripts :: Spec
-spec_scripts = do
+spec_utils :: Spec
+spec_utils = do
   it "parses derived address sample" $ do
     eitherDecode derivedAddressSample
     `shouldBe`

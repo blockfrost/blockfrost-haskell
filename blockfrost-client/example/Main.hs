@@ -3,9 +3,10 @@
 module Main
   where
 
+import Control.Lens ((^.))
 import Blockfrost.Client hiding (NutLinkAPI(..))
-import Control.Monad.IO.Class
 
+main :: IO ()
 main = do
   -- reads token from BLOCKFROST_TOKEN_PATH
   -- environment variable. It expects token
@@ -18,21 +19,23 @@ main = do
       tryError $ getAccountRewards "gonnaFail"
 
     -- variant accepting @Paged@ and @SortOrder@ arguments
-    -- getAccountRewards' "gonnaFail" (page 10) desc
+    -- getAccountRewards' "acc" (page 10) desc
 
     allMempoolTxs <-
       allPages $ \p -> getMempoolTransactions' p def
 
     if null allMempoolTxs
-    then return $ (latestBlocks, ers, allMempoolTxs, Nothing)
-    else do let lastTxInMempool = TxHash . unTxHashObject $ last allMempoolTxs
-            lastMempoolTx <- getMempoolTransaction lastTxInMempool
+    then
+      pure (latestBlocks, ers, allMempoolTxs, Nothing)
+    else do
+      let lastTxInMempool = TxHash . unTxHashObject $ last allMempoolTxs
+      lastMempoolTx <- getMempoolTransaction lastTxInMempool
 
-            return (latestBlocks, ers, allMempoolTxs, Just lastMempoolTx) 
+      pure (latestBlocks, ers, allMempoolTxs, Just lastMempoolTx)
 
   case res of
     Left e -> print e
-    Right ((latestBlocks, ers, allMempoolTxs, lastMempoolTx)) -> do 
+    Right ((latestBlocks, ers, allMempoolTxs, lastMempoolTx)) -> do
       print "Latest blocks:"
       print latestBlocks
       putStrLn ""
@@ -49,15 +52,14 @@ main = do
       case lastMempoolTx of
         Nothing -> print "No mempool transactions found."
         Just mempoolTx -> do
-          case _inputs mempoolTx of
+          case mempoolTx ^. inputs of
             [] -> print "No mempool transaction inputs found" -- Should be impossible
             (inp:_) -> do
-              case _address inp of
+              case inp ^. address of
                 Nothing -> print "Input has no address"
                 Just addr -> do
                   mempoolTxByAddress <-
                     runBlockfrost prj
-                      $ getMempoolTransactionsByAddress
-                          (Address addr)
+                      $ getMempoolTransactionsByAddress addr
                   print "Mempool transactions by address:"
                   print mempoolTxByAddress

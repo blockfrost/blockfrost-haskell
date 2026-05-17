@@ -196,32 +196,6 @@ transactionUtxosSample = [r|
 }
 |]
 
-utxoInSample :: UtxoInput
-utxoInSample =
-    UtxoInput
-      { _utxoInputAddress = "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv"
-      , _utxoInputAmount = sampleAmounts
-      , _utxoInputTxHash = "1a0570af966fb355a7160e4f82d5a80b8681b7955f5d44bec0dce628516157f0"
-      , _utxoInputOutputIndex = 0
-      , _utxoInputCollateral = False
-      , _utxoInputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
-      , _utxoInputInlineDatum = Nothing
-      , _utxoInputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
-      , _utxoInputReference = False
-      }
-
-utxoOutSample :: UtxoOutput
-utxoOutSample =
-  UtxoOutput
-    { _utxoOutputAddress = "addr1q9ld26v2lv8wvrxxmvg90pn8n8n5k6tdst06q2s856rwmvnueldzuuqmnsye359fqrk8hwvenjnqultn7djtrlft7jnq7dy7wv"
-    , _utxoOutputAmount = sampleAmounts
-    , _utxoOutputDataHash = Just "9e478573ab81ea7a8e31891ce0648b81229f408d596a3483e6f4f9b92d3cf710"
-    , _utxoOutputOutputIndex = 0
-    , _utxoOutputCollateral = False
-    , _utxoOutputInlineDatum = Just $ InlineDatum $ ScriptDatumCBOR "19a6aa"
-    , _utxoOutputReferenceScriptHash = Just "13a3efd825703a352a8f71f4e2758d08c28c564e8dfcce9f77776ad1"
-    }
-
 transactionUtxosExpected =
   TransactionUtxos
     { _transactionUtxosHash = "1e043f100dce12d107f679685acd2fc0610e10f72a92d412794c9773d11d8477"
