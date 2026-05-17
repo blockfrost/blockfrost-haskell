@@ -30,8 +30,8 @@ spec_scripts = do
 
   it "fails to parse tx eval error" $ do
     eitherDecode txEvalErrorSample
-    `shouldSatisfy`
-    (Data.Either.isLeft . _txEvalResult . Data.Either.fromRight undefined)
+    `shouldBe`
+    Right txEvalErrorExpected
 
   it "parses tx eval input sample" $ do
     eitherDecode txEvalInputSample
@@ -107,6 +107,8 @@ txEvalErrorSample = [r|
   "reflection": "st"
 }
 |]
+
+txEvalErrorExpected = evalErrorSample
 
 txEvalInputSample = [r|
 {
