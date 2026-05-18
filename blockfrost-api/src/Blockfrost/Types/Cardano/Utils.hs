@@ -4,9 +4,11 @@
 module Blockfrost.Types.Cardano.Utils
   ( DerivedAddress (..)
   , TxEval (..)
+  , TxEvalFailure(..)
   , TxEvalValidator (..)
   , TxEvalBudget (..)
   , evalSample
+  , evalErrorSample
   , TxEvalInput (..)
   ) where
 
@@ -30,11 +32,12 @@ import Blockfrost.Types.Shared.ValidationPurpose (ValidationPurpose(..))
 import Data.Text (Text)
 import Data.Map (Map)
 import Deriving.Aeson
-import Servant.Docs (ToSample (..), singleSample)
+import Servant.Docs (ToSample (..), samples, singleSample)
 import qualified Data.Aeson.Types
 import qualified Data.Char
 import qualified Data.Text
 import qualified Data.Map.Strict
+import qualified Data.Vector
 import qualified Text.Read
 
 -- | Derived Shelley address
@@ -157,6 +160,33 @@ data TxEvalFailure = TxEvalFailure Value
   deriving stock (Show, Eq, Generic)
   deriving (FromJSON, ToJSON)
 
+txEvalFailureSample :: TxEvalFailure
+txEvalFailureSample =
+  TxEvalFailure
+    $ object
+        [ "AdditionalUtxoOverlap" .=
+          ( Array
+          $ Data.Vector.fromList
+            [
+              object [
+                "txId"  .= ("ae85d245a3d00bfde01f59f3c4fe0b4bfae1cb37e9cf91929eadcea4985711de" :: Text)
+              , "index" .= (2 :: Int)
+              ]
+            , object [
+                "txId"  .= ("e88bd757ad5b9bedf372d8d3f0cf6c962a469db61a265f6418e1ffed86da29ec" :: Text)
+              , "index" .= (0 :: Int)
+              ]
+            , object [
+                "txId"  .= ("e88bd757ad5b9bedf372d8d3f0cf6c962a469db61a265f6418e1ffed86da29ec" :: Text)
+              , "index" .= (2 :: Int)
+              ]
+            ]
+          )
+        ]
+
+instance ToSample TxEvalFailure where
+  toSamples = pure $ singleSample txEvalFailureSample
+
 -- | Transaction evaluation result wrapper
 newtype TxEval = TxEval
   { _txEvalResult ::
@@ -194,8 +224,12 @@ evalSample =
           [(validatorSample, budgetSample)]
         )
 
+evalErrorSample :: TxEval
+evalErrorSample =
+  TxEval $ Left txEvalFailureSample
+
 instance ToSample TxEval where
-  toSamples = pure $ singleSample evalSample
+  toSamples = pure $ samples [ evalSample, evalErrorSample ]
 
 data LowerLeading
 instance StringModifier LowerLeading where

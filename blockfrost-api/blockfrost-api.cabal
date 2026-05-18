@@ -159,6 +159,7 @@ test-suite blockfrost-api-tests
                      , Cardano.Governance
                      , Cardano.Ledger
                      , Cardano.Metadata
+                     , Cardano.Mempool
                      , Cardano.Network
                      , Cardano.Pools
                      , Cardano.Scripts

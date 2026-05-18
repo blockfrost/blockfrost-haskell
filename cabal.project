@@ -3,3 +3,5 @@ packages:
   ./blockfrost-client-core
   ./blockfrost-client
   ./blockfrost-pretty
+
+multi-repl: True

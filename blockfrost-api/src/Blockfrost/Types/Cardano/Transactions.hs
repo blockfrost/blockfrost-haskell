@@ -4,7 +4,9 @@ module Blockfrost.Types.Cardano.Transactions
   ( Transaction (..)
   , TransactionUtxos (..)
   , UtxoInput (..)
+  , utxoInSample
   , UtxoOutput (..)
+  , utxoOutSample
   , TransactionRedeemer (..)
   , TransactionStake (..)
   , TransactionDelegation (..)

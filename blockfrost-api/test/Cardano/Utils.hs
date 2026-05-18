@@ -16,8 +16,8 @@ import Text.RawString.QQ
 
 import Blockfrost.Types
 
-spec_scripts :: Spec
-spec_scripts = do
+spec_utils :: Spec
+spec_utils = do
   it "parses derived address sample" $ do
     eitherDecode derivedAddressSample
     `shouldBe`
@@ -30,8 +30,8 @@ spec_scripts = do
 
   it "fails to parse tx eval error" $ do
     eitherDecode txEvalErrorSample
-    `shouldSatisfy`
-    (Data.Either.isLeft . _txEvalResult . Data.Either.fromRight undefined)
+    `shouldBe`
+    Right txEvalErrorExpected
 
   it "parses tx eval input sample" $ do
     eitherDecode txEvalInputSample
@@ -107,6 +107,8 @@ txEvalErrorSample = [r|
   "reflection": "st"
 }
 |]
+
+txEvalErrorExpected = evalErrorSample
 
 txEvalInputSample = [r|
 {
